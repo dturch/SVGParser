@@ -15,21 +15,31 @@ int main(int argc, char *argv[])
 
     SVGimage *svgImage = createValidSVGimage(argv[1], argv[2]); // 1st argument is svg file to pass through
 
-    
     result1 = validateSVGimage(svgImage, argv[2]); // 2nd argument is schema file
 
-    Attribute* attr = malloc(sizeof(Attribute));
-    attr->name = malloc(strlen("fill") + 1);
-    attr->value = malloc(strlen("#ff666f") + 1);
-    strcpy(attr->name, "fill");
-    strcpy(attr->value, "#ff666f");
-    setAttribute(svgImage, RECT, 1, attr);
-
-    result2 = writeSVGimage(svgImage, argv[3]); // 3rd argument is name of new file 
-    printf("validateSVGimage: %d\nwriteSVGimage: %d\n", result1, result2);
-
-
-
+    // addComponent Rectangle, Circle, Path -----------------------------------------
+/*    
+    Rectangle* rect = malloc(sizeof(Rectangle));
+    rect->height = 24; 
+    rect->width = 97;
+    rect->x = 9;
+    rect->y = 0.77;
+    strcpy(rect->units, "cm");
+    rect->otherAttributes = initializeList(attributeToString, deleteAttribute, compareAttributes);
+    addComponent(svgImage, RECT, rect);
+    Circle* circ = malloc(sizeof(Circle));
+    circ->r = 3.6; 
+    circ->cx = 40.4;
+    circ->cy = 34.3;
+    strcpy(circ->units, "cm");
+    circ->otherAttributes = initializeList(attributeToString, deleteAttribute, compareAttributes);
+    addComponent(svgImage, CIRC, circ);
+    Path* path = malloc(sizeof(Path));
+    path->data = malloc(strlen("213h4f87h13847fh178342hf8176934ghf89672g4") + 1);
+    strcpy(path->data, "213h4f87h13847fh178342hf8176934ghf89672g4");
+    path->otherAttributes = initializeList(attributeToString, deleteAttribute, compareAttributes);
+    addComponent(svgImage, PATH, path);
+*/
 
     // ListToJSON functions test -----------------------------------------
 /*
@@ -91,7 +101,6 @@ int main(int argc, char *argv[])
     }
 */
 
-
     // toString functions test -----------------------------------------
 /*
     char* string = NULL;
@@ -99,6 +108,8 @@ int main(int argc, char *argv[])
     printf("print start: %s\n", string);
     free(string);  
 */
+    result2 = writeSVGimage(svgImage, argv[3]); // 3rd argument is name of new file 
+    printf("validateSVGimage: %d\nwriteSVGimage: %d\n", result1, result2);
 
     deleteSVGimage(svgImage);
     

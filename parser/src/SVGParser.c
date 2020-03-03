@@ -2,7 +2,7 @@
  * file    		SVGParser.c
  * author  		Dario Turchi
  * studentID 	0929012
- * lastEdit     February 23, 2020
+ * lastEdit     March 3, 2020
  */
 #include "SVGParser.h"
 #include "helper.h"
@@ -729,46 +729,26 @@
 		deleteAttribute(newAttribute);
 	}
 
-/*  This is a generic function for adding a new component to an existing SVGimage. 
-	New components are always added at the end of the component list. 
-	This function only needs to handle Circles, Rectangles, and Paths.
-	The arguments are:
-		- image: Pointer to the SVGimage we are modifying
-		- type: Value indicating which struct we are modifying, i.e. CIRC, RECT, or PATH. 
-					We will use it so that we know how to dereference the generic newComponent pointer.
-		- newComponent: the new component.
-	This function will append the new component to the end of the appropriate list in SVGimage, after checking the elemType variable. 
-	It must do nothing if any of the arguments are invalid. */
-
 	void addComponent(SVGimage* image, elementType type, void* newElement)
 	{
 		if(!image || !newElement) return;
 
 		if(type == CIRC)
 		{
-			// Circle* newEleCirc = (Circle *)newElement;
-			// char* circ = newCircle();
-			
-			// insertBack(image->circles, newEleCirc);
-			// return;
+			insertBack(image->circles, (Circle *)newElement); // Dereference newElement as circle
+			return;
 		}
 		
 		if(type == RECT)
 		{
-			// Rectangle* newEleRect = (Rectangle *)newElement;
-			
-			// char* rect = newRectangle();
-			// insertBack(image->rectangles, newEleRect);
-			// return;
+			insertBack(image->rectangles, (Rectangle *)newElement); // Dereference newElement as rectangle
+			return;
 		}
 
 		if(type == PATH)
 		{
-			// Path* newElePath = (Path *)newElement;
-			
-			// char* pth = newPath();
-			// insertBack(image->paths, newElePath);
-			// return;
+			insertBack(image->paths, (Path *)newElement); // Dereference newElement as path
+			return;
 		}
 	}
 
