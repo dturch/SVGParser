@@ -1116,30 +1116,60 @@
 		return string;
 	}
 
-// ******************************* A2 module 3 bonus helper.h functions ***************************
+// ******************************* START: A2 - Module 3 Bonus JSONto functions ***************************
 	SVGimage* JSONtoSVG(const char* svgString)
 	{
 		SVGimage* img = newSVGImage();
-		if(!svgString) return img;
 
+		if(!svgString) return img;
+		
+		// splti
+		const char* dComma = ",";
+		const char* dColon = ":";
+		char* titleNameValue;
+		char* titleValue;
+
+		// because strtok write to string, make writeable copy and tokenize
+		char* copy = malloc(strlen(svgString)+1);
+		strcpy(copy, svgString);
+
+		titleNameValue = strtok(copy, dComma);
+		
+		titleValue = strtok(titleNameValue, dColon);
+		printf("----------------%s\n",copy);
+
+		strcpy(img->title, titleValue);
+		strcpy(img->namespace, "http://www.w3.org/2000/svg");
+
+		free(copy);
+
+		return img;
+	// should be able to delete as newSVGImage inits all lists
+		// img->rectangles = initializeList(rectangleToString, deleteRectangle, compareRectangles);	
+		// img->circles = initializeList(circleToString, deleteCircle, compareCircles);
+		// img->paths = initializeList(pathToString, deletePath, comparePaths);
+		// img->groups = initializeList(groupToString, deleteGroup, compareGroups);
+		// img->otherAttributes = initializeList(attributeToString, deleteAttribute, compareAttributes);
 		return img;
 	}
 
-	Rectangle* JSONtoRect(const char* svgString)
-	{
-		Rectangle* rect = newRectangle();
-		if(!svgString) return rect;
+	// Rectangle* JSONtoRect(const char* svgString)
+	// {
+	// 	if(!svgString) return;
+
+	// 	Rectangle* rect = newRectangle();
 		
-		return rect;
-	}
+	// 	return rect;
+	// }
 
-	Circle* JSONtoCircle(const char* svgString)
-	{
-		Circle* circ = newCircle();
-		if(!svgString) return circ;
+	// Circle* JSONtoCircle(const char* svgString)
+	// {
+	// 	if(!svgString) return;
 
-		return circ;
-	}
+	// 	Circle* circ = newCircle();
+
+	// 	return circ;
+	// }
 
 // ******************************* A1 userCreated helper.h functions ***************************
 	SVGimage* createSVGImageFromTree(xmlNode* root)

@@ -27,6 +27,7 @@ int main(int argc, char *argv[])
     strcpy(rect->units, "cm");
     rect->otherAttributes = initializeList(attributeToString, deleteAttribute, compareAttributes);
     addComponent(svgImage, RECT, rect);
+
     Circle* circ = malloc(sizeof(Circle));
     circ->r = 3.6; 
     circ->cx = 40.4;
@@ -34,6 +35,7 @@ int main(int argc, char *argv[])
     strcpy(circ->units, "cm");
     circ->otherAttributes = initializeList(attributeToString, deleteAttribute, compareAttributes);
     addComponent(svgImage, CIRC, circ);
+
     Path* path = malloc(sizeof(Path));
     path->data = malloc(strlen("213h4f87h13847fh178342hf8176934ghf89672g4") + 1);
     strcpy(path->data, "213h4f87h13847fh178342hf8176934ghf89672g4");
@@ -102,13 +104,18 @@ int main(int argc, char *argv[])
 */
 
     // toString functions test -----------------------------------------
-/*
+    char* json = "{\"title\":\"stuff\",\"descr\":\"junk\"}";
+
+    svgImage = JSONtoSVG(json);
+
+
     char* string = NULL;
     string = SVGimageToString(svgImage);
     printf("print start: %s\n", string);
     free(string);  
-*/
+
     result2 = writeSVGimage(svgImage, argv[3]); // 3rd argument is name of new file 
+
     printf("validateSVGimage: %d\nwriteSVGimage: %d\n", result1, result2);
 
     deleteSVGimage(svgImage);

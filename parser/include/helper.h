@@ -26,7 +26,7 @@ void getCirclesRecursive(void* data, bool isImage, List* list);
 
 //a2 module 3 bonus functions
 SVGimage* JSONtoSVG(const char* svgString);
-Rectangle* JSONtoRect(const char* svgString);
-Circle* JSONtoCircle(const char* svgString);
+//Rectangle* JSONtoRect(const char* svgString);
+//Circle* JSONtoCircle(const char* svgString);
 
 #endif
