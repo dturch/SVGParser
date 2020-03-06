@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>CHANGE ME</title>
+    <title>SVG Image Viewer</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="CHANGE ME">
-    <meta name="keywords" content="CHANGE ME">
-    <meta name="author" content="CHANGE ME">
+    <meta name="description" content="SVG Image Viewer">
+    <meta name="keywords" content="svg, image, viewer">
+    <meta name="author" content="Dario Turchi">
     <!-- Load jquery, bootstrap -->
     <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
@@ -17,7 +17,98 @@
     <!-- Custom CSS End -->
 </head>
 <body>
-    <h3>Download test</h3>
+    <!-- File Log Panel starts -->
+    <div id="file-log">
+        <h3>File Log Panel</h3> <br>
+        <div class="container">
+            <table class="table table-hover" id="log-table">
+                <thead>
+                    <tr>
+                        <th>Image (click to download)</th>
+                        <th>File name (click to download)</th>
+                        <th>File size</th>
+                        <th>Number of rectangles</th>
+                        <th>Number of circles</th>
+                        <th>Number of paths</th>
+                        <th>Number of groups</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    
+                </tbody>
+            </table>
+            <form enctype="multipart/form-data" method="post" action="/upload">
+                <input type="file" accept=".svg" id="upload-file" name="uploadFile" value="Upload-File" required>
+                <input type="submit" id="submit-file" name="Submit-File" value="Upload">
+            </form>
+    
+            <br />
+        </div>
+    </div>
+    <!-- File Log Panel ends -->
+
+    <!-- SVG View Panel starts -->
+    </br>
+    <div id="svg-view-panel">
+		<h3>SVG View Panel</h3><br>
+		<p>Select a file to view summary:  
+			<div class="container mt-3">
+			  <form>
+				<select name="files" class="custom-select mb-3" id="svg-dropdown">
+				  <option selected>-- None Selected --</option>
+				</select>
+			  </form>
+			</div>
+			</div> 
+		</p>
+
+
+    <!-- Tab panes -->
+    <div class="tab-content">
+        <div class="container tab-pane active"><br>
+            <h5>YERRRRRRRRRRRRRRRRRRR</h5>
+            <p>
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Title</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody id="image-details-table">
+
+                    </tbody>
+                </table>
+            </p>
+        </div>
+    </div>
+
+    <div class="tab-content">
+        <div class="container tab-pane active"><br>
+            <p>
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Component</th>
+                            <th>Summary</th>
+                            <th>Other attributes</th>
+                        </tr>
+                    </thead>
+                    <tbody id="component-attributes-details-table">
+
+                    </tbody>
+                </table>
+            </p>
+        </div>
+    </div>
+    <br />
+
+
+    <!-- SVG View Panel ends-->
+
+
+    <!-- Denis A3 Stub starts -->
+    <!-- <h3>Download test</h3>
     If the A3 stub is running and simple.gpx exists in the uploads/ directory on the server, then clicking on the link below will download it from the server.<br>
     <a href="rects.svg">rects.svg</a>
     <p></p>
@@ -35,7 +126,9 @@
         <div class="form-group">
             <input type='submit' class="btn btn-secondary">
         </div>
-    </form>
+    </form> -->
+    <!-- Denis A3 Stub ends -->
+
     <!-- Leave me at the bottom of body -->
     <script src="/index.js"></script>
 </body>
