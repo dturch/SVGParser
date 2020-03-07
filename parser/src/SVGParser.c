@@ -1142,14 +1142,7 @@
 		strcpy(img->namespace, "http://www.w3.org/2000/svg");
 
 		free(copy);
-
-		return img;
-	// should be able to delete as newSVGImage inits all lists
-		// img->rectangles = initializeList(rectangleToString, deleteRectangle, compareRectangles);	
-		// img->circles = initializeList(circleToString, deleteCircle, compareCircles);
-		// img->paths = initializeList(pathToString, deletePath, comparePaths);
-		// img->groups = initializeList(groupToString, deleteGroup, compareGroups);
-		// img->otherAttributes = initializeList(attributeToString, deleteAttribute, compareAttributes);
+		
 		return img;
 	}
 

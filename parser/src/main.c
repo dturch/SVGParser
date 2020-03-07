@@ -44,7 +44,6 @@ int main(int argc, char *argv[])
 */
 
     // ListToJSON functions test -----------------------------------------
-/*
     if(svgImage != NULL)
     {
         char* Jsvg = NULL;
@@ -88,31 +87,24 @@ int main(int argc, char *argv[])
         freeList(rectList);
         freeList(circList);
         freeList(groupList);
-    
 
-        // NEEED TO TEST FOR INVALIDITY AFTER!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-        Attribute* attr1 = malloc(sizeof(Attribute));
-        attr1->name = malloc(strlen("fill") + 1);
-        attr1->value = malloc(strlen("#ffff00") + 1);
-        strcpy(attr1->name, "fill");
-        strcpy(attr1->value, "#ffff00");
-        setAttribute(svgImage, SVG_IMAGE, 0, attr1);
+        // // NEEED TO TEST FOR INVALIDITY AFTER!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        // Attribute* attr1 = malloc(sizeof(Attribute));
+        // attr1->name = malloc(strlen("fill") + 1);
+        // attr1->value = malloc(strlen("#ffff00") + 1);
+        // strcpy(attr1->name, "fill");
+        // strcpy(attr1->value, "#ffff00");
+        // setAttribute(svgImage, SVG_IMAGE, 0, attr1);
 
         result2 = writeSVGimage(svgImage, argv[3]); // 3rd argument is name of new file 
         printf("validateSVGimage: %d\nwriteSVGimage: %d\n", result1, result2);
     }
-*/
 
     // toString functions test -----------------------------------------
-    char* json = "{\"title\":\"stuff\",\"descr\":\"junk\"}";
-
-    svgImage = JSONtoSVG(json);
-
-
-    char* string = NULL;
-    string = SVGimageToString(svgImage);
-    printf("print start: %s\n", string);
-    free(string);  
+    // char* string = NULL;
+    // string = SVGimageToString(svgImage);
+    // printf("print start: %s\n", string);
+    // free(string);  
 
     result2 = writeSVGimage(svgImage, argv[3]); // 3rd argument is name of new file 
 
