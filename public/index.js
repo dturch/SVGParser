@@ -1,5 +1,8 @@
 // Put all onload AJAX calls here, and event listeners
 $(document).ready(function() {
+    if ($('#log-table > tr').length > 5)
+    $('#log-table').css('overflow-y', 'scroll');
+    // Denis A3 stub
     // On page-load AJAX Example
     $.ajax({
         type: 'get',            //Request type

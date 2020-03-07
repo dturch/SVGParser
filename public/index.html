@@ -6,7 +6,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="SVG Image Viewer">
-    <meta name="keywords" content="svg, image, viewer">
+    <meta name="keywords" content="HTML, CSS, JavaScript, SVG">
     <meta name="author" content="Dario Turchi">
     <!-- Load jquery, bootstrap -->
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"
@@ -27,6 +27,7 @@
 <body>
     <!-- File Log Panel starts -->
     <div id="file-log">
+    </br>
         <h3>File Log Panel</h3> <br>
         <div class="container">
             <table class="table table-hover" id="log-table">
@@ -39,6 +40,78 @@
                         <th>Number of circles</th>
                         <th>Number of paths</th>
                         <th>Number of groups</th>
+                    </tr>
+                    <tr>
+                        <td><img src="rects.svg"></td>
+                        <td><a href="rects.svg" download>rects.svg</a></td>
+                        <td>1 KB</td>
+                        <td>4</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                    </tr>
+                    <tr>
+                        <td><img src="Emoji_poo_A2.svg"></td>
+                        <td><a href="Emoji_poo_A2.svg" download>Emoji_poo_A2.svg</a></td>
+                        <td>1 KB</td>
+                        <td>3</td>
+                        <td>2</td>
+                        <td>1</td>
+                        <td>9434</td>
+                    </tr>
+                    <tr>
+                        <td><img src="rects.svg"></td>
+                        <td><a href="rects.svg" download>rects.svg</a></td>
+                        <td>1 KB</td>
+                        <td>4</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                    </tr>
+                    <tr>
+                        <td><img src="Emoji_poo_A2.svg"></td>
+                        <td><a href="Emoji_poo_A2.svg" download>Emoji_poo_A2.svg</a></td>
+                        <td>1 KB</td>
+                        <td>3</td>
+                        <td>2</td>
+                        <td>1</td>
+                        <td>9434</td>
+                    </tr>
+                    <tr>
+                        <td><img src="Emoji_poo_A2.svg"></td>
+                        <td><a href="Emoji_poo_A2.svg" download>Emoji_poo_A2.svg</a></td>
+                        <td>1 KB</td>
+                        <td>3</td>
+                        <td>2</td>
+                        <td>1</td>
+                        <td>9434</td>
+                    </tr>
+                    <tr>
+                        <td><img src="Emoji_poo_A2.svg"></td>
+                        <td><a href="Emoji_poo_A2.svg" download>Emoji_poo_A2.svg</a></td>
+                        <td>1 KB</td>
+                        <td>3</td>
+                        <td>2</td>
+                        <td>1</td>
+                        <td>9434</td>
+                    </tr>
+                    <tr>
+                        <td><img src="Emoji_poo_A2.svg"></td>
+                        <td><a href="Emoji_poo_A2.svg" download>Emoji_poo_A2.svg</a></td>
+                        <td>1 KB</td>
+                        <td>3</td>
+                        <td>2</td>
+                        <td>1</td>
+                        <td>9434</td>
+                    </tr>
+                    <tr>
+                        <td><img src="rects.svg"></td>
+                        <td><a href="rects.svg" download>rects.svg</a></td>
+                        <td>1 KB</td>
+                        <td>4</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
                     </tr>
                 </thead>
                 <tbody>
@@ -110,10 +183,23 @@
     <br />
     <!-- SVG View Panel ends-->
 
+    <!-- File Log Panel starts -->
+    <div id="file-log">
+    </br>
+        <h3>Section 5: additional functionality</h3> <br>
+        <div class="container">
+
+            <form enctype="multipart/form-data" method="post" action="/upload">
+                <input type="file" accept=".svg" id="upload-file" name="uploadFile" value="Upload-File" required>
+                <input type="submit" id="submit-file" name="Submit-File" value="Upload">
+            </form>
+
+            <br />
+        </div>
+    </div>
+    <!-- File Log Panel ends -->
+
     <!-- Denis A3 Stub starts -->
-    <h3>Download test</h3>
-    If the A3 stub is running and simple.gpx exists in the uploads/ directory on the server, then clicking on the link
-    below will download it from the server.<br>
     <a href="rects.svg">rects.svg</a>
     <p></p>
     <img src="rects.svg">
