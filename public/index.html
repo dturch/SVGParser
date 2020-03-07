@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <title>SVG Image Viewer</title>
     <meta charset="utf-8">
@@ -8,14 +9,21 @@
     <meta name="keywords" content="svg, image, viewer">
     <meta name="author" content="Dario Turchi">
     <!-- Load jquery, bootstrap -->
-    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"
+        integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
     <!-- Custom CSS -->
     <link rel="stylesheet" type="text/css" href="/style.css">
     <!-- Custom CSS End -->
 </head>
+
 <body>
     <!-- File Log Panel starts -->
     <div id="file-log">
@@ -34,14 +42,14 @@
                     </tr>
                 </thead>
                 <tbody>
-                    
+
                 </tbody>
             </table>
             <form enctype="multipart/form-data" method="post" action="/upload">
                 <input type="file" accept=".svg" id="upload-file" name="uploadFile" value="Upload-File" required>
                 <input type="submit" id="submit-file" name="Submit-File" value="Upload">
             </form>
-    
+
             <br />
         </div>
     </div>
@@ -50,18 +58,16 @@
     <!-- SVG View Panel starts -->
     </br>
     <div id="svg-view-panel">
-		<h3>SVG View Panel</h3><br>
-		<h5>Select a file to view summary:</h5>
-			<div class="container mt-3">
-			  <form>
-				<select name="files" class="custom-select mb-3" id="svg-dropdown">
-				  <option selected>-- No File Selected --</option>
-				</select>
-			  </form>
-			</div>
-			</div> 
-
-
+        <h3>SVG View Panel</h3><br>
+        <h5>Select a file to view summary:</h5>
+        <div class="container mt-3">
+            <form>
+                <select name="files" class="custom-select mb-3" id="svg-dropdown">
+                    <option selected>-- No File Selected --</option>
+                </select>
+            </form>
+        </div>
+    </div>
 
     <!-- Tab panes -->
     <div class="tab-content">
@@ -102,14 +108,12 @@
         </div>
     </div>
     <br />
-
-
     <!-- SVG View Panel ends-->
 
-
     <!-- Denis A3 Stub starts -->
-    <!-- <h3>Download test</h3>
-    If the A3 stub is running and simple.gpx exists in the uploads/ directory on the server, then clicking on the link below will download it from the server.<br>
+    <h3>Download test</h3>
+    If the A3 stub is running and simple.gpx exists in the uploads/ directory on the server, then clicking on the link
+    below will download it from the server.<br>
     <a href="rects.svg">rects.svg</a>
     <p></p>
     <img src="rects.svg">
@@ -117,26 +121,19 @@
     <hr>
     <div id="blah">I am blah</div>
     <hr>
-    <form ref='someform'
-          id='someform'>
-          <div class="form-group">
-                <label for="entryBox">Last Name</label>
-                <input type="text" class="form-control" id="entryBox" value="Value" placeholder="Placeholder">
-            </div>
+    <form ref='someform' id='someform'>
+        <div class="form-group">
+            <label for="entryBox">Last Name</label>
+            <input type="text" class="form-control" id="entryBox" value="Value" placeholder="Placeholder">
+        </div>
         <div class="form-group">
             <input type='submit' class="btn btn-secondary">
         </div>
-    </form> -->
+    </form>
     <!-- Denis A3 Stub ends -->
 
     <!-- Leave me at the bottom of body -->
     <script src="/index.js"></script>
 </body>
+
 </html>
-
-
-
-
-
-
-
