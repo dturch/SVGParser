@@ -1871,6 +1871,27 @@
 	}
 
 
+
+
+// ******************************* A3 userCreated helper.h functions ***************************
+char * svg_struct_to_html(char * filename)
+{
+	char * dir = malloc(256);
+	strcpy(dir, "uploads/");
+	strcat(dir, filename);
+	
+	SVGimage * svgImage = createSVGimage(dir);
+	
+	bool valid = validateSVGimage(svgImage, "svg.xsd");
+	if(valid == false) return "Invalid file";
+	
+	char * str = SVGtoJSON(svgImage);
+	
+	deleteSVGimage(svgImage);
+	free(dir);	
+	return str;
+}
+
 // *******************************deleteFunction***************************
 	void deleteAttribute(void *data)
 	{

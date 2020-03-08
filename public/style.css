@@ -56,17 +56,22 @@ th td {
     height: 600px;
 }
 
-#log-table tr td {
-    width: 33%
+.svg-view-img {
+    display: block;
+    width: 800px;
 }
 
-.center {
+.table-img {
     display: block;
-    margin-left: auto;
-    margin-right: auto;
-    width: 50%;
+    width: 200px;
 }
 
 .blue {
     color: blue;
+}
+
+/*proportionally scaled images (Maintain aspect ratio*/s
+img {
+    max-width: 100%; 
+    max-height: 100%;
 }

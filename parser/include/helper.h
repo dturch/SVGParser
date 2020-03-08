@@ -2,7 +2,7 @@
  * file    		helper.h
  * author  		Dario Turchi
  * studentID 	0929012
- * lastEdit    	February 19, 2020
+ * lastEdit    	March 7, 2020
  */
 #ifndef HELPER_H
 #define HELPER_H
@@ -28,5 +28,7 @@ void getCirclesRecursive(void* data, bool isImage, List* list);
 SVGimage* JSONtoSVG(const char* svgString);
 //Rectangle* JSONtoRect(const char* svgString);
 //Circle* JSONtoCircle(const char* svgString);
+
+char * gpx_struct_to_html(char * filename);
 
 #endif

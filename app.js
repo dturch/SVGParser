@@ -81,3 +81,28 @@ app.get('/someendpoint', function(req , res){
 
 app.listen(portNum);
 console.log('Running app at localhost: ' + portNum);
+
+let lib = ffi.Library('./libsvgparse', {
+	'svg_struct_to_html': ['string', ['string']],
+});
+
+app.get('/svg', function(req, res){
+
+    var r = [];
+
+    let files = fs.readdirSync('./uploads');
+
+    for(var i = 0; i < files.length; i++)
+    {
+      let c = lib.svg_struct_to_html(files[i]);
+
+      if(c == "Invalid file") continue;
+
+      let jsonObj = JSON.parse(c);
+      jsonObj["filename"] = files[i];
+
+      r[i] = JSON.stringify(jsonObj);
+    }
+
+    res.send(r);
+});
