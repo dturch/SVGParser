@@ -29,6 +29,7 @@ SVGimage* JSONtoSVG(const char* svgString);
 //Rectangle* JSONtoRect(const char* svgString);
 //Circle* JSONtoCircle(const char* svgString);
 
-char * gpx_struct_to_html(char * filename);
+char * svg_struct_to_html(char * filename);
+char * shapes_struct_to_html(char * filename);
 
 #endif

@@ -1892,6 +1892,25 @@ char * svg_struct_to_html(char * filename)
 	return str;
 }
 
+char * shapes_struct_to_html(char * filename)
+{
+	char * dir = malloc(256);
+	strcpy(dir, "uploads/");
+	strcat(dir, filename);
+	
+	SVGimage * svgImage = createSVGimage(dir);
+	
+	bool valid = validateSVGimage(svgImage, "svg.xsd");
+	if(valid == false) return "Invalid Shapes detected";
+	
+	char * rectStr = rectListToJSON(svgImage->rectangles);
+	
+	deleteSVGimage(svgImage);
+	free(dir);
+	
+	return rectStr;
+}
+
 // *******************************deleteFunction***************************
 	void deleteAttribute(void *data)
 	{
