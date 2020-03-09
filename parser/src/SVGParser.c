@@ -1904,6 +1904,9 @@ char * shapes_struct_to_html(char * filename)
 	if(valid == false) return "Invalid Shapes detected";
 	
 	char * rectStr = rectListToJSON(svgImage->rectangles);
+	// char * circStr = circListToJSON(svgImage->circles);
+	// char * pathStr = pathListToJSON(svgImage->paths);
+	// char * grpStr = groupListToJSON(svgImage->groups);
 	
 	deleteSVGimage(svgImage);
 	free(dir);
