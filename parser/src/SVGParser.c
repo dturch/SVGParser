@@ -1874,45 +1874,45 @@
 
 
 // ******************************* A3 userCreated helper.h functions ***************************
-char * svg_struct_to_html(char * filename)
-{
-	char * dir = malloc(256);
-	strcpy(dir, "uploads/");
-	strcat(dir, filename);
-	
-	SVGimage * svgImage = createSVGimage(dir);
-	
-	bool valid = validateSVGimage(svgImage, "svg.xsd");
-	if(valid == false) return "Invalid file";
-	
-	char * str = SVGtoJSON(svgImage);
-	
-	deleteSVGimage(svgImage);
-	free(dir);	
-	return str;
-}
+	char* svg_struct_to_html(char * filename)
+	{
+		char * dir = malloc(256);
+		strcpy(dir, "uploads/");
+		strcat(dir, filename);
+		
+		SVGimage * svgImage = createSVGimage(dir);
+		
+		bool valid = validateSVGimage(svgImage, "svg.xsd");
+		if(valid == false) return "Invalid file";
+		
+		char * str = SVGtoJSON(svgImage);
+		
+		deleteSVGimage(svgImage);
+		free(dir);	
+		return str;
+	}
 
-char * shapes_struct_to_html(char * filename)
-{
-	char * dir = malloc(256);
-	strcpy(dir, "uploads/");
-	strcat(dir, filename);
-	
-	SVGimage * svgImage = createSVGimage(dir);
-	
-	bool valid = validateSVGimage(svgImage, "svg.xsd");
-	if(valid == false) return "Invalid Shapes detected";
-	
-	char * rectStr = rectListToJSON(svgImage->rectangles);
-	// char * circStr = circListToJSON(svgImage->circles);
-	// char * pathStr = pathListToJSON(svgImage->paths);
-	// char * grpStr = groupListToJSON(svgImage->groups);
-	
-	deleteSVGimage(svgImage);
-	free(dir);
-	
-	return rectStr;
-}
+	char* shapes_struct_to_html(char * filename)
+	{
+		char * dir = malloc(256);
+		strcpy(dir, "uploads/");
+		strcat(dir, filename);
+		
+		SVGimage * svgImage = createSVGimage(dir);
+		
+		bool valid = validateSVGimage(svgImage, "svg.xsd");
+		if(valid == false) return "Invalid Shapes detected";
+		
+		char * rectStr = rectListToJSON(svgImage->rectangles);
+		// char * circStr = circListToJSON(svgImage->circles);
+		// char * pathStr = pathListToJSON(svgImage->paths);
+		// char * grpStr = groupListToJSON(svgImage->groups);
+		
+		deleteSVGimage(svgImage);
+		free(dir);
+		
+		return rectStr;
+	}
 
 // *******************************deleteFunction***************************
 	void deleteAttribute(void *data)

@@ -26,9 +26,8 @@
 
 <body>
     <!-- File Log Panel starts -->
-    <div id="file-log">
-        </br>
-        <h3>File Log Panel</h3> <br>
+    <divs>
+        <h3>File Log Panel</h3>
         <div class="container">
             <table class="table table-hover" id="log-table">
                 <thead>
@@ -50,16 +49,13 @@
                 <input type="file" accept=".svg" id="upload-file" name="uploadFile" value="Upload-File" required>
                 <input type="submit" id="submit-file" name="Submit-File" value="Upload">
             </form>
-
-            <br />
         </div>
     </div>
     <!-- File Log Panel ends -->
-
+    <hr>
     <!-- SVG View Panel starts -->
-    </br>
-    <div id="svg-view-panel">
-        <h3>SVG View Panel</h3><br>
+    <div>
+        <h3>SVG View Panel</h3>
         <h5>Select a file to view summary:</h5>
         <div class="container mt-3">
             <form>
@@ -73,82 +69,99 @@
     <div id="svg-display-img">
     </div>
 
-    <div class="container tab-pane active"><br>
-        <p>
-            <table class="table table-hover">
-                <thead>
-                    <tr>
-                        <th>Title</th>
-                        <th>Description</th>
-                    </tr>
-                </thead>
-                <tbody id="svg-title-desc">
-                    <tr>
-                        <td>Example quad01 - quadratic Bezier commands in path data</td>
-                        <td>Picture showing a "Q" a "T" command, along with annotations showing the control points and
-                            end points</td>
-                    </tr>
-                </tbody>
-            </table>
+    <div class="container">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody id="svg-title-desc">
+                <tr>
+                    <td>Example quad01 - quadratic Bezier commands in path data</td>
+                    <td>Picture showing a "Q" a "T" command, along with annotations showing the control points and
+                        end points</td>
+                </tr>
+            </tbody>
+        </table>
         </p>
     </div>
 
     <div class="tab-content">
-        <div class="container tab-pane active"><br>
-            <p>
-                <table class="table table-hover">
-                    <thead>
-                        <tr>
-                            <th>Component</th>
-                            <th>Summary</th>
-                            <th>Other attributes</th>
-                        </tr>
-                    </thead>
-                    <tbody id="component-summary">
-                        <tr>
-                            <td>Path 1</td>
-                            <td>path data = M200,300 L400,50 L600,300 L800,550 L1000,300</td>
-                            <td>3</td>
-                        </tr>
-                        <tr>
-                            <td>Group 1</td>
-                            <td>2 child elements</td>
-                            <td>1</td>
-                        </tr>
-                        <tr>
-                            <td>Group 2</td>
-                            <td>3 child elements</td>
-                            <td>1</td>
-                        </tr>
-                        <tr>
-                            <td>Group 3</td>
-                            <td>2 child elements</td>
-                            <td>1</td>
-                        </tr>
-                    </tbody>
-                </table>
+        <div class="container">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Component</th>
+                        <th>Summary</th>
+                        <th>Other attributes</th>
+                    </tr>
+                </thead>
+                <tbody id="component-summary">
+                    <tr>
+                        <td>Path 1</td>
+                        <td>path data = M200,300 L400,50 L600,300 L800,550 L1000,300</td>
+                        <td>3</td>
+                    </tr>
+                    <tr>
+                        <td>Group 1</td>
+                        <td>2 child elements</td>
+                        <td>1</td>
+                    </tr>
+                    <tr>
+                        <td>Group 2</td>
+                        <td>3 child elements</td>
+                        <td>1</td>
+                    </tr>
+                    <tr>
+                        <td>Group 3</td>
+                        <td>2 child elements</td>
+                        <td>1</td>
+                    </tr>
+                </tbody>
+            </table>
             </p>
         </div>
     </div>
-    <br />
     <!-- SVG View Panel ends-->
+    <hr>
+    <!-- Updating image properties starts -->
+    <div>
+        <h3>Update SVG Image Properties</h3>
+        <h5>Select a a file to update image properties:</h5>
+        <div class="container mt-3">
+            <form>
+                <select name="files" class="custom-select mb-3" id="update-svg-properties-dropdown">
+                    <option selected>-- No File Selected --</option>
+                </select>
+            </form>
+        </div>
+    </div>
 
-    <!-- starts -->
-    
-    <!-- ends -->
-    
+    <div class="container">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Value</th>
+                </tr>
+            </thead>
+            <tbody id="svg-update">
+            </tbody>
+        </table>
+    </div>
+    <!-- Updating image properties ends -->
 
+    <hr>
     <!-- additional functionality starts -->
     <div id="file-log">
-    </br>
-        <h3>Section 5: additional functionality</h3> <br>
+        <h3>Section 5: additional functionality</h3>
         <div class="container">
-
             <form enctype="multipart/form-data" method="post" action="/upload">
                 <input type="file" accept=".svg" id="upload-file" name="uploadFile" value="Upload-File" required>
                 <input type="submit" id="submit-file" name="Submit-File" value="Upload">
             </form>
-            <br />
         </div>
     </div>
     <!-- additional functionality ends -->

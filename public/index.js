@@ -59,6 +59,38 @@ $(document).ready(function () {
         });
     });
 
+    // SVG Update Image Properties
+    $('#update-svg-properties-dropdown').change(function() {
+        let filename = $("#update-svg-properties-dropdown option:selected").text();
+
+        console.log(filename);
+
+        $('#component-summary tr').remove();
+        $('#svg-display-img img').remove();
+        $('#svg-display-img h5').remove();
+
+        $.ajax({
+            type: 'get',            //Request type
+            dataType: 'json',       //Data type - we will use JSON for almost everything 
+            url: '/components/' + filename,   //The server endpoint we are connecting to
+
+            success: function (data) {
+                console.log(data);
+                for (var i = 0; i < data.length; i++) {
+                    console.log(data[i]);
+                    $("#component-summary").append("<tr><td> Rectangle " + (i + 1) + "</td><td>" + data[i]["x"] + "</td><td>" + data[i]["numAttr"] + "</td></tr>");
+                }
+                $('#svg-display-img').append("<h5 class=\"blue\">" + filename + "</h5><img class=\"svg-display-img\" src=\"" + filename + "\">");
+                alert("Successfully displayed summary of " + filename + " to SVG View Panel");
+            },
+            fail: function (error) {
+                // Non-200 return, do something with error
+                alert("Could not display summary of " + filename + " to SVG View Panel");
+                console.log(error);
+            }
+        });
+    });
+
     // Event listener form example , we can use this instead explicitly listening for events
     // No redirects if possible
     // $('#someform').submit(function (e) {
