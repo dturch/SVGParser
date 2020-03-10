@@ -1901,16 +1901,16 @@
 		SVGimage * svgImage = createSVGimage(dir);
 		
 		bool valid = validateSVGimage(svgImage, "svg.xsd");
-		if(valid == false) return "Invalid Shapes detected";
+		if(valid == false) return "Invalid SVGImage";
 		
 		char* rectStr = rectListToJSON(svgImage->rectangles);
 		char* circStr = circListToJSON(svgImage->circles);
 		char* pathStr = pathListToJSON(svgImage->paths);
 		char* grpStr = groupListToJSON(svgImage->groups);
 
-		char* bigStr = malloc(strlen(rectStr) + strlen(circStr) + strlen(pathStr) + strlen(grpStr) + 64);
+		char* bigStr = malloc(strlen(rectStr) + strlen(circStr) + strlen(pathStr) + strlen(grpStr) + strlen(svgImage->description) + strlen(svgImage->title) + 128);
 
-		strcpy(bigStr, "{\"shapes\":{\"rectangle\":");
+		strcpy(bigStr, "{\"svgStruct\":{\"rectangle\":");
 		strcat(bigStr, rectStr);
 		strcat(bigStr, ",\"circle\":");
 		strcat(bigStr, circStr);
@@ -1918,7 +1918,11 @@
 		strcat(bigStr, pathStr);
 		strcat(bigStr, ",\"group\":");
 		strcat(bigStr, grpStr);
-		strcat(bigStr, "}}");
+		strcat(bigStr, ",\"title\":\"");
+		strcat(bigStr, svgImage->title);
+		strcat(bigStr, "\",\"description\":\"");
+		strcat(bigStr, svgImage->description);
+		strcat(bigStr, "\"}}");
 		
 		deleteSVGimage(svgImage);
 		free(dir);
@@ -1929,26 +1933,6 @@
 		
 		return bigStr;
 	}
-	
-	// char* attr_struct_to_html(char * filename)
-	// {
-	// 	char * dir = malloc(256);
-	// 	strcpy(dir, "uploads/");
-	// 	strcat(dir, filename);
-		
-	// 	SVGimage * svgImage = createSVGimage(dir);
-		
-	// 	bool valid = validateSVGimage(svgImage, "svg.xsd");
-	// 	if(valid == false) return "Invalid Attributes detected";
-		
-	// 	char * attr = attrListToJSON(svgImage->otherAttributes);
-		
-	// 	deleteSVGimage(svgImage);
-	// 	free(dir);
-		
-	// 	return attr;
-	// }
-
 // *******************************deleteFunction***************************
 	void deleteAttribute(void *data)
 	{
