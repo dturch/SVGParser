@@ -15,10 +15,10 @@ $(document).ready(function () {
             }
             // enable vertical scrolling if the file log panel contains more than 5 files
             if ($('#log-table tr').length > 6)
-            $('#log-table').addClass('enable-scroll');
+                $('#log-table').addClass('enable-scroll');
             // display this in file log panel if there are no files
             else if ($('#log-table tbody tr').length < 1)
-            $('#log-table').append("<tr><td>No files</td></tr>");
+                $('#log-table').append("<tr><td>No files</td></tr>");
         },
         fail: function (error) {
             // Non-200 return, do something with error
@@ -28,7 +28,7 @@ $(document).ready(function () {
     });
 
     // SVG Image Component Summary
-    $('#svg-dropdown').change(function() {
+    $('#svg-dropdown').change(function () {
         let filename = $("#svg-dropdown option:selected").text();
 
         console.log(filename);
@@ -39,7 +39,7 @@ $(document).ready(function () {
         $('#group-summary tr').remove();
         $('#svg-display-img img').remove();
         $('#svg-display-img h5').remove();
-        
+
         $.ajax({
             type: 'get',            //Request type
             dataType: 'json',       //Data type - we will use JSON for almost everything 
@@ -48,28 +48,16 @@ $(document).ready(function () {
             success: function (data) {
                 console.log(data);
                 for (let shapes in data) {
-                    // if (data[shapes].rectangle.length > 0) 
-                    // {
-                        // alert("rectangles are present");
-                        for (var r = 0; r < data[shapes].rectangle.length; r++) {
-                            $("#rectangle-summary").append("<tr><td>Rectangle " + (r + 1) + "</td><td>Upper left corner: x = " + data[shapes].rectangle[r].x + data[shapes].rectangle[r].units + ", y = " + data[shapes].rectangle[r].y + data[shapes].rectangle[r].units + ", Width: " + data[shapes].rectangle[r].w + data[shapes].rectangle[r].units + ", Height: " + data[shapes].rectangle[r].h + data[shapes].rectangle[r].units + "</td><td>" + data[shapes].rectangle[r].numAttr + "</td></tr>");
-                        }
-                    // }
-                    // else if (data[shapes].circle.length > 0)
-                    // {
-                        //alert("circles are present")
-                        for (var c = 0; c < data[shapes].circle.length; c++){
-                            $("#circle-summary").append("<tr><td>Circle " + (c + 1) + "</td><td>Centre: x = " + data[shapes].circle[c].cx + data[shapes].circle[c].units + ", y = " + data[shapes].circle[c].y + data[shapes].circle[c].units + ", radius: " + data[shapes].circle[c].r + data[shapes].circle[c].units + "</td><td>" + data[shapes].circle[c].numAttr + "</td></tr>");
-                        }
-                    // }
-                    // else if (data[shapes].path.length > 0)
-                    // {
-                        //alert("paths are present");
-                        for (var p = 0; p < data[shapes].path.length; p++){
-                            $("#path-summary").append("<tr><td>Path " + (p + 1) + "</td><td>path data = " + data[shapes].path[p].d + "</td><td>" + data[shapes].path[p].numAttr + "</td></tr>");
-                        }
-                    // }
-                    for (var g = 0; g < data[shapes].group.length; g++){
+                    for (var r = 0; r < data[shapes].rectangle.length; r++) {
+                        $("#rectangle-summary").append("<tr><td>Rectangle " + (r + 1) + "</td><td>Upper left corner: x = " + data[shapes].rectangle[r].x + data[shapes].rectangle[r].units + ", y = " + data[shapes].rectangle[r].y + data[shapes].rectangle[r].units + ", Width: " + data[shapes].rectangle[r].w + data[shapes].rectangle[r].units + ", Height: " + data[shapes].rectangle[r].h + data[shapes].rectangle[r].units + "</td><td>" + data[shapes].rectangle[r].numAttr + "</td></tr>");
+                    }
+                    for (var c = 0; c < data[shapes].circle.length; c++) {
+                        $("#circle-summary").append("<tr><td>Circle " + (c + 1) + "</td><td>Centre: x = " + data[shapes].circle[c].cx + data[shapes].circle[c].units + ", y = " + data[shapes].circle[c].y + data[shapes].circle[c].units + ", radius: " + data[shapes].circle[c].r + data[shapes].circle[c].units + "</td><td>" + data[shapes].circle[c].numAttr + "</td></tr>");
+                    }
+                    for (var p = 0; p < data[shapes].path.length; p++) {
+                        $("#path-summary").append("<tr><td>Path " + (p + 1) + "</td><td>path data = " + data[shapes].path[p].d + "</td><td>" + data[shapes].path[p].numAttr + "</td></tr>");
+                    }
+                    for (var g = 0; g < data[shapes].group.length; g++) {
                         $("#group-summary").append("<tr><td>Group " + (g + 1) + "</td><td>" + data[shapes].group[g].children + " child elements</td><td>" + data[shapes].group[g].numAttr + "</td></tr>");
                     }
                 }
