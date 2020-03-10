@@ -1904,15 +1904,50 @@
 		if(valid == false) return "Invalid Shapes detected";
 		
 		char * rectStr = rectListToJSON(svgImage->rectangles);
-		// char * circStr = circListToJSON(svgImage->circles);
-		// char * pathStr = pathListToJSON(svgImage->paths);
-		// char * grpStr = groupListToJSON(svgImage->groups);
+		char * circStr = circListToJSON(svgImage->circles);
+		char * pathStr = pathListToJSON(svgImage->paths);
+		char * grpStr = groupListToJSON(svgImage->groups);
+
+		char* bigStr = malloc(strlen(rectStr) + strlen(circStr) + strlen(pathStr) + strlen(grpStr) + 64);
+
+		strcpy(bigStr, "{\"shapes\":{\"rectangle\":");
+		strcat(bigStr, rectStr);
+		strcat(bigStr, ",\"circle\":");
+		strcat(bigStr, circStr);
+		strcat(bigStr, ",\"path\":");
+		strcat(bigStr, pathStr);
+		strcat(bigStr, ",\"group\":");
+		strcat(bigStr, grpStr);
+		strcat(bigStr, "}}");
 		
-		deleteSVGimage(svgImage);
 		free(dir);
+		free(rectStr);
+		free(circStr);
+		free(pathStr);
+		free(grpStr);
+		deleteSVGimage(svgImage);
 		
-		return rectStr;
+		return bigStr;
 	}
+	
+	// char* attr_struct_to_html(char * filename)
+	// {
+	// 	char * dir = malloc(256);
+	// 	strcpy(dir, "uploads/");
+	// 	strcat(dir, filename);
+		
+	// 	SVGimage * svgImage = createSVGimage(dir);
+		
+	// 	bool valid = validateSVGimage(svgImage, "svg.xsd");
+	// 	if(valid == false) return "Invalid Attributes detected";
+		
+	// 	char * attr = attrListToJSON(svgImage->otherAttributes);
+		
+	// 	deleteSVGimage(svgImage);
+	// 	free(dir);
+		
+	// 	return attr;
+	// }
 
 // *******************************deleteFunction***************************
 	void deleteAttribute(void *data)

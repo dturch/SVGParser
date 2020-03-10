@@ -85,7 +85,6 @@ console.log('Running app at localhost: ' + portNum);
 let lib = ffi.Library('./libsvgparse', {
 	'svg_struct_to_html': ['string', ['string']],
 	'shapes_struct_to_html': ['string', ['string']],
-	// 'attr_struct_to_html': ['string', ['string']],
 });
 
 app.get('/svg', function (req, res) {
@@ -112,10 +111,19 @@ app.get('/components/:filename', function (req, res) {
 
 	let file = req.params.filename;
 	
-    let c = lib.shapes_struct_to_html(file);
+	let c = lib.shapes_struct_to_html(file);
 
 	res.send(c);
 });
+
+// app.get('/components-properties/:filename', function (req, res) {
+
+// 	let file = req.params.filename;
+	
+//     let c = lib.attr_struct_to_html(file);
+
+// 	res.send(c);
+// });
 
 // app.get('/attributes/:filename', function (req, res) {
 

@@ -1,6 +1,6 @@
 // Put all onload AJAX calls here, and event listeners
 $(document).ready(function () {
-    // On click upload AJAX Example
+    // SVG file upload 
     $.ajax({
         type: 'get',            //Request type
         dataType: 'json',       //Data type - we will use JSON for almost everything 
@@ -33,10 +33,13 @@ $(document).ready(function () {
 
         console.log(filename);
 
-        $('#component-summary tr').remove();
+        $('#rectangle-summary tr').remove();
+        $('#circle-summary tr').remove();
+        $('#path-summary tr').remove();
+        $('#group-summary tr').remove();
         $('#svg-display-img img').remove();
         $('#svg-display-img h5').remove();
-
+        
         $.ajax({
             type: 'get',            //Request type
             dataType: 'json',       //Data type - we will use JSON for almost everything 
@@ -44,9 +47,31 @@ $(document).ready(function () {
 
             success: function (data) {
                 console.log(data);
-                for (var i = 0; i < data.length; i++) {
-                    console.log(data[i]);
-                    $("#component-summary").append("<tr><td> Rectangle " + (i + 1) + "</td><td>" + data[i]["x"] + "</td><td>" + data[i]["numAttr"] + "</td></tr>");
+                for (let shapes in data) {
+                    // if (data[shapes].rectangle.length > 0) 
+                    // {
+                        // alert("rectangles are present");
+                        for (var r = 0; r < data[shapes].rectangle.length; r++) {
+                            $("#rectangle-summary").append("<tr><td>Rectangle " + (r + 1) + "</td><td>Upper left corner: x = " + data[shapes].rectangle[r].x + data[shapes].rectangle[r].units + ", y = " + data[shapes].rectangle[r].y + data[shapes].rectangle[r].units + ", Width: " + data[shapes].rectangle[r].w + data[shapes].rectangle[r].units + ", Height: " + data[shapes].rectangle[r].h + data[shapes].rectangle[r].units + "</td><td>" + data[shapes].rectangle[r].numAttr + "</td></tr>");
+                        }
+                    // }
+                    // else if (data[shapes].circle.length > 0)
+                    // {
+                        //alert("circles are present")
+                        for (var c = 0; c < data[shapes].circle.length; c++){
+                            $("#circle-summary").append("<tr><td>Circle " + (c + 1) + "</td><td>Centre: x = " + data[shapes].circle[c].cx + data[shapes].circle[c].units + ", y = " + data[shapes].circle[c].y + data[shapes].circle[c].units + ", radius: " + data[shapes].circle[c].r + data[shapes].circle[c].units + "</td><td>" + data[shapes].circle[c].numAttr + "</td></tr>");
+                        }
+                    // }
+                    // else if (data[shapes].path.length > 0)
+                    // {
+                        //alert("paths are present");
+                        for (var p = 0; p < data[shapes].path.length; p++){
+                            $("#path-summary").append("<tr><td>Path " + (p + 1) + "</td><td>path data = " + data[shapes].path[p].d + "</td><td>" + data[shapes].path[p].numAttr + "</td></tr>");
+                        }
+                    // }
+                    for (var g = 0; g < data[shapes].group.length; g++){
+                        $("#group-summary").append("<tr><td>Group " + (g + 1) + "</td><td>" + data[shapes].group[g].children + " child elements</td><td>" + data[shapes].group[g].numAttr + "</td></tr>");
+                    }
                 }
                 $('#svg-display-img').append("<h5 class=\"blue\">" + filename + "</h5><img class=\"svg-display-img\" src=\"" + filename + "\">");
                 alert("Successfully displayed summary of " + filename + " to SVG View Panel");
@@ -59,37 +84,36 @@ $(document).ready(function () {
         });
     });
 
-    // SVG Update Image Properties
-    $('#update-svg-properties-dropdown').change(function() {
-        let filename = $("#update-svg-properties-dropdown option:selected").text();
+    // SVG Image Properties
+    /* 
+        $('#component-dropdown').change(function() {
+            let component = $("#component-dropdown option:selected").text();
 
-        console.log(filename);
+            console.log(component);
 
-        $('#component-summary tr').remove();
-        $('#svg-display-img img').remove();
-        $('#svg-display-img h5').remove();
+            $('#component-properties tr').remove();
 
-        $.ajax({
-            type: 'get',            //Request type
-            dataType: 'json',       //Data type - we will use JSON for almost everything 
-            url: '/components/' + filename,   //The server endpoint we are connecting to
+            $.ajax({
+                type: 'get',            //Request type
+                dataType: 'json',       //Data type - we will use JSON for almost everything 
+                url: '/components-properties/' + component,   //The server endpoint we are connecting to
 
-            success: function (data) {
-                console.log(data);
-                for (var i = 0; i < data.length; i++) {
-                    console.log(data[i]);
-                    $("#component-summary").append("<tr><td> Rectangle " + (i + 1) + "</td><td>" + data[i]["x"] + "</td><td>" + data[i]["numAttr"] + "</td></tr>");
+                success: function (data) {
+                    console.log(data);
+                    for (var i = 0; i < data.length; i++) {
+                        console.log(data[i]);
+                        $("#component-properties").append("<tr><td>" + data[i]["name"] + "</td><td>" + data[i]["value"] + "</td></tr>");
+                    }
+                    alert("Successfully displayed additional properites of " + component);
+                },
+                fail: function (error) {
+                    // Non-200 return, do something with error
+                    alert("Could not display additional properites of " + component);
+                    console.log(error);
                 }
-                $('#svg-display-img').append("<h5 class=\"blue\">" + filename + "</h5><img class=\"svg-display-img\" src=\"" + filename + "\">");
-                alert("Successfully displayed summary of " + filename + " to SVG View Panel");
-            },
-            fail: function (error) {
-                // Non-200 return, do something with error
-                alert("Could not display summary of " + filename + " to SVG View Panel");
-                console.log(error);
-            }
+            });
         });
-    });
+    */
 
     // Event listener form example , we can use this instead explicitly listening for events
     // No redirects if possible
