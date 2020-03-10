@@ -102,6 +102,16 @@ int main(int argc, char *argv[])
     // printf("print start: %s\n", string);
     // free(string);  
 
+    char * ytee;
+    ytee = shapes_struct_to_html(argv[1]);
+    printf("shapes_struct_to_html: %s\n", ytee);
+    free(ytee);
+
+    char * btee;
+    btee = svg_struct_to_html(argv[1]);
+    printf("svg_struct_to_html: %s\n", btee);
+    free(btee);
+
     result2 = writeSVGimage(svgImage, argv[3]); // 3rd argument is name of new file 
 
     printf("validateSVGimage: %d\nwriteSVGimage: %d\n", result1, result2);

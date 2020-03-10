@@ -1876,25 +1876,25 @@
 // ******************************* A3 userCreated helper.h functions ***************************
 	char* svg_struct_to_html(char * filename)
 	{
-		char * dir = malloc(256);
+		char* dir = malloc(256);
 		strcpy(dir, "uploads/");
 		strcat(dir, filename);
 		
-		SVGimage * svgImage = createSVGimage(dir);
+		SVGimage* svgImage = createSVGimage(dir);
 		
 		bool valid = validateSVGimage(svgImage, "svg.xsd");
 		if(valid == false) return "Invalid file";
 		
-		char * str = SVGtoJSON(svgImage);
+		char* str = SVGtoJSON(svgImage);
 		
 		deleteSVGimage(svgImage);
 		free(dir);	
 		return str;
 	}
 
-	char* shapes_struct_to_html(char * filename)
+	char* shapes_struct_to_html(char* filename)
 	{
-		char * dir = malloc(256);
+		char* dir = malloc(256);
 		strcpy(dir, "uploads/");
 		strcat(dir, filename);
 		
@@ -1903,10 +1903,10 @@
 		bool valid = validateSVGimage(svgImage, "svg.xsd");
 		if(valid == false) return "Invalid Shapes detected";
 		
-		char * rectStr = rectListToJSON(svgImage->rectangles);
-		char * circStr = circListToJSON(svgImage->circles);
-		char * pathStr = pathListToJSON(svgImage->paths);
-		char * grpStr = groupListToJSON(svgImage->groups);
+		char* rectStr = rectListToJSON(svgImage->rectangles);
+		char* circStr = circListToJSON(svgImage->circles);
+		char* pathStr = pathListToJSON(svgImage->paths);
+		char* grpStr = groupListToJSON(svgImage->groups);
 
 		char* bigStr = malloc(strlen(rectStr) + strlen(circStr) + strlen(pathStr) + strlen(grpStr) + 64);
 
@@ -1920,12 +1920,12 @@
 		strcat(bigStr, grpStr);
 		strcat(bigStr, "}}");
 		
+		deleteSVGimage(svgImage);
 		free(dir);
 		free(rectStr);
 		free(circStr);
 		free(pathStr);
 		free(grpStr);
-		deleteSVGimage(svgImage);
 		
 		return bigStr;
 	}
