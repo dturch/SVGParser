@@ -1892,7 +1892,7 @@
 		return str;
 	}
 
-	char* shapes_struct_to_html(char* filename)
+	char* shapes_struct_to_html(char * filename)
 	{
 		char* dir = malloc(256);
 		strcpy(dir, "uploads/");
