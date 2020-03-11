@@ -85,6 +85,7 @@ console.log('Running app at localhost: ' + portNum);
 let lib = ffi.Library('./libsvgparse', {
 	'svg_struct_to_html': ['string', ['string']],
 	'shapes_struct_to_html': ['string', ['string']],
+	'html_to_svg_struct': ['string', ['string', 'string']],
 });
 
 app.get('/svg', function (req, res) {
@@ -98,38 +99,44 @@ app.get('/svg', function (req, res) {
 
 		if (c == "Invalid file") continue;
 
+
 		let jsonObj = JSON.parse(c);
 		jsonObj["filename"] = files[i];
 
+		// fs.stat(files[i], function (err, stats) {
+
+		//   var fileSize;
+
+		//   if (err) {
+		//     callback(err);
+		//     return;
+		//   }
+
+		//   fileSize = stats.size;
+		//   callback(null, fileSize);
+		// });
+
 		r[i] = JSON.stringify(jsonObj);
 	}
-
 	res.send(r);
 });
 
 app.get('/components/:filename', function (req, res) {
 
 	let file = req.params.filename;
-	
+
 	let c = lib.shapes_struct_to_html(file);
 
 	res.send(c);
 });
 
-// app.get('/components-properties/:filename', function (req, res) {
+app.get('/svgcreate', function (req, res) {
 
-// 	let file = req.params.filename;
-	
-//     let c = lib.attr_struct_to_html(file);
+	let file = req.query.filename;
+	console.log(file);
 
-// 	res.send(c);
-// });
+	let c = lib.html_to_svg_struct(file, req.query.svgJSON);
+	console.log(c);
 
-// app.get('/attributes/:filename', function (req, res) {
-
-// 	let file = req.params.filename;
-	
-//     let c = lib.attr_struct_to_html(file);
-
-// 	res.send(c);
-// });
+	res.send(c);
+});

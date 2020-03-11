@@ -1121,49 +1121,14 @@
 	{
 		SVGimage* img = newSVGImage();
 
-		if(!svgString) return img;
+		if(!svgString) return NULL;
+	
+		SVGimage * svgImage = newSVGImage();
 		
-		// splti
-		const char* dComma = ",";
-		const char* dColon = ":";
-		char* titleNameValue;
-		char* titleValue;
-
-		// because strtok write to string, make writeable copy and tokenize
-		char* copy = malloc(strlen(svgString)+1);
-		strcpy(copy, svgString);
-
-		titleNameValue = strtok(copy, dComma);
+		strcpy(svgImage->namespace, "http://www.w3.org/2000/svg");
 		
-		titleValue = strtok(titleNameValue, dColon);
-		printf("----------------%s\n",copy);
-
-		strcpy(img->title, titleValue);
-		strcpy(img->namespace, "http://www.w3.org/2000/svg");
-
-		free(copy);
-		
-		return img;
+		return svgImage;
 	}
-
-	// Rectangle* JSONtoRect(const char* svgString)
-	// {
-	// 	if(!svgString) return;
-
-	// 	Rectangle* rect = newRectangle();
-		
-	// 	return rect;
-	// }
-
-	// Circle* JSONtoCircle(const char* svgString)
-	// {
-	// 	if(!svgString) return;
-
-	// 	Circle* circ = newCircle();
-
-	// 	return circ;
-	// }
-
 // ******************************* A1 userCreated helper.h functions ***************************
 	SVGimage* createSVGImageFromTree(xmlNode* root)
 	{
@@ -1932,6 +1897,28 @@
 		free(grpStr);
 		
 		return bigStr;
+	}
+
+	char * html_to_svg_struct(char * filename, char * svgJSON)
+	{
+		char * dir = malloc(256);
+		strcpy(dir, "uploads/");
+		strcat(dir, filename);
+		
+		SVGimage * svgImage = JSONtoSVG(svgJSON);
+		
+		printf("infunc: %s\n", SVGimageToString(svgImage));
+		printf("infunc: %s\n", dir);
+
+		bool write = writeSVGimage(svgImage, dir);
+		if(write == false) return "Error writing to file";
+		
+		char * str = SVGtoJSON(svgImage);
+		
+		deleteSVGimage(svgImage);
+		free(dir);
+	
+		return str;
 	}
 // *******************************deleteFunction***************************
 	void deleteAttribute(void *data)

@@ -2,7 +2,7 @@
  * file    		helper.h
  * author  		Dario Turchi
  * studentID 	0929012
- * lastEdit    	March 7, 2020
+ * lastEdit    	March 10, 2020
  */
 #ifndef HELPER_H
 #define HELPER_H
@@ -31,5 +31,6 @@ SVGimage* JSONtoSVG(const char* svgString);
 
 char * svg_struct_to_html(char * filename);
 char * shapes_struct_to_html(char * filename);
+char * html_to_svg_struct(char * filename, char * svgJSON);
 
 #endif
