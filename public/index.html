@@ -117,8 +117,7 @@
         <h5>Select a component to display its additional properties:</h5>
         <div class="container mt-3">
             <form>
-                <select name="files" class="custom-select mb-3" id=component-dropdown">
-                    <option selected>-- No Component Selected --</option>
+                <select name="files" class="custom-select mb-3" id="component-dropdown">
                 </select>
             </form>
         </div>
@@ -150,13 +149,23 @@
                     <input type="text" class="form-control" id="fname" placeholder="Enter Filename" name="fname"
                         required>
                 </div>
-                <div class="input-group-text">.svg</div>
+            </div>
+            <div class="form-group row">
+                <label class="control-label col-sm-2 col-form-label" for="newTitle">Title:</label>
+                <div class="col-sm-7">
+                    <input type="text" class="form-control" id="newTitle" placeholder="Enter title" name="newTitle">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="control-label col-sm-2 col-form-label" for="newDescription">Description:</label>
+                <div class="col-sm-7">
+                    <input type="text" class="form-control" id="newDescription" placeholder="Enter description" name="newDescription">
+                </div>
                 <div class="col-sm-2">
-                    <button type="submit" class="btn btn-success">Create SVG</button>
+                    <button type="submit" id="btn-create-svg"class="btn btn-primary">Create SVG</button>
                 </div>
             </div>
         </form>
-        </br>
     </div>
     <!-- Create SVG File ends -->
 
@@ -168,49 +177,73 @@
         <br>
         <form id="add-rectangle">
             <div class="form-group row">
-                <label for="files-for-rectangle" class="col-sm-3 col-form-label">Select File to Add Rectangle
-                    to:</label>
+                <label for="files-for-rectangle" class="col-sm-2 col-form-label">Select File to edit:</label>
                 <div class="col-sm-7">
                     <select name="files-for-rectangle" class="custom-select mb-3" id="svg-dropdown-add-rectangle">
                         <option selected>-- None Selected --</option>
                     </select>
                 </div>
             </div>
-            <div class="form-group row">
-                <div class="col-sm-3">
-                    <input type="text" class="form-control" id="x" placeholder="Upper Left Corner 'x' value" name="x">
-                    <input type="text" class="form-control" id="y" placeholder="Upper Left Corner 'y' value" name="y">
+
+            <div class="content">
+                <div class="form-group row">
+                    <label class="control-label col-form-label" for="x">x:</label>
+                    <div class="col-sm-2">
+                        <input type="text" class="form-control" id="x" placeholder="x" name="x">
+                    </div>
+                    <label class="control-label col-form-label" for="width">Width:</label>
+                    <div class="col-sm-2">
+                        <input type="text" class="form-control" id="width" placeholder="width" name="width">
+                    </div>
                 </div>
-                <div class="col-sm-3">
-                    <input type="text" class="form-control" id="width" placeholder="Width" name="width">
-                    <input type="text" class="form-control" id="height" placeholder="Height" name="height">
-                </div>
-                <div class="col-sm-3">
-                    <button type="" id="btn-add-rectangle" class="btn btn-primary">Add Rectangle</button>
+
+                <div class="form-group row">
+                    <label class="control-label col-form-label" for="x">y:</label>
+                    <div class="col-sm-2">
+                        <input type="text" class="form-control" id="y" placeholder="y" name="y">
+                    </div>
+
+                    <label class="control-label col-form-label" for="height">Height:</label>
+                    <div class="col-sm-2">
+                        <input type="text" class="form-control" id="height" placeholder="height" name="height">
+                    </div>
+                    <div class="col-sm-2">
+                        <button type="" id="btn-add-rectangle" class="btn btn-primary">Add Rectangle</button>
+                    </div>
                 </div>
             </div>
         </form>
+
         <br>
+
         <form id="add-circle">
+
             <div class="form-group row">
-                <label for="files-for-circle" class="col-sm-3 col-form-label">Select File to Add Circle to:</label>
+                <label for="files-for-circle" class="col-sm-2 col-form-label">Select File to edit:</label>
                 <div class="col-sm-7">
                     <select name="files-for-circle" class="custom-select mb-3" id="svg-dropdown-add-circle">
                         <option selected>-- None Selected --</option>
                     </select>
                 </div>
             </div>
-            <div class="form-group row">
-                <div class="col-sm-3">
-                    <input type="text" class="form-control" id="cx" placeholder="Center 'x' value" name="cx">
-                    <input type="text" class="form-control" id="cy" placeholder="Center 'y' value" name="cy">
-                </div>
-                <div class="col-sm-3">
-                    <input type="text" class="form-control" id="radius" placeholder="Radius" name="radius">
 
-                </div>
-                <div class="col-sm-3">
-                    <button type="" id="btn-add-circle" class="btn btn-primary">Add Circle</button>
+            <div class="content">
+                <div class="form-group row">
+                    <label class="control-label col-form-label" for="cx">cx:</label>
+                    <div class="col-sm-2">
+                        <input type="text" class="form-control" id="cx" placeholder="cx" name="cx">
+                    </div>
+                    <label class="control-label col-form-label" for="cy">cy:</label>
+                    <div class="col-sm-2">
+                        <input type="text" class="form-control" id="cy" placeholder="cy" name="cy">
+                    </div>
+                    <label class="control-label col-form-label" for="cy">Radius:</label>
+                    <div class="col-sm-2">
+                        <input type="text" class="form-control" id="radius" placeholder="radius" name="radius">
+                    </div>
+                    <div class="col-sm-2">
+                        <button type="" id="btn-add-circle" class="btn btn-primary">Add Circle</button>
+                    </div>
                 </div>
             </div>
         </form>

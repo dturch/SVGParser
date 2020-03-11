@@ -10,12 +10,12 @@
 
 int main(int argc, char *argv[]) 
 {
-    bool result1 = 0;
-    bool result2 = 0;
+    //bool result1 = 0;
+    //bool result2 = 0;
 
-    SVGimage *svgImage = createValidSVGimage(argv[1], argv[2]); // 1st argument is svg file to pass through
+    //SVGimage *svgImage = createValidSVGimage(argv[1], argv[2]); // 1st argument is svg file to pass through
 
-    result1 = validateSVGimage(svgImage, argv[2]); // 2nd argument is schema file
+    //result1 = validateSVGimage(svgImage, argv[2]); // 2nd argument is schema file
 
     // addComponent Rectangle, Circle, Path -----------------------------------------
 /*    
@@ -42,7 +42,7 @@ int main(int argc, char *argv[])
     path->otherAttributes = initializeList(attributeToString, deleteAttribute, compareAttributes);
     addComponent(svgImage, PATH, path);
 */
-
+/*
     // ListToJSON functions test -----------------------------------------
     if(svgImage != NULL)
     {
@@ -87,6 +87,7 @@ int main(int argc, char *argv[])
         freeList(circList);
         freeList(groupList);
     }
+*/    
     // // NEEED TO TEST FOR INVALIDITY AFTER!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     // Attribute* attr1 = malloc(sizeof(Attribute));
     // attr1->name = malloc(strlen("fill") + 1);
@@ -102,21 +103,34 @@ int main(int argc, char *argv[])
     // printf("print start: %s\n", string);
     // free(string);  
 
-    char * ytee;
-    ytee = shapes_struct_to_html(argv[1]);
-    printf("shapes_struct_to_html: %s\n", ytee);
-    free(ytee);
+    // char * ytee;
+    // ytee = shapes_struct_to_html(argv[1]);
+    // printf("shapes_struct_to_html: %s\n", ytee);
+    // free(ytee);
 
-    char * btee;
-    btee = svg_struct_to_html(argv[1]);
-    printf("svg_struct_to_html: %s\n", btee);
-    free(btee);
+    // char * btee;
+    // btee = svg_struct_to_html(argv[1]);
+    // printf("svg_struct_to_html: %s\n", btee);
+    // free(btee);
 
-    result2 = writeSVGimage(svgImage, argv[3]); // 3rd argument is name of new file 
+    SVGimage * svg;
+    svg = JSONtoSVG("{\"title\":\"this is a ahkjlsldjfhlakjsdhflkjahsdlkjfh title\",\"description\":\"this is a description\"}");
+    char* string = NULL;
+    string = SVGimageToString(svg);
+    printf("print start: %s\n", string);
+    free(string);  
+    deleteSVGimage(svg);
 
-    printf("validateSVGimage: %d\nwriteSVGimage: %d\n", result1, result2);
+    // need to test JSONtoRECT
+    // need to test JSONToCircle
+    // Rectangle * rect;
+    // rect = JSONtoRect("{\"title\":\"this is a ahkjlsldjfhlakjsdhflkjahsdlkjfh title\",\"description\":\"this is a description\"}")
 
-    deleteSVGimage(svgImage);
+    //result2 = writeSVGimage(svgImage, argv[3]); // 3rd argument is name of new file 
+
+    //printf("validateSVGimage: %d\nwriteSVGimage: %d\n", result1, result2);
+
+    //deleteSVGimage(svgImage);
     
     return 0;
 }

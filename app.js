@@ -85,36 +85,25 @@ console.log('Running app at localhost: ' + portNum);
 let lib = ffi.Library('./libsvgparse', {
 	'svg_struct_to_html': ['string', ['string']],
 	'shapes_struct_to_html': ['string', ['string']],
-	'html_to_svg_struct': ['string', ['string', 'string']],
+	'createSVG': ['string', ['string', 'string']],
+	'getComponentDetails': ['string', ['string'] ],
 });
 
-app.get('/svg', function (req, res) {
-
+app.get('/getFiles', function (req, res) {
 	var r = [];
-
 	let files = fs.readdirSync('./uploads');
-
 	for (var i = 0; i < files.length; i++) {
 		let c = lib.svg_struct_to_html(files[i]);
 
-		if (c == "Invalid file") continue;
+		if (c == "Error Writing to File") alert("invalid file");
 
+		var stats = fs.statSync('./uploads/'+files[i]);
+		var kb =  Math.round(stats.size / 1024);
 
 		let jsonObj = JSON.parse(c);
 		jsonObj["filename"] = files[i];
 
-		// fs.stat(files[i], function (err, stats) {
-
-		//   var fileSize;
-
-		//   if (err) {
-		//     callback(err);
-		//     return;
-		//   }
-
-		//   fileSize = stats.size;
-		//   callback(null, fileSize);
-		// });
+		jsonObj.sizeKB = kb
 
 		r[i] = JSON.stringify(jsonObj);
 	}
@@ -131,12 +120,7 @@ app.get('/components/:filename', function (req, res) {
 });
 
 app.get('/svgcreate', function (req, res) {
-
 	let file = req.query.filename;
-	console.log(file);
-
-	let c = lib.html_to_svg_struct(file, req.query.svgJSON);
-	console.log(c);
-
+	let c = lib.createSVG(file, req.query.svgJSON);
 	res.send(c);
 });

@@ -2,7 +2,7 @@
  * file    		helper.h
  * author  		Dario Turchi
  * studentID 	0929012
- * lastEdit    	March 10, 2020
+ * lastEdit    	March 11, 2020
  */
 #ifndef HELPER_H
 #define HELPER_H
@@ -23,14 +23,17 @@ void getRectsRecursive(void* data, bool isImage, List* list);
 void getGroupsRecursive(void* data, bool isImage, List* list);
 void getPathsRecursive(void* data, bool isImage, List* list);
 void getCirclesRecursive(void* data, bool isImage, List* list);
-
-//a2 module 3 bonus functions
 SVGimage* JSONtoSVG(const char* svgString);
-//Rectangle* JSONtoRect(const char* svgString);
-//Circle* JSONtoCircle(const char* svgString);
-
-char * svg_struct_to_html(char * filename);
-char * shapes_struct_to_html(char * filename);
-char * html_to_svg_struct(char * filename, char * svgJSON);
+Rectangle* JSONtoRect(const char* svgString);
+Circle* JSONtoCircle(const char* svgString);
+char* svg_struct_to_html(char* filename);
+char* shapes_struct_to_html(char* filename);
+char* createSVG(char* filename, char* svgJSON);
+char* getComponentDetails(char* filename);
+List* parseJSONObj(char* JSON);
+// Source: geeksforgeeks.org 
+// Site: https://www.geeksforgeeks.org/remove-all-occurrences-of-a-character-in-a-string/
+// creator: vivekreddy96 , Remove all occurrences of a character in a string
+void replaceChar(char *str, char s);
 
 #endif
