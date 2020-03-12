@@ -82,7 +82,6 @@ let lib = ffi.Library('./libsvgparse', {
 	'getSVGInfo': ['string', ['string']],
 	'getShapesInfo': ['string', ['string']],
 	'createSVG': ['string', ['string', 'string']],
-	'addComponent': ['void', ['string', 'string']],
 	'isValid': ['bool', ['string']],
 });
 
@@ -119,14 +118,4 @@ app.get('/svgcreate', function (req, res) {
 	let file = req.query.filename;
 	let c = lib.createSVG(file, req.query.svgJSON);
 	res.send(c);
-});
-
-app.get('/addRectangle', function (req, res) {
-	let response = lib.addComponent(req.query.filename, JSON.stringify(req.query.rect));
-	res.send(resonse);
-});
-
-app.get('/addCircle', function (req, res) {
-	let response = lib.addComponent(req.query.filename, JSON.stringify(req.query.rect));
-	res.send(resonse);
 });
