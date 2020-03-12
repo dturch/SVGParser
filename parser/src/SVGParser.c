@@ -2074,7 +2074,7 @@
 		str[j] = '\0'; 
 	}
 
-	char* svg_struct_to_html(char* filename)
+	char* getSVGInfo(char* filename)
 	{
 		char *dir = malloc(256);
 		strcpy(dir, "uploads/");
@@ -2093,7 +2093,7 @@
 		return str;
 	}
 
-	char* shapes_struct_to_html(char* filename)
+	char* getShapesInfo(char* filename)
 	{
 		char *dir = malloc(256);
 		strcpy(dir, "uploads/");
@@ -2159,9 +2159,14 @@
 		return str;
 	}
 
-	char* getComponentDetails(char* filename)
+	bool isValid(char* filename)
 	{
-		return NULL;
+		SVGimage* img = NULL;
+		bool isValid = false;
+		img = createValidSVGimage(filename, "svg.xsd");
+		isValid = validateSVGimage(img, "svg.xsd");
+		deleteSVGimage(img);
+		return isValid;
 	}
 	
 // *******************************deleteFunction***************************

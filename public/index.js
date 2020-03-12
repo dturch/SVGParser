@@ -99,7 +99,7 @@ $(document).ready(function () {
 
         var currFiles = document.getElementById('log-table');
         for (var i = 1; i < currFiles.rows.length; i++) {
-            if (filename == currFiles.rows[i].cells[1].textContent) {
+            if (filename + '.svg' == currFiles.rows[i].cells[1].textContent || filename == currFiles.rows[i].cells[1].textContent) {
                 alert('File exists already, please enter a unique file name');
                 return;
             }
@@ -128,6 +128,8 @@ $(document).ready(function () {
                     clearAllForms();
                     $('#log-table').append("<tr><th scope=\"row\"><a download href=\"uploads/" + filename + "\"><img class='table-img' src=\"uploads/" + filename + "\">" + "</th><td>" + "<a href=\"uploads/" + filename + "\" download>" + filename + "</a><td>" + "1KB</td><td>" + data["numRect"] + "</td><td>" + data["numCirc"] + "</td><td>" + data["numPaths"] + "</td><td>" + data["numGroups"] + "</td>");
                     $('#svg-dropdown').append("<option value=\"" + filename + "\"" + ">" + filename + "</option>");
+                    $('#svg-dropdown-add-rectangle').append("<option value=\"" + filename + "\"" + ">" + filename + "</option>");
+                    $('#svg-dropdown-add-circle').append("<option value=\"" + filename + "\"" + ">" + filename + "</option>");
             },
             fail: function (error) {
                 // Non-200 return, do something with error
@@ -136,8 +138,67 @@ $(document).ready(function () {
             }
         });
     });
+
+    $('#btn-add-rectangle').on('click', function() {
+        let rectFNToUpdate = "uploads/" + $("#svg-dropdown-add-rectangle").children("option:selected").val();
+        let x = $('#x').val();
+        let y = $('#y').val();
+        let height = $('#height').val();
+        let width = $('#width').val();
+        let rectUnits = $('#rectUnits').val();
+
+        if(rectFNToUpdate == "uploads/-- None Selected --"){
+            alert("please select a rectangle to add to!");
+            return;
+        }
+        
+        if(width < 0 || height) {
+            alert("width and height cannot be negative!");
+            return;
+        }
+
+        alert("The file you want add the new rectangle to is located: "+rectFNToUpdate+"\nNew Rectangle with values of { x: "+x+rectUnits+", y: "+y+rectUnits+", height: "+height+rectUnits+", width: "+width+rectUnits+" }");
+        clearRectangleForm();
+    });
+
+    $('#btn-add-circle').on('click', function() {
+        let circFNToUpdate = "uploads/" + $("#svg-dropdown-add-circle").children("option:selected").val();
+        let cx = $('#cx').val();
+        let cy = $('#cy').val();
+        let radius = $('#radius').val();
+        let circUnits = $('#circUnits').val();
+
+        if(circFNToUpdate == "uploads/-- None Selected --"){
+            alert("please select a rectangle to add to!");
+            return;
+        }
+
+        if(radius < 0) {
+            alert("Radius cannot be negative!");
+            return;
+        }
+        if(isNaN(cx) == 1 || isNaN(cy) == 1 || isNaN(radius) == 1){
+            alert("invalid input! only numbers are accepted for cx, cy, radius");
+            return;
+        }
+
+        alert("The file you want add the new circle to is located: "+circFNToUpdate+"\nNew Circle with values of { cx: "+cx+circUnits+", cy: "+cy+circUnits+", radius: "+radius+circUnits+" }");
+        clearCircleForm();
+    });
+
+    $('#btn-scale-shape').on('click', function() {
+        let shapeToUpdate = "uploads/" + $("#svg-dropdown-add-circle").children("option:selected").val();
+        let scaleFactor = $('#scale-factor').val();
+
+        if(isNaN(scaleFactor) == 1){
+            alert("invalid input! only numbers are accepted for scale factor");
+            return;
+        }
+
+        alert("The shape you want to scale is "+shapeToUpdate+"\nScale Factor of "+scaleFactor);
+        clearScaleForm();
+    });
 });
-/// ---- end of $(document).ready(function())
 
 function refreshFileLogandDropdown() {
     $.ajax({
@@ -147,17 +208,10 @@ function refreshFileLogandDropdown() {
         success: function (data) {
             for (var i = 0; i < data.length; i++) {
                 let json = JSON.parse(data[i]);
-                $('#log-table').append("<tr><th scope=\"row\"><a download href=\"uploads/" + json["filename"] + "\"><img class='table-img' src=\"uploads/" + json["filename"] + "\">" + "</th><td>" + "<a href=\"uploads/" + json["filename"] + "\" download>" + json["filename"] + "</a><td>" + "1KB</td><td>" + json["numRect"] + "</td><td>" + json["numCirc"] + "</td><td>" + json["numPaths"] + "</td><td>" + json["numGroups"] + "</td>");
-                // $('#log-table').append("<tr>");
-                // $('#log-table').append("<th scope=\"row\"><a download href=\"uploads/" + json["filename"] + "\"><img class='table-img' src=\"uploads/" + json["filename"] + "\">" + "</th>");
-                // $('#log-table').append("<td><a href=\"uploads/" + json["filename"] + "\" download>" + json["filename"] + "</a>");
-                // $('#log-table').append("<td>" + json["sizeKB"] + "KB</td>");
-                // $('#log-table').append("<td>" + json["numRect"] + "</td>");
-                // $('#log-table').append("<td>" + json["numCirc"] + "</td>");
-                // $('#log-table').append("<td>" + json["numPaths"] + "</td>");
-                // $('#log-table').append("<td>" + json["numGroups"] + "</td>");
-                // $('#log-table').append("</tr>");
+                $('#log-table').append("<tr><th scope=\"row\"><a download href=\"uploads/" + json["filename"] + "\"><img class='table-img' src=\"uploads/" + json["filename"] + "\">" + "</th><td>" + "<a href=\"uploads/" + json["filename"] + "\" download>" + json["filename"] + "</a><td>" + json["sizeKB"] + "KB</td><td>" + json["numRect"] + "</td><td>" + json["numCirc"] + "</td><td>" + json["numPaths"] + "</td><td>" + json["numGroups"] + "</td>");
                 $('#svg-dropdown').append("<option value=\"" + json["filename"] + "\"" + ">" + json["filename"] + "</option>");
+                $('#svg-dropdown-add-rectangle').append("<option value=\"" + json["filename"] + "\"" + ">" + json["filename"] + "</option>");
+                $('#svg-dropdown-add-circle').append("<option value=\"" + json["filename"] + "\"" + ">" + json["filename"] + "</option>");
             }
             // enable vertical scrolling if the file log panel contains more than 5 files
             if ($('#log-table tr').length > 6)
@@ -176,4 +230,19 @@ function refreshFileLogandDropdown() {
 
 function clearAllForms() {
     $('#new-svg').trigger("reset");
+    clearCircleForm();
+    clearRectangleForm();
+    clearScaleForm();
+}
+
+function clearCircleForm() {
+    $('#add-circle').trigger("reset");
+}
+
+function clearRectangleForm() {
+    $('#add-rectangle').trigger("reset");
+}
+
+function clearScaleForm() {
+    $('#scale-shapes').trigger("reset");
 }

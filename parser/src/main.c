@@ -10,12 +10,12 @@
 
 int main(int argc, char *argv[]) 
 {
-    //bool result1 = 0;
-    //bool result2 = 0;
+    bool result1 = 0;
+    bool result2 = 0;
 
-    //SVGimage *svgImage = createValidSVGimage(argv[1], argv[2]); // 1st argument is svg file to pass through
+    SVGimage *svgImage = createValidSVGimage(argv[1], argv[2]); // 1st argument is svg file to pass through
 
-    //result1 = validateSVGimage(svgImage, argv[2]); // 2nd argument is schema file
+    result1 = validateSVGimage(svgImage, argv[2]); // 2nd argument is schema file
 
     // addComponent Rectangle, Circle, Path -----------------------------------------
 /*    
@@ -113,13 +113,13 @@ int main(int argc, char *argv[])
     // printf("svg_struct_to_html: %s\n", btee);
     // free(btee);
 
-    SVGimage * svg;
-    svg = JSONtoSVG("{\"title\":\"this is a ahkjlsldjfhlakjsdhflkjahsdlkjfh title\",\"description\":\"this is a description\"}");
-    char* string = NULL;
-    string = SVGimageToString(svg);
-    printf("print start: %s\n", string);
-    free(string);  
-    deleteSVGimage(svg);
+    // SVGimage * svg;
+    // svg = JSONtoSVG("{\"title\":\"this is a ahkjlsldjfhlakjsdhflkjahsdlkjfh title\",\"description\":\"this is a description\"}");
+    // char* string = NULL;
+    // string = SVGimageToString(svg);
+    // printf("print start: %s\n", string);
+    // free(string);  
+    // deleteSVGimage(svg);
 
     // need to test JSONtoRECT
     // need to test JSONToCircle
@@ -128,9 +128,9 @@ int main(int argc, char *argv[])
 
     //result2 = writeSVGimage(svgImage, argv[3]); // 3rd argument is name of new file 
 
-    //printf("validateSVGimage: %d\nwriteSVGimage: %d\n", result1, result2);
+    printf("validateSVGimage: %d\n", result1);
 
-    //deleteSVGimage(svgImage);
+    deleteSVGimage(svgImage);
     
     return 0;
 }

@@ -26,11 +26,12 @@ void getCirclesRecursive(void* data, bool isImage, List* list);
 SVGimage* JSONtoSVG(const char* svgString);
 Rectangle* JSONtoRect(const char* svgString);
 Circle* JSONtoCircle(const char* svgString);
-char* svg_struct_to_html(char* filename);
-char* shapes_struct_to_html(char* filename);
+bool isValid(char* filename);
+char* getSVGInfo(char* filename);
+char* getShapesInfo(char* filename);
 char* createSVG(char* filename, char* svgJSON);
-char* getComponentDetails(char* filename);
 List* parseJSONObj(char* JSON);
+
 // Source: geeksforgeeks.org 
 // Site: https://www.geeksforgeeks.org/remove-all-occurrences-of-a-character-in-a-string/
 // creator: vivekreddy96 , Remove all occurrences of a character in a string

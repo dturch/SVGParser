@@ -71,51 +71,43 @@ app.get('/uploads/:name', function (req, res) {
 
 //******************** Your code goes here ******************** 
 
-//Sample endpoint
-app.get('/someendpoint', function (req, res) {
-	let retStr = req.query.name1 + " " + req.query.name2;
-	res.send({
-		foo: retStr
-	});
-});
-
 app.listen(portNum);
 console.log('Running app at localhost: ' + portNum);
 
 let lib = ffi.Library('./libsvgparse', {
-	'svg_struct_to_html': ['string', ['string']],
-	'shapes_struct_to_html': ['string', ['string']],
+	'getSVGInfo': ['string', ['string']],
+	'getShapesInfo': ['string', ['string']],
 	'createSVG': ['string', ['string', 'string']],
-	'getComponentDetails': ['string', ['string'] ],
+	'addComponent': ['void', ['string', 'string']],
+	'isValid': ['bool', ['string']],
 });
 
 app.get('/getFiles', function (req, res) {
 	var r = [];
 	let files = fs.readdirSync('./uploads');
-	for (var i = 0; i < files.length; i++) {
-		let c = lib.svg_struct_to_html(files[i]);
-
-		if (c == "Error Writing to File") alert("invalid file");
-
-		var stats = fs.statSync('./uploads/'+files[i]);
-		var kb =  Math.round(stats.size / 1024);
-
+	let i = 0;
+	while (i < files.length) {
+		if (files[i].slice(files[i].length - 4) != ".svg" || !lib.isValid("uploads/" + files[i])) {
+			console.log("invalid file: " + files[i] + "found in uploads/ folder!");
+			files.splice(i, 1);
+			i = 0;
+		}
+		console.log("valid file: "+files[i]+" found in uploads/ folder!");
+		let c = lib.getSVGInfo(files[i]);
+		var stats = fs.statSync('./uploads/' + files[i]);
+		var kb = Math.round(stats.size / 1024);
 		let jsonObj = JSON.parse(c);
 		jsonObj["filename"] = files[i];
-
 		jsonObj.sizeKB = kb
-
 		r[i] = JSON.stringify(jsonObj);
+		i++;
 	}
 	res.send(r);
 });
 
 app.get('/components/:filename', function (req, res) {
-
 	let file = req.params.filename;
-
-	let c = lib.shapes_struct_to_html(file);
-
+	let c = lib.getShapesInfo(file);
 	res.send(c);
 });
 
@@ -123,4 +115,14 @@ app.get('/svgcreate', function (req, res) {
 	let file = req.query.filename;
 	let c = lib.createSVG(file, req.query.svgJSON);
 	res.send(c);
+});
+
+app.get('/addRectangle', function (req, res) {
+	let response = lib.addComponent(req.query.filename, JSON.stringify(req.query.rect));
+	res.send(resonse);
+});
+
+app.get('/addCircle', function (req, res) {
+	let response = lib.addComponent(req.query.filename, JSON.stringify(req.query.rect));
+	res.send(resonse);
 });
