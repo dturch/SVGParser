@@ -47,8 +47,8 @@ app.post('/upload', function (req, res) {
 
 	let uploadFile = req.files.uploadFile;
 
-	if (uploadFile.name.slice(uploadFile.name.length - 4) != ".svg" || !lib.isValid("uploads/" + uploadFile.name)) {
-		return res.status(400).send(uploadFile.name+" cannot be uploaded! valid .svg files only! Please go back and select a different image!");
+	if (uploadFile.name.slice(uploadFile.name.length - 4) != ".svg") { //added to prevent non.svg images from being added
+		return res.status(400).send(uploadFile.name+" cannot be uploaded! upload svg files only! Please go back and select a different file!");
 	}
 
 	// Use the mv() method to place the file somewhere on your server
@@ -82,6 +82,7 @@ let lib = ffi.Library('./libsvgparse', {
 	'getSVGInfo': ['string', ['string']],
 	'getShapesInfo': ['string', ['string']],
 	'createSVG': ['string', ['string', 'string']],
+	'addComponent': ['void', ['string', 'string']],
 	'isValid': ['bool', ['string']],
 });
 
@@ -118,4 +119,14 @@ app.get('/svgcreate', function (req, res) {
 	let file = req.query.filename;
 	let c = lib.createSVG(file, req.query.svgJSON);
 	res.send(c);
+});
+
+app.get('/addRectangle', function (req, res) {
+	let response = lib.addComponent(req.query.filename, JSON.stringify(req.query.rect));
+	res.send(resonse);
+});
+
+app.get('/addCircle', function (req, res) {
+	let response = lib.addComponent(req.query.filename, JSON.stringify(req.query.rect));
+	res.send(resonse);
 });

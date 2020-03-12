@@ -109,13 +109,16 @@ $(document).ready(function () {
         if(svgDesc.length == 0) {
             svgDesc = " ";
         }
+
         if(filename.slice(filename.length - 4) != ".svg"){
             filename += ".svg";
         }
+
         let svg = {
             'title' : svgTitle,
             'description' : svgDesc
         }
+        
         let svgJSON = JSON.stringify(svg);
 
         $.ajax({
@@ -155,8 +158,13 @@ $(document).ready(function () {
             return;
         }
         
-        if(width < 0 || height) {
-            alert("width and height cannot be negative!");
+        if(width < 0 || height < 0) {
+            alert("width / height cannot be negative!");
+            return;
+        }
+
+        if(isNaN(width) == 1 || isNaN(height) == 1 || isNaN(y) == 1 || isNaN(x) == 1){
+            alert("invalid input! only numbers are accepted for x, y, height, and width");
             return;
         }
 
@@ -172,7 +180,7 @@ $(document).ready(function () {
         let circUnits = $('#circUnits').val();
 
         if(circFNToUpdate == "uploads/-- None Selected --"){
-            alert("please select a rectangle to add to!");
+            alert("please select a circle to add to!");
             return;
         }
 
@@ -193,11 +201,15 @@ $(document).ready(function () {
         let shapeToUpdate = "uploads/" + $("#svg-dropdown-scale-shapes").children("option:selected").val();
         let scaleFactor = $('#scale-factor').val();
 
+        if(shapeToUpdate == "uploads/-- None Selected --"){
+            alert("please select a file to scale!");
+            return;
+        }
+
         if(isNaN(scaleFactor) == 1){
             alert("invalid input! only numbers are accepted for scale factor");
             return;
         }
-
         alert("The shape you want to scale is "+shapeToUpdate+"\nScale Factor: "+scaleFactor);
         clearScaleForm();
     });
