@@ -3,6 +3,9 @@ $(document).ready(function () {
     refreshFileLogandDropdown();
     clearAllForms();
 
+    $('#upload-file').change(function(){
+    });
+
     $('#svg-dropdown').change(function () {
         let filename = $("#svg-dropdown option:selected").text();
 
@@ -96,7 +99,6 @@ $(document).ready(function () {
             alert('title or description is too large. Keep under 256 characters');
             return;
         }
-
         var currFiles = document.getElementById('log-table');
         for (var i = 1; i < currFiles.rows.length; i++) {
             if (filename + '.svg' == currFiles.rows[i].cells[1].textContent || filename == currFiles.rows[i].cells[1].textContent) {
@@ -108,7 +110,6 @@ $(document).ready(function () {
         if(filename.slice(filename.length - 4) != ".svg"){
             filename += ".svg";
         }
-
         let svg = {
             'title' : svgTitle,
             'description' : svgDesc
@@ -126,7 +127,7 @@ $(document).ready(function () {
             success: function (data) {
                     alert("successfully created new SVG file");
                     clearAllForms();
-                    $('#log-table').append("<tr><th scope=\"row\"><a download href=\"uploads/" + filename + "\"><img class='table-img' src=\"uploads/" + filename + "\">" + "</th><td>" + "<a href=\"uploads/" + filename + "\" download>" + filename + "</a><td>" + "1KB</td><td>" + data["numRect"] + "</td><td>" + data["numCirc"] + "</td><td>" + data["numPaths"] + "</td><td>" + data["numGroups"] + "</td>");
+                    $('#log-table').append("<tr><th scope=\"row\"><a download href=\"uploads/" + filename + "\"><img class='table-img' src=\"uploads/" + filename + "\">" + "</th><td>" + "<a href=\"uploads/" + filename + "\" download>" + filename + "</a><td>" + data["sizeKB"] +"KB</td><td>" + data["numRect"] + "</td><td>" + data["numCirc"] + "</td><td>" + data["numPaths"] + "</td><td>" + data["numGroups"] + "</td>");
                     $('#svg-dropdown').append("<option value=\"" + filename + "\"" + ">" + filename + "</option>");
                     $('#svg-dropdown-add-rectangle').append("<option value=\"" + filename + "\"" + ">" + filename + "</option>");
                     $('#svg-dropdown-add-circle').append("<option value=\"" + filename + "\"" + ">" + filename + "</option>");
