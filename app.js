@@ -47,8 +47,8 @@ app.post('/upload', function (req, res) {
 
 	let uploadFile = req.files.uploadFile;
 
-	if (uploadFile.name.slice(uploadFile.name.length - 4) != ".svg") {
-		return res.status(400).send(uploadFile.name+" attempted to be uploaded! I stopped you...'.SVG' files accepted only! sorry");
+	if (uploadFile.name.slice(uploadFile.name.length - 4) != ".svg" || !lib.isValid("uploads/" + uploadFile.name)) {
+		return res.status(400).send(uploadFile.name+" cannot be uploaded! valid .svg files only! Please go back and select a different image!");
 	}
 
 	// Use the mv() method to place the file somewhere on your server

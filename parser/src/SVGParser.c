@@ -1172,12 +1172,12 @@
 			if(strcmp(attr->name, "title") == 0) 
 			{
 				strcpy(svgImage->title, attr->value);
-				printf("the title:%s\n",svgImage->title);
+				//printf("the title:%s\n",svgImage->title);
         	}
 			else if(strcmp(attr->name, "description") == 0) 
 			{
 				strcpy(svgImage->description, attr->value);
-				printf("the desc:%s\n",svgImage->description);
+				//printf("the desc:%s\n",svgImage->description);
         	}
   		}
 		freeList(properties);
@@ -2146,8 +2146,8 @@
 
 		SVGimage *svgImage = JSONtoSVG(svgJSON);
 
-		printf("SVGimageToString: %s\n", SVGimageToString(svgImage));
-		printf("Location saved to: %s\n", dir);
+		//printf("SVGimageToString: %s\n", SVGimageToString(svgImage));
+		//printf("Location saved to: %s\n", dir);
 
 		bool write = writeSVGimage(svgImage, dir);
 		if (write == false)

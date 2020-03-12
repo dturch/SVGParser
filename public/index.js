@@ -3,9 +3,6 @@ $(document).ready(function () {
     refreshFileLogandDropdown();
     clearAllForms();
 
-    $('#upload-file').change(function(){
-    });
-
     $('#svg-dropdown').change(function () {
         let filename = $("#svg-dropdown option:selected").text();
 
@@ -193,7 +190,7 @@ $(document).ready(function () {
     });
 
     $('#btn-scale-shape').on('click', function() {
-        let shapeToUpdate = "uploads/" + $("#shape-dropdown-scale-shapes").children("option:selected").val();
+        let shapeToUpdate = "uploads/" + $("#svg-dropdown-scale-shapes").children("option:selected").val();
         let scaleFactor = $('#scale-factor').val();
 
         if(isNaN(scaleFactor) == 1){
@@ -201,7 +198,7 @@ $(document).ready(function () {
             return;
         }
 
-        alert("The shape you want to scale is "+shapeToUpdate+"\nScale Factor of "+scaleFactor);
+        alert("The shape you want to scale is "+shapeToUpdate+"\nScale Factor: "+scaleFactor);
         clearScaleForm();
     });
 });
@@ -218,6 +215,8 @@ function refreshFileLogandDropdown() {
                 $('#svg-dropdown').append("<option value=\"" + json["filename"] + "\"" + ">" + json["filename"] + "</option>");
                 $('#svg-dropdown-add-rectangle').append("<option value=\"" + json["filename"] + "\"" + ">" + json["filename"] + "</option>");
                 $('#svg-dropdown-add-circle').append("<option value=\"" + json["filename"] + "\"" + ">" + json["filename"] + "</option>");
+                $('#svg-dropdown-scale-shapes').append("<option value=\"" + json["filename"] + "\"" + ">" + json["filename"] + "</option>");
+                
             }
             // enable vertical scrolling if the file log panel contains more than 5 files
             if ($('#log-table tr').length > 6)

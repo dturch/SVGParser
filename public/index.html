@@ -50,6 +50,7 @@
         <form enctype="multipart/form-data" method="post" action="/upload">
             <input type="file" accept=".svg" id="upload-file" name="uploadFile" value="Upload-File" required>
             <input type="submit" id="submit-file" name="Submit-File" value="Upload" class="btn btn-primary">
+            <small>*only valid .svg files will be displayed in panels and dropdown lists</small>
         </form>
     </div>
     </div>
@@ -265,12 +266,13 @@
     <!-- Scale Shape starts -->
     <div id="scale-shapes">
         <h3>Scale Shapes</h3>
+        <h6>Scales Rectangles and Circles along their x, y, r dimensions</h6>
         <br>
         <form id="scale-shapes">
             <div class="form-group row">
-                <label for="files-for-scaling" class="col-sm-2 col-form-label">Select shape to scale:</label>
+                <label for="files-for-scaling" class="col-sm-2 col-form-label">Select file to Scale:</label>
                 <div class="col-sm-7">
-                    <select name="files-for-scaling" class="custom-select mb-3" id="shape-dropdown-scale-shapes">
+                    <select name="files-for-scaling" class="custom-select mb-3" id="svg-dropdown-scale-shapes">
                         <option selected>-- None Selected --</option>
                     </select>
                 </div>
