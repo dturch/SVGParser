@@ -99,6 +99,7 @@ $(document).ready(function () {
             alert('title or description is too large. Keep under 256 characters');
             return;
         }
+
         var currFiles = document.getElementById('log-table');
         for (var i = 1; i < currFiles.rows.length; i++) {
             if (filename + '.svg' == currFiles.rows[i].cells[1].textContent || filename == currFiles.rows[i].cells[1].textContent) {
@@ -107,6 +108,10 @@ $(document).ready(function () {
             }
         }
 
+        // temp server crash fix... this causes a non-empty description with nothing inside but a space character need to fix
+        if(svgDesc.length == 0) {
+            svgDesc = " ";
+        }
         if(filename.slice(filename.length - 4) != ".svg"){
             filename += ".svg";
         }
@@ -188,7 +193,7 @@ $(document).ready(function () {
     });
 
     $('#btn-scale-shape').on('click', function() {
-        let shapeToUpdate = "uploads/" + $("#svg-dropdown-add-circle").children("option:selected").val();
+        let shapeToUpdate = "uploads/" + $("#shape-dropdown-scale-shapes").children("option:selected").val();
         let scaleFactor = $('#scale-factor').val();
 
         if(isNaN(scaleFactor) == 1){

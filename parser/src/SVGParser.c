@@ -1172,10 +1172,12 @@
 			if(strcmp(attr->name, "title") == 0) 
 			{
 				strcpy(svgImage->title, attr->value);
+				printf("the title:%s\n",svgImage->title);
         	}
 			else if(strcmp(attr->name, "description") == 0) 
 			{
 				strcpy(svgImage->description, attr->value);
+				printf("the desc:%s\n",svgImage->description);
         	}
   		}
 		freeList(properties);
