@@ -74,15 +74,20 @@ app.get('/uploads/:name', function (req, res) {
 });
 
 //******************** Your code goes here ******************** 
-
+/**
+ * file    		app.js
+ * author  		Dario Turchi
+ * studentID 	0929012
+ * lastEdit     March 12, 2020
+ */
 app.listen(portNum);
 console.log('Running app at localhost: ' + portNum);
 
 let lib = ffi.Library('./libsvgparse', {
 	'getSVGInfo': ['string', ['string']],
 	'getShapesInfo': ['string', ['string']],
+	'getAttrInfo': ['string', ['string']],
 	'createSVG': ['string', ['string', 'string']],
-	'addComponent': ['void', ['string', 'string']],
 	'isValid': ['bool', ['string']],
 });
 
@@ -115,18 +120,30 @@ app.get('/components/:filename', function (req, res) {
 	res.send(c);
 });
 
+app.get('/components-properties/:filename', function (req, res) {
+	let file = req.params.filename;
+	let c = lib.getAttrInfo(file);
+	res.send(c);
+});
+
 app.get('/svgcreate', function (req, res) {
 	let file = req.query.filename;
 	let c = lib.createSVG(file, req.query.svgJSON);
 	res.send(c);
 });
 
-app.get('/addRectangle', function (req, res) {
-	let response = lib.addComponent(req.query.filename, JSON.stringify(req.query.rect));
-	res.send(resonse);
+app.get('/edit-svg/:filename', function (req, res) {
+	let file = req.params.filename;
+	let c = lib.createSVG(file, req.query.svgJSON);
+	res.send(c);
 });
 
-app.get('/addCircle', function (req, res) {
-	let response = lib.addComponent(req.query.filename, JSON.stringify(req.query.rect));
-	res.send(resonse);
-});
+// app.get('/addRectangle', function (req, res) {
+// 	let response = lib.addComponent(req.query.filename, JSON.stringify(req.query.rect));
+// 	res.send(resonse);
+// });
+
+// app.get('/addCircle', function (req, res) {
+// 	let response = lib.addComponent(req.query.filename, JSON.stringify(req.query.rect));
+// 	res.send(resonse);
+// });

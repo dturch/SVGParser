@@ -11,7 +11,7 @@
 int main(int argc, char *argv[]) 
 {
     bool result1 = 0;
-    bool result2 = 0;
+    //bool result2 = 0;
 
     SVGimage *svgImage = createValidSVGimage(argv[1], argv[2]); // 1st argument is svg file to pass through
 
@@ -108,10 +108,10 @@ int main(int argc, char *argv[])
     // printf("shapes_struct_to_html: %s\n", ytee);
     // free(ytee);
 
-    // char * btee;
-    // btee = svg_struct_to_html(argv[1]);
-    // printf("svg_struct_to_html: %s\n", btee);
-    // free(btee);
+    char * btee;
+    btee = getAttrInfo(argv[1]);
+    printf("attrStruct: %s\n", btee);
+    free(btee);
 
     // SVGimage * svg;
     // svg = JSONtoSVG("{\"title\":\"this is a ahkjlsldjfhlakjsdhflkjahsdlkjfh title\",\"description\":\"this is a description\"}");

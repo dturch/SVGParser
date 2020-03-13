@@ -2,7 +2,7 @@
  * file    		SVGParser.c
  * author  		Dario Turchi
  * studentID 	0929012
- * lastEdit     March 11, 2020
+ * lastEdit     March 12, 2020
  */
 #include "SVGParser.h"
 #include "helper.h"
@@ -2011,7 +2011,7 @@
 	}
 
 // ******************************* A3 userCreated helper.h functions ***************************
-	List* parseJSONObj(char* JSON) // functions that retuns name value pair of JSON object. delimit " { }
+	List* parseJSONObj(char* JSON) // functions that returns name value pair of JSON object. delimit " { }
 	{
 		List* properties = NULL;
 		Attribute* attribute = NULL;
@@ -2134,6 +2134,44 @@
 		free(grpStr);
 
 		return bigStr;
+	}
+
+	char* getAttrInfo(char* filename)
+	{
+		char *dir = malloc(256);
+		strcpy(dir, "uploads/");
+		strcat(dir, filename);
+
+		SVGimage *svgImage = createSVGimage(dir);
+
+		bool valid = validateSVGimage(svgImage, "svg.xsd");
+		if (valid == false)
+			return "Invalid file";
+
+		// char * rectStr = attrListToJSON(svgImage->rectangles);
+		// char * circStr = attrListToJSON(svgImage->circles);
+		// char * pathStr = attrListToJSON(svgImage->paths);
+		// char * grpStr = attrListToJSON(svgImage->groups);
+		char * otherStr = attrListToJSON(svgImage->otherAttributes);
+		
+		//char *bigStr = malloc(strlen(rectStr) + strlen(circStr) + strlen(pathStr) + strlen(grpStr) + 128);
+
+		// strcpy(bigStr, "{\"attrStruct\":{\"rectangle\":");
+		// strcat(bigStr, rectStr);
+		// strcat(bigStr, ",\"circle\":");
+		// strcat(bigStr, circStr);
+		// strcat(bigStr, ",\"path\":");
+		// strcat(bigStr, pathStr);
+		// strcat(bigStr, ",\"group\":");
+		// strcat(bigStr, grpStr);
+		// strcat(bigStr, ",\"otherAttr\":");
+		// strcat(bigStr, otherStr);
+		// strcat(bigStr, "}}");
+
+		free(dir);
+		deleteSVGimage(svgImage);
+
+		return otherStr;
 	}
 
 	char* createSVG(char* filename, char* svgJSON)

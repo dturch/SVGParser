@@ -61,7 +61,7 @@
     <!-- SVG View Panel starts -->
     <div>
         <h3>SVG View Panel</h3>
-        <h5>Select a file to view summary:</h5>
+        <h6>Select a file to view summary:</h6>
         <div class="container mt-3">
             <form>
                 <select class="custom-select mb-3" id="svg-dropdown">
@@ -114,8 +114,8 @@
 
     <!-- image properties starts -->
     <div>
-        <h3>SVG Image Properties</h3>
-        <h5>Select a component to display its additional properties:</h5>
+        <h3>Show Attributes</h3>
+        <h6>Select a component to display its attributes:</h6>
         <div class="container mt-3">
             <form>
                 <select name="files" class="custom-select mb-3" id="component-dropdown">
@@ -140,6 +140,39 @@
 
     <hr>
 
+    <!-- Edit Attributes starts -->
+    <div id="edit-attributes">
+        <h3>Edit Attributes</h3>
+        <br>
+        <form id="edit-attributes">
+            <div class="form-group row">
+                <label for="component-for-edit" class="col-sm-2 col-form-label">Select Component:</label>
+                <div class="col-sm-7">
+                    <select name="component-for-edit" class="custom-select mb-3" id="component-dropdown-edit">
+                    </select>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="control-label col-sm-2 col-form-label" for="editAttrName">Attr Name:</label>
+                <div class="col-sm-7">
+                    <input type="text" class="form-control" id="editAttrName" name="editAttrName">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="control-label col-sm-2 col-form-label" for="editAttrValue">Attr Value:</label>
+                <div class="col-sm-7">
+                    <input type="text" class="form-control" id="editAttrValue" name="editAttrValue">
+                </div>
+                <div class="col-sm-2">
+                    <button type="button" id="btn-edit-attr-name" class="btn btn-warning">Edit Attribute</button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <!-- Edit Attributes ends -->
+
+    <hr>
+
     <!-- Create SVG File starts -->
     <div id="create-svg">
         <h3>Create SVG file</h3>
@@ -160,15 +193,51 @@
             <div class="form-group row">
                 <label class="control-label col-sm-2 col-form-label" for="newDescription">Description:</label>
                 <div class="col-sm-7">
-                    <input type="text" class="form-control" id="newDescription" placeholder="Enter description" name="newDescription">
+                    <input type="text" class="form-control" id="newDescription" placeholder="Enter description"
+                        name="newDescription">
                 </div>
                 <div class="col-sm-2">
-                    <button type="submit" id="btn-create-svg"class="btn btn-primary">Create SVG</button>
+                    <button type="submit" id="btn-create-svg" class="btn btn-success">Create SVG</button>
                 </div>
             </div>
         </form>
     </div>
     <!-- Create SVG File ends -->
+
+    <hr>
+
+    <!-- Edit SVG Title & Description starts -->
+    <div id="edit-svg">
+        <h3>Edit SVG file</h3>
+        <small>incorrect operation...overwrites entire svg image instead of edit tite/desc</small>
+        <br>
+        <form id="edit-svg">
+            <div class="form-group row">
+                <label for="files-for-edit" class="col-sm-2 col-form-label">Select File to edit:</label>
+                <div class="col-sm-7">
+                    <select name="files-for-edit" class="custom-select mb-3" id="svg-dropdown-edit-svg">
+                        <option selected>-- None Selected --</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="control-label col-sm-2 col-form-label" for="editTitle">Title:</label>
+                <div class="col-sm-7">
+                    <input type="text" class="form-control" id="editTitle" placeholder="edit title" name="editTitle">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="control-label col-sm-2 col-form-label" for="editDescription">Description:</label>
+                <div class="col-sm-7">
+                    <input type="text" class="form-control" id="editDescription" placeholder="edit description" name="editDescription">
+                </div>
+                <div class="col-sm-2">
+                    <button type="button" id="btn-edit-svg" class="btn btn-warning">Edit SVG</button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <!-- Edit SVG Title & Description ends -->
 
     <hr>
 
@@ -213,7 +282,7 @@
                         <input type="text" class="form-control" id="height" placeholder="height" name="height">
                     </div>
                     <div class="col-sm-2">
-                        <button type="button" id="btn-add-rectangle" class="btn btn-primary">Add Rectangle</button>
+                        <button type="button" id="btn-add-rectangle" class="btn btn-success">Add Rectangle</button>
                     </div>
                 </div>
             </div>
@@ -222,7 +291,6 @@
         <br>
 
         <form id="add-circle">
-
             <div class="form-group row">
                 <label for="files-for-circle" class="col-sm-2 col-form-label">Select File to edit:</label>
                 <div class="col-sm-7">
@@ -243,7 +311,7 @@
                         <input type="text" class="form-control" id="cy" placeholder="cy" name="cy">
                     </div>
                 </div>
-                <div class="form-group row">                    
+                <div class="form-group row">
                     <label class="control-label col-form-label" for="cy">Radius:</label>
                     <div class="col-sm-2">
                         <input type="text" class="form-control" id="radius" placeholder="radius" name="radius">
@@ -253,7 +321,7 @@
                         <input type="text" class="form-control" id="circUnits" placeholder="units" name="circUnits">
                     </div>
                     <div class="col-sm-2">
-                        <button type="button" id="btn-add-circle" class="btn btn-primary">Add Circle</button>
+                        <button type="button" id="btn-add-circle" class="btn btn-success">Add Circle</button>
                     </div>
                 </div>
             </div>
@@ -282,10 +350,11 @@
                 <div class="form-group row">
                     <label class="control-label col-form-label" for="scale-factor">Scale Factor:</label>
                     <div class="col-sm-2">
-                        <input type="text" class="form-control" id="scale-factor" placeholder="Scale By" name="scale-factor">
+                        <input type="text" class="form-control" id="scale-factor" placeholder="Scale By"
+                            name="scale-factor">
                     </div>
                     <div class="col-sm-2">
-                        <button type="button" id="btn-scale-shape" class="btn btn-primary">Scale Shape</button>
+                        <button type="button" id="btn-scale-shape" class="btn btn-warning">Scale Shape</button>
                     </div>
                 </div>
             </div>

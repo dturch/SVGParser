@@ -1,8 +1,16 @@
+/**
+ * file    		index.js
+ * author  		Dario Turchi
+ * studentID 	0929012
+ * lastEdit     March 12, 2020
+ */
 // Put all onload AJAX calls here, and event listeners
 $(document).ready(function () {
-    refreshFileLogandDropdown();
-    clearAllForms();
+    refreshFileLogandDropdown(); // populate dropdownlists and filelog
+    clearAllForms(); //triger reset to clear all fields in forms
 
+    // ---------------------------- DROP DOWN LISTS -----------------------------------------
+    // svg Summary dropdown action ---------------------------------------------------------
     $('#svg-dropdown').change(function () {
         let filename = $("#svg-dropdown option:selected").text();
 
@@ -17,6 +25,7 @@ $(document).ready(function () {
         $('#svg-display-img h5').remove();
         $('#component-dropdown option').remove();
         $('#component-dropdown').append("<option selected value=\"-- No Component Selected --\"" + ">" + "-- No Component Selected --" + "</option>");
+        $('#component-dropdown-edit').append("<option selected value=\"-- No Component Selected --\"" + ">" + "-- No Component Selected --" + "</option>");
 
         $.ajax({
             type: 'get',            //Request type
@@ -28,21 +37,27 @@ $(document).ready(function () {
                 for (let svgStruct in data) {
                     for (var r = 0; r < data[svgStruct].rectangle.length; r++) {
                         $("#rectangle-summary").append("<tr><td>Rectangle " + (r + 1) + "</td><td>Upper left corner: x = " + data[svgStruct].rectangle[r].x + data[svgStruct].rectangle[r].units + ", y = " + data[svgStruct].rectangle[r].y + data[svgStruct].rectangle[r].units + ", Width: " + data[svgStruct].rectangle[r].w + data[svgStruct].rectangle[r].units + ", Height: " + data[svgStruct].rectangle[r].h + data[svgStruct].rectangle[r].units + "</td><td>" + data[svgStruct].rectangle[r].numAttr + "</td></tr>");
+                        $('#component-dropdown').append("<option value=\""+r+"\"" + ">" + "Rectangle " + (r + 1) + "</option>");
+                        $('#component-dropdown-edit').append("<option value=\""+r+"\"" + ">" + "Rectangle " + (r + 1) + "</option>");
                     }
                     for (var c = 0; c < data[svgStruct].circle.length; c++) {
                         $("#circle-summary").append("<tr><td>Circle " + (c + 1) + "</td><td>Centre: x = " + data[svgStruct].circle[c].cx + data[svgStruct].circle[c].units + ", y = " + data[svgStruct].circle[c].cy + data[svgStruct].circle[c].units + ", radius: " + data[svgStruct].circle[c].r + data[svgStruct].circle[c].units + "</td><td>" + data[svgStruct].circle[c].numAttr + "</td></tr>");
+                        $('#component-dropdown').append("<option value=\""+c+"\"" + ">" + "Circle " + (c + 1) + "</option>");
+                        $('#component-dropdown-edit').append("<option value=\""+c+"\"" + ">" + "Circle " + (c + 1) + "</option>");
                     }
                     for (var p = 0; p < data[svgStruct].path.length; p++) {
                         $("#path-summary").append("<tr><td>Path " + (p + 1) + "</td><td>path data = " + data[svgStruct].path[p].d + "</td><td>" + data[svgStruct].path[p].numAttr + "</td></tr>");
+                        $('#component-dropdown').append("<option value=\""+p+"\"" + ">" + "Path " + (p + 1) + "</option>");
+                        $('#component-dropdown-edit').append("<option value=\""+p+"\"" + ">" + "Path " + (p + 1) + "</option>");
                     }
                     for (var g = 0; g < data[svgStruct].group.length; g++) {
                         $("#group-summary").append("<tr><td>Group " + (g + 1) + "</td><td>" + data[svgStruct].group[g].children + " child elements</td><td>" + data[svgStruct].group[g].numAttr + "</td></tr>");
+                        $('#component-dropdown').append("<option value=\""+g+"\"" + ">" + "Group " + (g + 1) + "</option>");
+                        $('#component-dropdown-edit').append("<option value=\""+g+"\"" + ">" + "Group " + (g + 1) + "</option>");
                     }
                     $('#svg-title-desc').append("<tr><td>" + data[svgStruct].title + "</td><td>" + data[svgStruct].description + "</td></tr>");
                 }
                 $('#svg-display-img').append("<h5 class=\"blue\">" + filename + "</h5><img class=\"svg-display-img\" src=\"" + filename + "\">");
-                // populate dropdownlist of components to diplay
-                $('#component-dropdown').append("<option value=\"dummyCircle\"" + ">" + "dummy Circle 1" + "</option>");
                 alert("Successfully displayed summary of " + filename + " to SVG View Panel");
             },
             fail: function (error) {
@@ -53,17 +68,18 @@ $(document).ready(function () {
         });
     });
 
+    // component properties dropdown action ---------------------------------------------------------
     $('#component-dropdown').change(function () {
         let component = $("#component-dropdown option:selected").text();
-
+        let file = $("#svg-dropdown").children("option:selected").val();        
         console.log(component);
 
         $('#component-properties tr').remove();
-
+        
         $.ajax({
             type: 'get',            //Request type
             dataType: 'json',       //Data type - we will use JSON for almost everything 
-            url: '/components-properties/' + component,   //The server endpoint we are connecting to
+            url: '/components-properties/' + file,   //The server endpoint we are connecting to
 
             success: function (data) {
                 console.log(data);
@@ -81,6 +97,34 @@ $(document).ready(function () {
         });
     });
 
+    // edit-svg dropdown action ---------------------------------------------------------
+    $('#svg-dropdown-edit-svg').change(function (){
+        let imageToEdit = $("#svg-dropdown-edit-svg option:selected").text();
+        console.log(imageToEdit);        
+
+        $.ajax({
+            type: 'get',            //Request type
+            dataType: 'json',       //Data type - we will use JSON for almost everything 
+            url: '/components/' + imageToEdit,   //The server endpoint we are connecting to
+
+            success: function (data) {
+                console.log(data);
+                for (let svgStruct in data) {
+                    document.getElementsByName('editTitle')[0].value = data[svgStruct].title;
+                    document.getElementsByName('editDescription')[0].value = data[svgStruct].description;
+                    alert("Successfully displayed CURRENT title/desc of " + imageToEdit + " to Edit SVG form");
+                }
+            },
+            fail: function (error) {
+                // Non-200 return, do something with error
+                alert("Could not display current title/desc of " + imageToEdit + " to Edit SVG form");
+                console.log(error);
+            }
+        });
+    });
+
+    // ---------------------------- BUTTONS -----------------------------------------
+    // create SVG btn.Click ---------------------------------------------------------
     $('#btn-create-svg').on('click', function (e) {
         e.preventDefault();
         let filename = $("#fname").val()
@@ -136,6 +180,7 @@ $(document).ready(function () {
                     $('#svg-dropdown').append("<option value=\"" + filename + "\"" + ">" + filename + "</option>");
                     $('#svg-dropdown-add-rectangle').append("<option value=\"" + filename + "\"" + ">" + filename + "</option>");
                     $('#svg-dropdown-add-circle').append("<option value=\"" + filename + "\"" + ">" + filename + "</option>");
+                    $('#svg-dropdown-edit-svg').append("<option value=\"" + filename + "\"" + ">" + filename + "</option>");
             },
             fail: function (error) {
                 // Non-200 return, do something with error
@@ -145,6 +190,59 @@ $(document).ready(function () {
         });
     });
 
+    // edit SVG btn.Click ---------------------------------------------------------
+    $('#btn-edit-svg').on('click', function() {
+        let editSVGFNToUpdate = $("#svg-dropdown-edit-svg").children("option:selected").val();
+        let titleEdits = $('#editTitle').val();
+        let descEdits = $('#editDescription').val();
+
+        if(editSVGFNToUpdate == "uploads/-- None Selected --"){
+            alert("please select a svg image to edit its title/description!");
+            return;
+        }
+
+        let svg = {
+            'title' : titleEdits,
+            'description' : descEdits
+        }
+        
+        let svgJSON = JSON.stringify(svg);
+
+        $.ajax({
+            type: 'get',            //Request type
+            dataType: 'json',       //Data type - we will use JSON for almost everything
+            url: '/edit-svg/' + editSVGFNToUpdate,   //The server endpoint we are connecting to  
+            data: {
+                filename: editSVGFNToUpdate,
+                svgJSON: svgJSON
+            },   
+            success: function (data) {
+                alert("The file you want edit the title/desc is:  "+editSVGFNToUpdate+"\nTitle is now: "+titleEdits+", description is now: "+descEdits);
+                clearEditSVGForm();
+            },
+            fail: function (error) {
+                // Non-200 return, do something with error
+                alert("failed to edit SVG file");
+                console.log(error);
+            }
+        });
+    });
+
+    // edit SVG btn.Click ---------------------------------------------------------
+    $('#btn-edit-attr').on('click', function(e) {
+        let editAttrFNToUpdate = $("#component-dropdown-edit").children("option:selected").val();
+        let attrNameEdits = $('#editAttrName').val();
+        let attrValueEdits = $('#editAttrValue').val();
+
+        if(editSVGFNToUpdate == "uploads/-- None Selected --"){
+            alert("please select a svg image to edit its title/description!");
+            return;
+        }
+        alert("dummy button click alert for edit attribute\n"+"component to load attributes from: "+editAttrFNToUpdate+"\nattrName: "+attrNameEdits+", attrValue is now: "+attrValueEdits);
+        clearEditAttributeForm();
+    });
+
+    // add rectangle btn.Click ---------------------------------------------------------
     $('#btn-add-rectangle').on('click', function() {
         let rectFNToUpdate = "uploads/" + $("#svg-dropdown-add-rectangle").children("option:selected").val();
         let x = $('#x').val();
@@ -154,7 +252,7 @@ $(document).ready(function () {
         let rectUnits = $('#rectUnits').val();
 
         if(rectFNToUpdate == "uploads/-- None Selected --"){
-            alert("please select a rectangle to add to!");
+            alert("please select a file to add rectangles to!");
             return;
         }
         
@@ -172,6 +270,7 @@ $(document).ready(function () {
         clearRectangleForm();
     });
 
+    // add circle btn.Click ---------------------------------------------------------
     $('#btn-add-circle').on('click', function() {
         let circFNToUpdate = "uploads/" + $("#svg-dropdown-add-circle").children("option:selected").val();
         let cx = $('#cx').val();
@@ -180,7 +279,7 @@ $(document).ready(function () {
         let circUnits = $('#circUnits').val();
 
         if(circFNToUpdate == "uploads/-- None Selected --"){
-            alert("please select a circle to add to!");
+            alert("please select a file to add circles to!");
             return;
         }
 
@@ -197,6 +296,7 @@ $(document).ready(function () {
         clearCircleForm();
     });
 
+    // scale shape btn.Click ---------------------------------------------------------
     $('#btn-scale-shape').on('click', function() {
         let shapeToUpdate = "uploads/" + $("#svg-dropdown-scale-shapes").children("option:selected").val();
         let scaleFactor = $('#scale-factor').val();
@@ -225,10 +325,11 @@ function refreshFileLogandDropdown() {
                 let json = JSON.parse(data[i]);
                 $('#log-table').append("<tr><th scope=\"row\"><a download href=\"uploads/" + json["filename"] + "\"><img class='table-img' src=\"uploads/" + json["filename"] + "\">" + "</th><td>" + "<a href=\"uploads/" + json["filename"] + "\" download>" + json["filename"] + "</a><td>" + json["sizeKB"] + "KB</td><td>" + json["numRect"] + "</td><td>" + json["numCirc"] + "</td><td>" + json["numPaths"] + "</td><td>" + json["numGroups"] + "</td>");
                 $('#svg-dropdown').append("<option value=\"" + json["filename"] + "\"" + ">" + json["filename"] + "</option>");
+                $('#svg-dropdown-edit-svg').append("<option value=\"" + json["filename"] + "\"" + ">" + json["filename"] + "</option>");
                 $('#svg-dropdown-add-rectangle').append("<option value=\"" + json["filename"] + "\"" + ">" + json["filename"] + "</option>");
                 $('#svg-dropdown-add-circle').append("<option value=\"" + json["filename"] + "\"" + ">" + json["filename"] + "</option>");
                 $('#svg-dropdown-scale-shapes').append("<option value=\"" + json["filename"] + "\"" + ">" + json["filename"] + "</option>");
-                
+                alert('Successfully added '+json["filename"]+' to the Panel');
             }
             // enable vertical scrolling if the file log panel contains more than 5 files
             if ($('#log-table tr').length > 6)
@@ -239,7 +340,7 @@ function refreshFileLogandDropdown() {
         },
         fail: function (error) {
             // Non-200 return, do something with error
-            alert('Could not display ' + json["filename"] + ' to View Panel');
+            alert('Could not display ' + json["filename"] + ' to the View Panel');
             console.log(error);
         }
     });
@@ -247,6 +348,8 @@ function refreshFileLogandDropdown() {
 
 function clearAllForms() {
     $('#new-svg').trigger("reset");
+    clearEditSVGForm();
+    clearEditAttributeForm();
     clearCircleForm();
     clearRectangleForm();
     clearScaleForm();
@@ -261,5 +364,15 @@ function clearRectangleForm() {
 }
 
 function clearScaleForm() {
-    $('#scale-shapes').trigger("reset");
+    document.getElementsByName('scale-factor')[0].value = "";
+}
+
+function clearEditSVGForm() {
+    document.getElementsByName('editTitle')[0].value = "";
+    document.getElementsByName('editDescription')[0].value = "";
+}
+
+function clearEditAttributeForm() {
+    document.getElementsByName('editAttrName')[0].value = "";
+    document.getElementsByName('editAttrValue')[0].value = "";
 }

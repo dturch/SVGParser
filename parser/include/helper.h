@@ -2,7 +2,7 @@
  * file    		helper.h
  * author  		Dario Turchi
  * studentID 	0929012
- * lastEdit    	March 11, 2020
+ * lastEdit    	March 12, 2020
  */
 #ifndef HELPER_H
 #define HELPER_H
@@ -27,8 +27,10 @@ SVGimage* JSONtoSVG(const char* svgString);
 Rectangle* JSONtoRect(const char* svgString);
 Circle* JSONtoCircle(const char* svgString);
 bool isValid(char* filename);
+// bool scaleSVG(char* filename, float scaleVal);
 char* getSVGInfo(char* filename);
 char* getShapesInfo(char* filename);
+char* getAttrInfo(char* filename);
 char* createSVG(char* filename, char* svgJSON);
 List* parseJSONObj(char* JSON);
 
