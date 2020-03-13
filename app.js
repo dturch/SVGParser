@@ -97,8 +97,8 @@ app.get('/getFiles', function (req, res) {
 	let i = 0;
 	while (i < files.length) {
 		if (files[i].slice(files[i].length - 4) != ".svg" || !lib.isValid("uploads/" + files[i])) {
-			console.log("invalid file: " + files[i] + "found in uploads/ folder!");
-			files.splice(i, 1);
+			console.log("invalid file: " + files[i] + " found in uploads/ folder!");
+			files.splice(i, 1); // doesn't include invalid files! but its still inside upload folder!!!!
 			i = 0;
 		}
 		console.log("valid file: "+files[i]+" found in uploads/ folder!");
@@ -135,6 +135,12 @@ app.get('/svgcreate', function (req, res) {
 app.get('/edit-svg/:filename', function (req, res) {
 	let file = req.params.filename;
 	let c = lib.createSVG(file, req.query.svgJSON);
+	res.send(c);
+});
+
+app.get('/edit-attr/:filename', function (req, res) {
+	let file = req.params.filename;
+	let c = lib.getAttrInfo(file);
 	res.send(c);
 });
 

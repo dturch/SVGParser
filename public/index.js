@@ -196,7 +196,7 @@ $(document).ready(function () {
         let titleEdits = $('#editTitle').val();
         let descEdits = $('#editDescription').val();
 
-        if(editSVGFNToUpdate == "uploads/-- None Selected --"){
+        if(editSVGFNToUpdate == "-- None Selected --"){
             alert("please select a svg image to edit its title/description!");
             return;
         }
@@ -229,17 +229,44 @@ $(document).ready(function () {
     });
 
     // edit SVG btn.Click ---------------------------------------------------------
-    $('#btn-edit-attr').on('click', function(e) {
+    $('#btn-edit-attr').on('click', function() {
         let editAttrFNToUpdate = $("#component-dropdown-edit").children("option:selected").val();
+        let nullDDL = $("#component-dropdown-edit").children("option:selected").val();
         let attrNameEdits = $('#editAttrName').val();
         let attrValueEdits = $('#editAttrValue').val();
 
-        if(editSVGFNToUpdate == "uploads/-- None Selected --"){
-            alert("please select a svg image to edit its title/description!");
+        if(editAttrFNToUpdate == "-- No Component Selected --" || nullDDL == null){
+            alert("please select an image component to edit its attributes!");
             return;
         }
-        alert("dummy button click alert for edit attribute\n"+"component to load attributes from: "+editAttrFNToUpdate+"\nattrName: "+attrNameEdits+", attrValue is now: "+attrValueEdits);
-        clearEditAttributeForm();
+
+        let attr = {
+            'name' : attrNameEdits,
+            'value' : attrNameEdits
+        }
+        
+        let attrJSON = JSON.stringify(attr);
+
+        $.ajax({
+            type: 'get',            //Request type
+            dataType: 'json',       //Data type - we will use JSON for almost everything
+            url: '/edit-attr/' + editAttrFNToUpdate,   //The server endpoint we are connecting to  
+            data: {
+                filename: editAttrFNToUpdate,
+                attrJSON: attrJSON,
+            },   
+            success: function (data) {
+                alert("dummy button click alert for edit attribute\n"+"component to load attributes from: "+editAttrFNToUpdate+"\nattrName: "+attrNameEdits+", attrValue is now: "+attrValueEdits);
+                clearEditAttributeForm();
+                alert("The Component you want edit the Attr is:  "+editAttrFNToUpdate+"\nTitle is now: "+attrNameEdits+", description is now: "+attrNameEdits);
+                clearEditSVGForm();
+            },
+            fail: function (error) {
+                // Non-200 return, do something with error
+                alert("failed to edit SVG file");
+                console.log(error);
+            }
+        });
     });
 
     // add rectangle btn.Click ---------------------------------------------------------
