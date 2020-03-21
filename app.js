@@ -47,7 +47,8 @@ app.post('/upload', function (req, res) {
 
 	let uploadFile = req.files.uploadFile;
 
-	if (uploadFile.name.slice(uploadFile.name.length - 4) != ".svg") { //added to prevent non.svg images from being added
+	//added to prevent non.svg images from being added - Dario Turchi
+	if (uploadFile.name.slice(uploadFile.name.length - 4) != ".svg") { 
 		return res.status(400).send(uploadFile.name+" cannot be uploaded! upload svg files only! Please go back and select a different file!");
 	}
 
@@ -73,8 +74,7 @@ app.get('/uploads/:name', function (req, res) {
 	});
 });
 
-//******************** Your code goes here ******************** 
-/**
+/******************** Your code goes here ******************** 
  * file    		app.js
  * author  		Dario Turchi
  * studentID 	0929012
