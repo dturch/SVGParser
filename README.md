@@ -12,6 +12,8 @@
 - go to root of SVGApp/ directory
 - run 'npm run dev xxxxx' command (where xxxxx is port number)
 
+## Additional Notes on expected results for my SVG App
+
 ### Console Output
 - will display if files in uploads/ directory are valid svg files are not
 
