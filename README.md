@@ -17,16 +17,16 @@
 ### Console Output
 - will display if files in uploads/ directory are valid svg files are not
 
-### svg.xsd and supporting schemas location
-- vplace in root directory if removed otherwise they should be there upon extraction
+### Schema File Location
+- place in root of SVGApp/ directory ONLY if removed... otherwise the .xsd files should be there upon extraction
 
-### page load
+### On Page Load
 - Alert user of valid svg files in uploads/ and display valid files in File Log Panel
 - Fill corresponding Dropdown Lists with file names
 
 ### SVG File Upload 
-- Upon attempting to upload file not ending with .svg extension redirects users to status page
-- please refresh the page in order to get proper file summary
+- Upon attempting to upload file not ending with .svg extension. Redirect user to status page
+- please refresh the page in order to get proper file summary after successful uploads
 
 ### SVG View Panel
 - Select file from dropdown list to display its summary
