@@ -2136,6 +2136,73 @@
 		return bigStr;
 	}
 
+	/*
+			char* getAttrInfo(char* filename)
+			{
+				char *dir = malloc(256);
+				strcpy(dir, "uploads/");
+				strcat(dir, filename);
+
+				SVGimage *svgImage = createSVGimage(dir);
+
+				bool valid = validateSVGimage(svgImage, "svg.xsd");
+				if (valid == false)
+					return "Invalid file";
+				
+				int length = 0;
+
+				List * rectList = getRects(svgImage->rectangles);
+				List * circList = getCircles(svgImage->circles);
+				List * pathList = getPaths(svgImage->paths);
+				List * gprList = getGroups(svgImage->groups);
+				
+				char * otherAttrStr = attrListToJSON(svgImage->otherAttributes);
+
+				ListIterator * itr = createIterator(rectList);
+				Rectangle *rect = nextElement(&itr);
+
+				while (rect != NULL)
+				{
+					char * rectAttrStr = attrListToJSON(rectList->otherAttributes);
+					length += strlen(rectAttrStr) + 1;
+					free(rectAttrStr);
+					rect = nextElement(&itr);
+				}
+
+				char * rectAttrStr = malloc(256 + length);
+				rect = nextElement(&itr);
+
+				while(rect != NULL)
+				{
+					char * rectAttrStr = attrListToJSON(rectList->otherAttributes);
+				}
+				
+				char * bigStr = malloc(strlen(rectAttrStr) + strlen(otherAttrStr) + 128);
+
+				strcpy(bigStr, "{\"rectangle\":");
+				strcat(bigStr, rectAttrStr);
+				strcat(bigStr, ",\"circle\":");
+				strcat(bigStr, circStr);
+				strcat(bigStr, ",\"path\":");
+				strcat(bigStr, pathStr);
+				strcat(bigStr, ",\"group\":");
+				strcat(bigStr, grpStr);
+				strcat(bigStr, ",\"otherAttr\":");
+				strcat(bigStr, otherStr);
+				strcat(bigStr, "}");
+
+				deleteSVGimage(svgImage);
+				free(dir);
+				free(rectStr);
+				free(circStr);
+				free(otherStr);
+				free(pathStr);
+				free(grpStr);
+
+				return bigStr;
+			}
+	*/
+
 	char* getAttrInfo(char* filename)
 	{
 		char *dir = malloc(256);
@@ -2147,58 +2214,13 @@
 		bool valid = validateSVGimage(svgImage, "svg.xsd");
 		if (valid == false)
 			return "Invalid file";
-		
-		int length = 0;
 
-		List * rectList = getRects(svgImage->rectangles);
-		List * circList = getCircles(svgImage->circles);
-		List * pathList = getPaths(svgImage->paths);
-		List * gprList = getGroups(svgImage->groups);
-		
-		char * otherAttrStr = attrListToJSON(svgImage->otherAttributes);
-
-		ListIterator * itr = createIterator(rectList);
-		Rectangle *rect = nextElement(&itr);
-
-		while (rect != NULL)
-		{
-			char * rectAttrStr = attrListToJSON(rectList->otherAttributes);
-			length += strlen(rectAttrStr) + 1;
-			free(rectAttrStr);
-			rect = nextElement(&itr);
-		}
-
-		char * rectAttrStr = malloc(256 + length);
-		rect = nextElement(&itr);
-
-		while(rect != NULL)
-		{
-			char * rectAttrStr = attrListToJSON(rectList->otherAttributes);
-		}
-		
-		char * bigStr = malloc(strlen(rectAttrStr) + strlen(circAttrStr) + strlen(pathAttrStr) + strlen(grpAttrStr) + strlen(otherAttrStr) + 128);
-
-		strcpy(bigStr, "{\"rectangle\":");
-		strcat(bigStr, rectAttrStr);
-		strcat(bigStr, ",\"circle\":");
-		strcat(bigStr, circStr);
-		strcat(bigStr, ",\"path\":");
-		strcat(bigStr, pathStr);
-		strcat(bigStr, ",\"group\":");
-		strcat(bigStr, grpStr);
-		strcat(bigStr, ",\"otherAttr\":");
-		strcat(bigStr, otherStr);
-		strcat(bigStr, "}");
-
-		deleteSVGimage(svgImage);
+		char * otherStr = attrListToJSON(svgImage->otherAttributes);
+	
 		free(dir);
-		free(rectStr);
-		free(circStr);
-		free(otherStr);
-		free(pathStr);
-		free(grpStr);
+		deleteSVGimage(svgImage);
 
-		return bigStr;
+		return otherStr;
 	}
 
 	char* createSVG(char* filename, char* svgJSON)
