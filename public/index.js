@@ -151,7 +151,11 @@ $(document).ready(function () {
 
         // temp server crash fix... this causes a non-empty description with nothing inside but a space character need to fix
         if(svgDesc.length == 0) {
-            svgDesc = " ";
+            svgDesc = "";
+        }
+
+        if(svgTitle.length == 0) {
+            svgTitle = "";
         }
 
         if(filename.slice(filename.length - 4) != ".svg"){
