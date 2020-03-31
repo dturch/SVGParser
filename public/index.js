@@ -9,8 +9,7 @@ $(document).ready(function () {
     refreshFileLogandDropdown(); // populate dropdownlists and filelog
     clearAllForms(); //triger reset to clear all fields in forms
 
-    // ---------------------------- DROP DOWN LISTS -----------------------------------------
-    // svg Summary dropdown action ---------------------------------------------------------
+    // svg Summary dropdown action 
     $('#svg-dropdown').change(function () {
         let filename = $("#svg-dropdown option:selected").text();
 
@@ -68,7 +67,7 @@ $(document).ready(function () {
         });
     });
 
-    // component properties dropdown action ---------------------------------------------------------
+    // component properties dropdown action 
     $('#component-dropdown').change(function () {
         let component = $("#component-dropdown option:selected").text();
         let file = $("#svg-dropdown").children("option:selected").val();        
@@ -97,7 +96,7 @@ $(document).ready(function () {
         });
     });
 
-    // edit-svg dropdown action ---------------------------------------------------------
+    // edit-svg dropdown action 
     $('#svg-dropdown-edit-svg').change(function (){
         let imageToEdit = $("#svg-dropdown-edit-svg option:selected").text();
         console.log(imageToEdit);        
@@ -123,8 +122,7 @@ $(document).ready(function () {
         });
     });
 
-    // ---------------------------- BUTTONS -----------------------------------------
-    // create SVG btn.Click ---------------------------------------------------------
+    // create SVG btn.Click 
     $('#btn-create-svg').on('click', function (e) {
         e.preventDefault();
         let filename = $("#fname").val()
@@ -194,7 +192,7 @@ $(document).ready(function () {
         });
     });
 
-    // edit SVG btn.Click ---------------------------------------------------------
+    // edit SVG btn.Click 
     $('#btn-edit-svg').on('click', function() {
         let editSVGFNToUpdate = $("#svg-dropdown-edit-svg").children("option:selected").val();
         let titleEdits = $('#editTitle').val();
@@ -232,7 +230,7 @@ $(document).ready(function () {
         });
     });
 
-    // edit SVG btn.Click ---------------------------------------------------------
+    // edit SVG btn.Click 
     $('#btn-edit-attr').on('click', function() {
         let editAttrFNToUpdate = $("#component-dropdown-edit").children("option:selected").val();
         let nullDDL = $("#component-dropdown-edit").children("option:selected").val();
@@ -273,7 +271,7 @@ $(document).ready(function () {
         });
     });
 
-    // add rectangle btn.Click ---------------------------------------------------------
+    // add rectangle btn.Click 
     $('#btn-add-rectangle').on('click', function() {
         let rectFNToUpdate = "uploads/" + $("#svg-dropdown-add-rectangle").children("option:selected").val();
         let x = $('#x').val();
@@ -301,7 +299,7 @@ $(document).ready(function () {
         clearRectangleForm();
     });
 
-    // add circle btn.Click ---------------------------------------------------------
+    // add circle btn.Click 
     $('#btn-add-circle').on('click', function() {
         let circFNToUpdate = "uploads/" + $("#svg-dropdown-add-circle").children("option:selected").val();
         let cx = $('#cx').val();
@@ -327,7 +325,7 @@ $(document).ready(function () {
         clearCircleForm();
     });
 
-    // scale shape btn.Click ---------------------------------------------------------
+    // scale shape btn.Click 
     $('#btn-scale-shape').on('click', function() {
         let shapeToUpdate = "uploads/" + $("#svg-dropdown-scale-shapes").children("option:selected").val();
         let scaleFactor = $('#scale-factor').val();
