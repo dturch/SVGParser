@@ -9,6 +9,9 @@ const app = express();
 const path = require("path");
 const fileUpload = require('express-fileupload');
 
+// get the client
+const mysql = require('mysql2/promise');
+
 app.use(fileUpload());
 app.use(express.static(path.join(__dirname + '/uploads')));
 
@@ -78,7 +81,7 @@ app.get('/uploads/:name', function (req, res) {
  * file    		app.js
  * author  		Dario Turchi
  * studentID 	0929012
- * lastEdit     March 12, 2020
+ * lastEdit     April 13, 2020
  */
 app.listen(portNum);
 console.log('Running app at localhost: ' + portNum);
@@ -153,3 +156,66 @@ app.get('/edit-attr/:filename', function (req, res) {
 // 	let response = lib.addComponent(req.query.filename, JSON.stringify(req.query.rect));
 // 	res.send(resonse);
 // });
+
+//**********************A4 Functions **********************
+
+let cred = {};
+let connection; 
+// queries
+let query_file = `CREATE TABLE IF NOT EXISTS FILE (
+	svg_id INT NOT NULL AUTO_INCREMENT, 
+	file_name VARCHAR(60) NOT NULL,
+	file_title VARCHAR(256),
+	file_description VARCHAR(256),
+	n_rect INT NOT NULL,
+	n_circ INT NOT NULL,
+	n_path INT NOT NULL,
+	n_group INT NOT NULL,
+	creation_time DATETIME NOT NULL,
+	file_size INT NOT NULL, PRIMARY KEY (svg_id))`;
+	
+let query_image_change = `CREATE TABLE IF NOT EXISTS IMG_CHANGE (
+	change_id INT NOT NULL AUTO_INCREMENT, 
+	change_type VARCHAR(256) NOT NULL,
+	change_summary VARCHAR(256) NOT NULL,
+	change_time DATETIME NOT NULL,
+	svg_id INT NOT NULL,
+	PRIMARY KEY (change_id),
+	FOREIGN KEY (svg_id) REFERENCES FILE(svg_id) ON DELETE CASCADE)`;
+	
+let query_download = `CREATE TABLE IF NOT EXISTS DOWNLOAD (
+	download_id INT NOT NULL AUTO_INCREMENT, 
+	d_descr VARCHAR(256),
+	svg_id INT NOT NULL,
+	PRIMARY KEY (download_id), 
+	FOREIGN KEY (svg_id) REFERENCES FILE(svg_id) ON DELETE CASCADE)`;
+
+
+// dbms
+app.get('/dbms', async function(req, res){
+
+	cred = {
+		host		: 'dursley.socs.uoguelph.ca',
+		user		: req.query.username,
+		password	: req.query.password,
+		database	: req.query.database }
+	
+		var status;
+
+	try {
+		connection = await mysql.createConnection(cred);
+
+		await connection.execute(query_file);
+		await connection.execute(query_image_change);
+		await connection.execute(query_download);
+
+		status = "Success";
+	} 
+	catch(err) {
+		console.log("Query error: " + err);
+		status = "Failure";
+	}
+	finally {
+		if(connection && connection.end) connection.end();
+	}
+}); 
