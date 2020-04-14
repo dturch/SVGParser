@@ -30,28 +30,29 @@
     <!-- File Log Panel starts -->
     <div class="card">
         <h3 class="card-header">File Log Panel</h3>
-            <table class="table table-hover" id="log-table">
-                <thead>
-                    <tr>
-                        <th>Image (click to download)</th>
-                        <th>File name (click to download)</th>
-                        <th>File size</th>
-                        <th>Number of rectangles</th>
-                        <th>Number of circles</th>
-                        <th>Number of paths</th>
-                        <th>Number of groups</th>
-                    </tr>
-                </thead>
-                <tbody>
+        <table class="table table-hover" id="log-table">
+            <thead>
+                <tr>
+                    <th>Image (click to download)</th>
+                    <th>File name (click to download)</th>
+                    <th>File size</th>
+                    <th>Number of rectangles</th>
+                    <th>Number of circles</th>
+                    <th>Number of paths</th>
+                    <th>Number of groups</th>
+                </tr>
+            </thead>
+            <tbody>
 
-                </tbody>
-            </table>
-            <form enctype="multipart/form-data" method="post" action="/upload">
+            </tbody>
+        </table>
+        <form enctype="multipart/form-data" method="post" action="/upload">
+            <div class="form-group">
                 <input type="file" accept=".svg" id="upload-file" name="uploadFile" value="Upload-File" required>
                 <input type="submit" id="submit-file" name="Submit-File" value="Upload" class="btn btn-primary">
                 <small>*only valid .svg files will be displayed in panels and dropdown lists</small>
-            </form>
-        </div>
+            </div>
+        </form>
     </div>
     <!-- File Log Panel ends -->
 
@@ -346,7 +347,7 @@
     <!-- Scale Shapes ends -->
 
     <br>
-    
+
     <h1>Database Section</h1>
 
     <br>
@@ -378,33 +379,45 @@
 
     <br>
 
-    <!-- Database status starts -->
-    <div class="card">
-        <h5 class="card-header">Display DB Status</h5>
-        <div class="card-body">
-            <p class="card-text">Database has (N1) files, (N2) changes and (N3) downloads.</p>
-            <button type="button" class="btn btn-outline-dark" id="get-status-button">Get Status</button>
+    <div id="db-actions">
+        <!-- Database status starts -->
+        <div class="card">
+            <h5 class="card-header">Display DB Status</h5>
+            <div class="card-body">
+                <p class="card-text">Database has (N1) files, (N2) changes and (N3) downloads.</p>
+                <button type="button" class="btn btn-outline-dark" id="get-status-button">Get Status</button>
+            </div>
         </div>
+        <!-- Database status ends -->
+
+        <br>
+
+        <!-- Storing Files starts -->
+        <div class="card">
+            <div class="card-header">Storing Files into Database</div>
+            <div class="card-body">
+                <h5 class="card-title"></h5>
+                <button type="button" class="btn btn-success" id="store-files-button">Store All Files</button>
+                <button type="button" class="btn btn-danger" id="clear-data-button">Clear All Data</button>
+            </div>
+        </div>
+        <!-- Database Functionality Section ends -->
+
+        <br>
+
+        <!-- Database status starts -->
+        <div class="card">
+            <h5 class="card-header">Execute Queries</h5>
+            <div class="card-body">
+                <p class="card-text">Database has many queries boi.</p>
+                <button type="button" class="btn btn-outline-dark" id="get-status-button">Get Status</button>
+            </div>
+        </div>
+        <!-- Database status ends -->
+
     </div>
-    <!-- Database status ends -->
 
     <br>
-
-    <!-- Database Functionality Section starts -->
-    <div class="card text-center">
-        <div class="card-header">
-            Database Functionality
-        </div>
-        <div class="card-body">
-            <h5 class="card-title"></h5>
-            <button type="button" class="btn btn-success" id="store-files-button">Store All Files</button>
-            <button type="button" class="btn btn-danger" id="clear-data-button">Clear All Data</button>
-        </div>
-        <div class="card-footer text-muted">
-            Designed by Dario Turchi
-        </div>
-    </div>
-    <!-- Database Functionality Section ends -->
 
     <!-- Leave me at the bottom of body -->
     <script src="/index.js"></script>

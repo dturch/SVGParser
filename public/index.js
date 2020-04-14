@@ -6,6 +6,7 @@
  */
 // Put all onload AJAX calls here, and event listeners
 $(document).ready(function () {
+    document.getElementById("db-actions").style.display = "none"; // hide the db actions until logged in
     refreshFileLogandDropdown(); // populate dropdownlists and filelog
     clearAllForms(); //triger reset to clear all fields in forms
 
@@ -347,6 +348,8 @@ $(document).ready(function () {
     $('#db-login').submit(function(e){
         e.preventDefault();
 
+        document.getElementById("db-actions").style.display = "block";
+
         let username = $("#username").val();
         let password = $("#password").val();
         let dbname = $("#db-name").val();
@@ -354,7 +357,7 @@ $(document).ready(function () {
         $.ajax({
             type: 'get',
             dataType: 'json',
-            url: '/dbms/',
+            url: '/login/',
             data: {
                 username: username,
                 password: password,
@@ -365,19 +368,17 @@ $(document).ready(function () {
                 if(data === "Success")
                 {
                     alert("Valid Credentials, Successfully Logged Into Database!");
-                    //disabled, false properties
+                    document.getElementById("db-actions").style.display = "block"; // reveal db actions once logged in
                 }
                 else{
-                    alert("Invalid Credentials! Please Confirm Values and Try Again");
+                    alert("Invalid Credentials! Please Try Again");
                 }
             },
             fail: function(error) {
                 console.log(error);
-                alert("Invalid Credentials! Please Confirm Values and Try Again");
+                alert("There was an error while logging in");
             }
         });
-            //alert("Valid Credentials, Successfully Logged Into Database!");
-            //disabled, false properties
     })
 
 });
