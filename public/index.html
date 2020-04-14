@@ -25,120 +25,123 @@
 </head>
 
 <body>
-    <hr>
     <h1 class="welcome">SVG App</h1>
-    <hr>
-    <!-- File Log Panel starts -->
-    <h3>File Log Panel</h3>
-    <div class="container">
-        <table class="table table-hover" id="log-table">
-            <thead>
-                <tr>
-                    <th>Image (click to download)</th>
-                    <th>File name (click to download)</th>
-                    <th>File size</th>
-                    <th>Number of rectangles</th>
-                    <th>Number of circles</th>
-                    <th>Number of paths</th>
-                    <th>Number of groups</th>
-                </tr>
-            </thead>
-            <tbody>
 
-            </tbody>
-        </table>
-        <form enctype="multipart/form-data" method="post" action="/upload">
-            <input type="file" accept=".svg" id="upload-file" name="uploadFile" value="Upload-File" required>
-            <input type="submit" id="submit-file" name="Submit-File" value="Upload" class="btn btn-primary">
-            <small>*only valid .svg files will be displayed in panels and dropdown lists</small>
-        </form>
-    </div>
+    <!-- File Log Panel starts -->
+    <div class="card">
+        <h3 class="card-header">File Log Panel</h3>
+            <table class="table table-hover" id="log-table">
+                <thead>
+                    <tr>
+                        <th>Image (click to download)</th>
+                        <th>File name (click to download)</th>
+                        <th>File size</th>
+                        <th>Number of rectangles</th>
+                        <th>Number of circles</th>
+                        <th>Number of paths</th>
+                        <th>Number of groups</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                </tbody>
+            </table>
+            <form enctype="multipart/form-data" method="post" action="/upload">
+                <input type="file" accept=".svg" id="upload-file" name="uploadFile" value="Upload-File" required>
+                <input type="submit" id="submit-file" name="Submit-File" value="Upload" class="btn btn-primary">
+                <small>*only valid .svg files will be displayed in panels and dropdown lists</small>
+            </form>
+        </div>
     </div>
     <!-- File Log Panel ends -->
 
-    <hr>
+    <br>
 
     <!-- SVG View Panel starts -->
-    <div>
-        <h3>SVG View Panel</h3>
-        <h6>Select a file to view summary:</h6>
-        <div class="container mt-3">
-            <form>
-                <select class="custom-select mb-3" id="svg-dropdown">
-                    <option selected>-- No File Selected --</option>
-                </select>
-            </form>
+    <div class="card">
+        <h3 class="card-header">SVG View Panel</h3>
+        <div class="card-body">
+            <h6>Select a file to view summary:</h6>
+            <div class="container mt-3">
+                <form>
+                    <select class="custom-select mb-3" id="svg-dropdown">
+                        <option selected>-- No File Selected --</option>
+                    </select>
+                </form>
+            </div>
+
+            <div id="svg-display-img">
+            </div>
+
+            <div class="container alignToLeft">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Title</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody id="svg-title-desc">
+                    </tbody>
+                </table>
+                </p>
+            </div>
+
+            <div class="container">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Component</th>
+                            <th>Summary</th>
+                            <th>Other attributes</th>
+                        </tr>
+                    </thead>
+                    <tbody id="rectangle-summary">
+                    </tbody>
+                    <tbody id="circle-summary">
+                    </tbody>
+                    <tbody id="path-summary">
+                    </tbody>
+                    <tbody id="group-summary">
+                    </tbody>
+                </table>
+                </p>
+            </div>
         </div>
-    </div>
-
-    <div id="svg-display-img">
-    </div>
-
-    <div class="container alignToLeft">
-        <table class="table table-hover">
-            <thead>
-                <tr>
-                    <th>Title</th>
-                    <th>Description</th>
-                </tr>
-            </thead>
-            <tbody id="svg-title-desc">
-            </tbody>
-        </table>
-        </p>
-    </div>
-
-    <div class="container">
-        <table class="table table-hover">
-            <thead>
-                <tr>
-                    <th>Component</th>
-                    <th>Summary</th>
-                    <th>Other attributes</th>
-                </tr>
-            </thead>
-            <tbody id="rectangle-summary">
-            </tbody>
-            <tbody id="circle-summary">
-            </tbody>
-            <tbody id="path-summary">
-            </tbody>
-            <tbody id="group-summary">
-            </tbody>
-        </table>
-        </p>
     </div>
     <!-- SVG View Panel ends-->
 
-    <hr>
+    <br>
 
     <!-- image properties starts -->
-    <div>
-        <h3>Show Attributes</h3>
-        <h6>Select a component to display its attributes:</h6>
-        <div class="container mt-3">
-            <form>
-                <select name="files" class="custom-select mb-3" id="component-dropdown">
-                </select>
-            </form>
-        </div>
-    </div>
+    <div class="card">
+        <h3 class="card-header">Show Attributes</h3>
+        <div class="card-body">
+            <h6>Select a component to display its attributes:</h6>
+            <div class="container mt-3">
+                <form>
+                    <select name="files" class="custom-select mb-3" id="component-dropdown">
+                    </select>
+                </form>
+            </div>
 
-    <div class="container">
-        <table class="table table-hover">
-            <thead>
-                <tr>
-                    <th>Name</th>
-                    <th>Value</th>
-                </tr>
-            </thead>
-            <tbody id="component-properties">
-            </tbody>
-        </table>
+            <div class="container">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Value</th>
+                        </tr>
+                    </thead>
+                    <tbody id="component-properties">
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
     <!-- image properties ends -->
 
-    <hr>
+    <br>
 
     <!-- Edit Attributes starts -->
     <div id="edit-attributes">
@@ -166,7 +169,7 @@
     </div>
     <!-- Edit Attributes ends -->
 
-    <hr>
+    <br>
 
     <!-- Create SVG File starts -->
     <div id="create-svg">
@@ -195,7 +198,7 @@
     </div>
     <!-- Create SVG File ends -->
 
-    <hr>
+    <br>
 
     <!-- Edit SVG Title & Description starts -->
     <div id="edit-svg">
@@ -227,7 +230,7 @@
     </div>
     <!-- Edit SVG Title & Description ends -->
 
-    <hr>
+    <br>
 
     <!-- Add Shape starts -->
     <div id="add-shape" class="card">
@@ -315,7 +318,7 @@
     </div>
     <!-- Add Shape ends -->
 
-    <hr>
+    <br>
 
     <!-- Scale Shape starts -->
     <div id="scale-shapes">
@@ -341,57 +344,67 @@
         </div>
     </div>
     <!-- Scale Shapes ends -->
-    <hr>
-    <h2>Database Section</h2>
 
-    <!-- Database UI Section starts -->
-    <div id="database-section">
-        <div class="card">
-            <div class="card border-secondary">
-                <div class="card-body">
-                    <h5 class="card-title">Login to Database</h5>
-                    <form id="db-login">
-                        <div class="form-group">
-                            <label for="username">Username</label>
-                            <input type="text" class="form-control" id="username" placeholder="Enter Username">
-                        </div>
-                        <div class="form-group">
-                            <label for="password">Password</label>
-                            <input type="password" class="form-control" id="password" placeholder="Enter Password">
-                        </div>
-                        <div class="form-group">
-                            <label for="db-name">DB Name</label>
-                            <input type="text" class="form-control" id="db-name" placeholder="Enter DB Name">
-                        </div>
-                        <button type="submit" class="btn btn-primary" id="log-button">Login</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-        <br>
-        <div class="card">
-            <h5 class="card-header">Display DB Status</h5>
+    <br>
+    
+    <h1>Database Section</h1>
+
+    <br>
+
+    <!-- Database login starts -->
+    <div class="card">
+        <div class="card border-secondary">
             <div class="card-body">
-                <p class="card-text">Database has (N1) files, (N2) changes and (N3) downloads.</p>
-                <button type="button" class="btn btn-outline-dark" id="get-status-button">Get Status</button>
-            </div>
-        </div>
-        <br>
-        <div class="card text-center">
-            <div class="card-header">
-                Database Functionality
-            </div>
-            <div class="card-body">
-                <h5 class="card-title"></h5>
-                <button type="button" class="btn btn-success" id="store-files-button">Store All Files</button>
-                <button type="button" class="btn btn-danger" id="clear-data-button">Clear All Data</button>
-            </div>
-            <div class="card-footer text-muted">
-                Designed by Dario Turchi
+                <h5 class="card-title">Login to Database</h5>
+                <form id="db-login">
+                    <div class="form-group">
+                        <label for="username">Username</label>
+                        <input type="text" class="form-control" id="username" placeholder="Enter Username">
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input type="password" class="form-control" id="password" placeholder="Enter Password">
+                    </div>
+                    <div class="form-group">
+                        <label for="db-name">DB Name</label>
+                        <input type="text" class="form-control" id="db-name" placeholder="Enter DB Name">
+                    </div>
+                    <button type="submit" class="btn btn-primary" id="log-button">Login</button>
+                </form>
             </div>
         </div>
     </div>
-    <!-- Database UI Section ends -->
+    <!-- Database login ends -->
+
+    <br>
+
+    <!-- Database status starts -->
+    <div class="card">
+        <h5 class="card-header">Display DB Status</h5>
+        <div class="card-body">
+            <p class="card-text">Database has (N1) files, (N2) changes and (N3) downloads.</p>
+            <button type="button" class="btn btn-outline-dark" id="get-status-button">Get Status</button>
+        </div>
+    </div>
+    <!-- Database status ends -->
+
+    <br>
+
+    <!-- Database Functionality Section starts -->
+    <div class="card text-center">
+        <div class="card-header">
+            Database Functionality
+        </div>
+        <div class="card-body">
+            <h5 class="card-title"></h5>
+            <button type="button" class="btn btn-success" id="store-files-button">Store All Files</button>
+            <button type="button" class="btn btn-danger" id="clear-data-button">Clear All Data</button>
+        </div>
+        <div class="card-footer text-muted">
+            Designed by Dario Turchi
+        </div>
+    </div>
+    <!-- Database Functionality Section ends -->
 
     <!-- Leave me at the bottom of body -->
     <script src="/index.js"></script>
