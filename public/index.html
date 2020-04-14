@@ -26,7 +26,7 @@
 
 <body>
     <hr>
-    <h1 class="welcome">Welcome to Dario Turchi's SVG App</h1>
+    <h1 class="welcome">SVG App</h1>
     <hr>
     <!-- File Log Panel starts -->
     <h3>File Log Panel</h3>
@@ -142,32 +142,27 @@
 
     <!-- Edit Attributes starts -->
     <div id="edit-attributes">
-        <h3>Edit Attributes</h3>
-        <br>
-        <form id="edit-attributes">
-            <div class="form-group row">
-                <label for="component-for-edit" class="col-sm-2 col-form-label">Select Component:</label>
-                <div class="col-sm-7">
-                    <select name="component-for-edit" class="custom-select mb-3" id="component-dropdown-edit">
-                    </select>
-                </div>
-            </div>
-            <div class="form-group row">
-                <label class="control-label col-sm-2 col-form-label" for="editAttrName">Attribute Name:</label>
-                <div class="col-sm-7">
-                    <input type="text" class="form-control" id="editAttrName" name="editAttrName">
-                </div>
-            </div>
-            <div class="form-group row">
-                <label class="control-label col-sm-2 col-form-label" for="editAttrValue">Attribute Value:</label>
-                <div class="col-sm-7">
-                    <input type="text" class="form-control" id="editAttrValue" name="editAttrValue">
-                </div>
-                <div class="col-sm-2">
+        <div class="card">
+            <h3 class="card-header">Edit Attributes</h3>
+            <div class="card-body">
+                <form id="edit-attributes">
+                    <div class="form-group">
+                        <i><label for="component-for-edit">Select Component:</label></i>
+                        <select name="component-for-edit" class="custom-select mb-3" id="component-dropdown-edit">
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="editAttrName">Attribute Name:</label>
+                        <input type="text" class="form-control" id="editAttrName" name="editAttrName">
+                    </div>
+                    <div class="form-group">
+                        <label for="editAttrValue">Attribute Value:</label>
+                        <input type="text" class="form-control" id="editAttrValue" name="editAttrValue">
+                    </div>
                     <button type="button" id="btn-edit-attr" class="btn btn-warning">Edit Attribute</button>
-                </div>
+                </form>
             </div>
-        </form>
+        </div>
     </div>
     <!-- Edit Attributes ends -->
 
@@ -175,32 +170,28 @@
 
     <!-- Create SVG File starts -->
     <div id="create-svg">
-        <h3>Create SVG file</h3>
-        <form id="new-svg">
-            <div class="form-group row">
-                <label class="control-label col-sm-2 col-form-label" for="fname">Filename:</label>
-                <div class="col-sm-7">
-                    <input type="text" class="form-control" id="fname" placeholder="Enter Filename" name="fname"
-                        required>
-                </div>
-            </div>
-            <div class="form-group row">
-                <label class="control-label col-sm-2 col-form-label" for="newTitle">Title:</label>
-                <div class="col-sm-7">
-                    <input type="text" class="form-control" id="newTitle" placeholder="Enter title" name="newTitle">
-                </div>
-            </div>
-            <div class="form-group row">
-                <label class="control-label col-sm-2 col-form-label" for="newDescription">Description:</label>
-                <div class="col-sm-7">
-                    <input type="text" class="form-control" id="newDescription" placeholder="Enter description"
-                        name="newDescription">
-                </div>
-                <div class="col-sm-2">
+        <div class="card">
+            <h3 class="card-header">Create SVG file</h3>
+            <div class="card-body">
+                <form id="new-svg">
+                    <div class="form-group">
+                        <label for="fname">Filename:</label>
+                        <input type="text" class="form-control" id="fname" placeholder="Enter Filename" name="fname"
+                            required>
+                    </div>
+                    <div class="form-group">
+                        <label for="newTitle">Title:</label>
+                        <input type="text" class="form-control" id="newTitle" placeholder="Enter title" name="newTitle">
+                    </div>
+                    <div class="form-group">
+                        <label for="newDescription">Description:</label>
+                        <input type="text" class="form-control" id="newDescription" placeholder="Enter description"
+                            name="newDescription">
+                    </div>
                     <button type="submit" id="btn-create-svg" class="btn btn-success">Create SVG</button>
-                </div>
+                </form>
             </div>
-        </form>
+        </div>
     </div>
     <!-- Create SVG File ends -->
 
@@ -208,125 +199,119 @@
 
     <!-- Edit SVG Title & Description starts -->
     <div id="edit-svg">
-        <h3>Edit SVG file</h3>
-        <small>incorrect operation...overwrites entire svg image instead of edit tite/desc</small>
-        <br>
-        <form id="edit-svg">
-            <div class="form-group row">
-                <label for="files-for-edit" class="col-sm-2 col-form-label">Select File to edit:</label>
-                <div class="col-sm-7">
-                    <select name="files-for-edit" class="custom-select mb-3" id="svg-dropdown-edit-svg">
-                        <option selected>-- None Selected --</option>
-                    </select>
-                </div>
-            </div>
-            <div class="form-group row">
-                <label class="control-label col-sm-2 col-form-label" for="editTitle">Title:</label>
-                <div class="col-sm-7">
-                    <input type="text" class="form-control" id="editTitle" placeholder="edit title" name="editTitle">
-                </div>
-            </div>
-            <div class="form-group row">
-                <label class="control-label col-sm-2 col-form-label" for="editDescription">Description:</label>
-                <div class="col-sm-7">
-                    <input type="text" class="form-control" id="editDescription" placeholder="edit description"
-                        name="editDescription">
-                </div>
-                <div class="col-sm-2">
+        <div class="card">
+            <h3 class="card-header">Edit SVG file</h3>
+            <div class="card-body">
+                <p class="card-text">incorrect operation...overwrites entire svg image instead of edit tite/desc</p>
+                <form id="edit-svg">
+                    <div class="form-group">
+                        <i><label for="files-for-edit">Select File to edit:</label></i>
+                        <select name="files-for-edit" class="custom-select mb-3" id="svg-dropdown-edit-svg">
+                            <option selected>-- None Selected --</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="editTitle">Title:</label>
+                        <input type="text" class="form-control" id="editTitle" placeholder="edit title"
+                            name="editTitle">
+                    </div>
+                    <div class="form-group">
+                        <label for="editDescription">Description:</label>
+                        <input type="text" class="form-control" id="editDescription" placeholder="edit description"
+                            name="editDescription">
+                    </div>
                     <button type="button" id="btn-edit-svg" class="btn btn-warning">Edit SVG</button>
-                </div>
+                </form>
             </div>
-        </form>
+        </div>
     </div>
     <!-- Edit SVG Title & Description ends -->
 
     <hr>
 
     <!-- Add Shape starts -->
-    <div id="add-shape">
-        <h3>Add Shape (Rectangles & Circles)</h3>
-        <br>
-        <form id="add-rectangle">
-            <div class="form-group row">
-                <label for="files-for-rectangle" class="col-sm-2 col-form-label">Select File to edit:</label>
-                <div class="col-sm-7">
-                    <select name="files-for-rectangle" class="custom-select mb-3" id="svg-dropdown-add-rectangle">
-                        <option selected>-- None Selected --</option>
-                    </select>
+    <div id="add-shape" class="card">
+        <h3 class="card-header">Add Shapes</h3>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <h4 class="card-title">Add Rectangle</h4>
+                            <form id="add-rectangle">
+                                <div class="form-group">
+                                    <i><label for="files-for-rectangle">Select File to edit:</label></i>
+                                    <select name="files-for-rectangle" class="custom-select mb-3"
+                                        id="svg-dropdown-add-rectangle">
+                                        <option selected>-- None Selected --</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="x">x:</label>
+                                    <input type="text" class="form-control" id="x" placeholder="x" name="x">
+                                </div>
+                                <div class="form-group">
+                                    <label for="y">y:</label>
+                                    <input type="text" class="form-control" id="y" placeholder="y" name="y">
+                                </div>
+                                <div class="form-group">
+                                    <label for="height">Height:</label>
+                                    <input type="text" class="form-control" id="height" placeholder="height"
+                                        name="height">
+                                </div>
+                                <div class="form-group">
+                                    <label for="width">Width:</label>
+                                    <input type="text" class="form-control" id="width" placeholder="width" name="width">
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="rectUnits">Units:</label>
+                                    <input type="text" class="form-control" id="rectUnits" placeholder="units"
+                                        name="rectUnits">
+                                </div>
+                                <button type="button" id="btn-add-rectangle" class="btn btn-success">Add
+                                    Rectangle</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <h4 class="card-title">Add Circle</h4>
+                            <form id="add-circle">
+                                <div class="form-group">
+                                    <i><label for="files-for-circle">Select File to edit:</label></i>
+                                    <select name="files-for-circle" class="custom-select mb-3"
+                                        id="svg-dropdown-add-circle">
+                                        <option selected>-- None Selected --</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="cx">cx:</label>
+                                    <input type="text" class="form-control" id="cx" placeholder="cx" name="cx">
+                                </div>
+                                <div class="form-group">
+                                    <label for="cy">cy:</label>
+                                    <input type="text" class="form-control" id="cy" placeholder="cy" name="cy">
+                                </div>
+                                <div class="form-group">
+                                    <label for="cy">Radius:</label>
+                                    <input type="text" class="form-control" id="radius" placeholder="radius"
+                                        name="radius">
+                                </div>
+                                <div class="form-group">
+                                    <label for="circUnits">Units:</label>
+                                    <input type="text" class="form-control" id="circUnits" placeholder="units"
+                                        name="circUnits">
+                                </div>
+                                <button type="button" id="btn-add-circle" class="btn btn-success">Add Circle</button>
+                            </form>
+                        </div>
+                    </div>
                 </div>
             </div>
-
-            <div class="content">
-                <div class="form-group row">
-                    <label class="control-label col-form-label" for="x">x:</label>
-                    <div class="col-sm-2">
-                        <input type="text" class="form-control" id="x" placeholder="x" name="x">
-                    </div>
-                    <label class="control-label col-form-label" for="width">Width:</label>
-                    <div class="col-sm-2">
-                        <input type="text" class="form-control" id="width" placeholder="width" name="width">
-                    </div>
-                    <label class="control-label col-form-label" for="rectUnits">Units:</label>
-                    <div class="col-sm-2">
-                        <input type="text" class="form-control" id="rectUnits" placeholder="units" name="rectUnits">
-                    </div>
-                </div>
-
-                <div class="form-group row">
-                    <label class="control-label col-form-label" for="x">y:</label>
-                    <div class="col-sm-2">
-                        <input type="text" class="form-control" id="y" placeholder="y" name="y">
-                    </div>
-
-                    <label class="control-label col-form-label" for="height">Height:</label>
-                    <div class="col-sm-2">
-                        <input type="text" class="form-control" id="height" placeholder="height" name="height">
-                    </div>
-                    <div class="col-sm-2">
-                        <button type="button" id="btn-add-rectangle" class="btn btn-success">Add Rectangle</button>
-                    </div>
-                </div>
-            </div>
-        </form>
-
-        <br>
-
-        <form id="add-circle">
-            <div class="form-group row">
-                <label for="files-for-circle" class="col-sm-2 col-form-label">Select File to edit:</label>
-                <div class="col-sm-7">
-                    <select name="files-for-circle" class="custom-select mb-3" id="svg-dropdown-add-circle">
-                        <option selected>-- None Selected --</option>
-                    </select>
-                </div>
-            </div>
-
-            <div class="content">
-                <div class="form-group row">
-                    <label class="control-label col-form-label" for="cx">cx:</label>
-                    <div class="col-sm-2">
-                        <input type="text" class="form-control" id="cx" placeholder="cx" name="cx">
-                    </div>
-                    <label class="control-label col-form-label" for="cy">cy:</label>
-                    <div class="col-sm-2">
-                        <input type="text" class="form-control" id="cy" placeholder="cy" name="cy">
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <label class="control-label col-form-label" for="cy">Radius:</label>
-                    <div class="col-sm-2">
-                        <input type="text" class="form-control" id="radius" placeholder="radius" name="radius">
-                    </div>
-                    <label class="control-label col-form-label" for="circUnits">Units:</label>
-                    <div class="col-sm-2">
-                        <input type="text" class="form-control" id="circUnits" placeholder="units" name="circUnits">
-                    </div>
-                    <div class="col-sm-2">
-                        <button type="button" id="btn-add-circle" class="btn btn-success">Add Circle</button>
-                    </div>
-                </div>
-            </div>
-        </form>
+        </div>
     </div>
     <!-- Add Shape ends -->
 
@@ -334,59 +319,77 @@
 
     <!-- Scale Shape starts -->
     <div id="scale-shapes">
-        <h3>Scale Shapes</h3>
-        <h6>Scales Rectangles and Circles along their x, y, r dimensions</h6>
-        <br>
-        <form id="scale-shapes">
-            <div class="form-group row">
-                <label for="files-for-scaling" class="col-sm-2 col-form-label">Select file to Scale:</label>
-                <div class="col-sm-7">
-                    <select name="files-for-scaling" class="custom-select mb-3" id="svg-dropdown-scale-shapes">
-                        <option selected>-- None Selected --</option>
-                    </select>
-                </div>
-            </div>
-
-            <div class="content">
-                <div class="form-group row">
-                    <label class="control-label col-form-label" for="scale-factor">Scale Factor:</label>
-                    <div class="col-sm-2">
+        <div class="card">
+            <h3 class="card-header">Scale Shapes</h3>
+            <div class="card-body">
+                <p class="card-text">Scales Rectangles and Circles along their x, y, r dimensions</p>
+                <form id="scale-shapes">
+                    <div class="form-group">
+                        <i><label for="files-for-scaling">Select file to Scale:</label></i>
+                        <select name="files-for-scaling" class="custom-select mb-3" id="svg-dropdown-scale-shapes">
+                            <option selected>-- None Selected --</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="scale-factor">Scale Factor:</label>
                         <input type="text" class="form-control" id="scale-factor" placeholder="Scale By"
                             name="scale-factor">
                     </div>
-                    <div class="col-sm-2">
-                        <button type="button" id="btn-scale-shape" class="btn btn-warning">Scale Shape</button>
-                    </div>
-                </div>
+                    <button type="button" id="btn-scale-shape" class="btn btn-warning">Scale Shape</button>
+                </form>
             </div>
-        </form>
+        </div>
     </div>
     <!-- Scale Shapes ends -->
-    <br>
     <hr>
     <h2>Database Section</h2>
-    <hr>
-    <br>
 
     <!-- Database UI Section starts -->
-    <div>
-        <h3>Database Login</h3>
+    <div id="database-section">
+        <div class="card">
+            <div class="card border-secondary">
+                <div class="card-body">
+                    <h5 class="card-title">Login to Database</h5>
+                    <form id="db-login">
+                        <div class="form-group">
+                            <label for="username">Username</label>
+                            <input type="text" class="form-control" id="username" placeholder="Enter Username">
+                        </div>
+                        <div class="form-group">
+                            <label for="password">Password</label>
+                            <input type="password" class="form-control" id="password" placeholder="Enter Password">
+                        </div>
+                        <div class="form-group">
+                            <label for="db-name">DB Name</label>
+                            <input type="text" class="form-control" id="db-name" placeholder="Enter DB Name">
+                        </div>
+                        <button type="submit" class="btn btn-primary" id="log-button">Login</button>
+                    </form>
+                </div>
+            </div>
+        </div>
         <br>
-        <form>
-            <div class="form-group">
-                <label for="username">Username</label>
-                <input type="text" class="form-control" id="username" placeholder="Enter Username">
+        <div class="card">
+            <h5 class="card-header">Display DB Status</h5>
+            <div class="card-body">
+                <p class="card-text">Database has (N1) files, (N2) changes and (N3) downloads.</p>
+                <button type="button" class="btn btn-outline-dark" id="get-status-button">Get Status</button>
             </div>
-            <div class="form-group">
-                <label for="password">Password</label>
-                <input type="password" class="form-control" id="password" placeholder="Enter Password">
+        </div>
+        <br>
+        <div class="card text-center">
+            <div class="card-header">
+                Database Functionality
             </div>
-            <div class="form-group">
-                <label for="db-name">DB Name</label>
-                <input type="text" class="form-control" id="db-name" placeholder="Enter Database Name">
+            <div class="card-body">
+                <h5 class="card-title"></h5>
+                <button type="button" class="btn btn-success" id="store-files-button">Store All Files</button>
+                <button type="button" class="btn btn-danger" id="clear-data-button">Clear All Data</button>
             </div>
-            <button type="submit" class="btn btn-dark" id="log-button">Login</button>
-        </form>
+            <div class="card-footer text-muted">
+                Designed by Dario Turchi
+            </div>
+        </div>
     </div>
     <!-- Database UI Section ends -->
 

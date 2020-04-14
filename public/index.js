@@ -2,7 +2,7 @@
  * file    		index.js
  * author  		Dario Turchi
  * studentID 	0929012
- * lastEdit     March 12, 2020
+ * lastEdit     April 13, 2020s
  */
 // Put all onload AJAX calls here, and event listeners
 $(document).ready(function () {
@@ -342,6 +342,44 @@ $(document).ready(function () {
         alert("The shape you want to scale is "+shapeToUpdate+"\nScale Factor: "+scaleFactor);
         clearScaleForm();
     });
+
+    //**********************A4 Functions **********************
+    $('#db-login').submit(function(e){
+        e.preventDefault();
+
+        let username = $("#username").val();
+        let password = $("#password").val();
+        let dbname = $("#db-name").val();
+
+        $.ajax({
+            type: 'get',
+            dataType: 'json',
+            url: '/dbms/',
+            data: {
+                username: username,
+                password: password,
+                dbname: dbname,
+            },
+            success: function(data) {
+                console.log(data);
+                if(data === "Success")
+                {
+                    alert("Valid Credentials, Successfully Logged Into Database!");
+                    //disabled, false properties
+                }
+                else{
+                    alert("Invalid Credentials! Please Confirm Values and Try Again");
+                }
+            },
+            fail: function(error) {
+                console.log(error);
+                alert("Invalid Credentials! Please Confirm Values and Try Again");
+            }
+        });
+            //alert("Valid Credentials, Successfully Logged Into Database!");
+            //disabled, false properties
+    })
+
 });
 
 function refreshFileLogandDropdown() {

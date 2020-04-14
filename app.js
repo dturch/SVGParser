@@ -51,8 +51,8 @@ app.post('/upload', function (req, res) {
 	let uploadFile = req.files.uploadFile;
 
 	//added to prevent non.svg images from being added - Dario Turchi
-	if (uploadFile.name.slice(uploadFile.name.length - 4) != ".svg") { 
-		return res.status(400).send(uploadFile.name+" cannot be uploaded! upload svg files only! Please go back and select a different file!");
+	if (uploadFile.name.slice(uploadFile.name.length - 4) != ".svg") {
+		return res.status(400).send(uploadFile.name + " cannot be uploaded! upload svg files only! Please go back and select a different file!");
 	}
 
 	// Use the mv() method to place the file somewhere on your server
@@ -104,7 +104,7 @@ app.get('/getFiles', function (req, res) {
 			files.splice(i, 1); // doesn't include invalid files! but its still inside upload folder!!!!
 			i = 0;
 		}
-		console.log("valid file: "+files[i]+" found in uploads/ folder!");
+		console.log("valid file: " + files[i] + " found in uploads/ folder!");
 		let c = lib.getSVGInfo(files[i]);
 		var stats = fs.statSync('./uploads/' + files[i]);
 		var kb = Math.round(stats.size / 1024);
@@ -160,7 +160,7 @@ app.get('/edit-attr/:filename', function (req, res) {
 //**********************A4 Functions **********************
 
 let cred = {};
-let connection; 
+let connection;
 // queries
 let query_file = `CREATE TABLE IF NOT EXISTS FILE (
 	svg_id INT NOT NULL AUTO_INCREMENT, 
@@ -173,7 +173,7 @@ let query_file = `CREATE TABLE IF NOT EXISTS FILE (
 	n_group INT NOT NULL,
 	creation_time DATETIME NOT NULL,
 	file_size INT NOT NULL, PRIMARY KEY (svg_id))`;
-	
+
 let query_image_change = `CREATE TABLE IF NOT EXISTS IMG_CHANGE (
 	change_id INT NOT NULL AUTO_INCREMENT, 
 	change_type VARCHAR(256) NOT NULL,
@@ -182,7 +182,7 @@ let query_image_change = `CREATE TABLE IF NOT EXISTS IMG_CHANGE (
 	svg_id INT NOT NULL,
 	PRIMARY KEY (change_id),
 	FOREIGN KEY (svg_id) REFERENCES FILE(svg_id) ON DELETE CASCADE)`;
-	
+
 let query_download = `CREATE TABLE IF NOT EXISTS DOWNLOAD (
 	download_id INT NOT NULL AUTO_INCREMENT, 
 	d_descr VARCHAR(256),
@@ -192,15 +192,15 @@ let query_download = `CREATE TABLE IF NOT EXISTS DOWNLOAD (
 
 
 // dbms
-app.get('/dbms', async function(req, res){
-
+app.get('/dbms', async function (req, res) {
 	cred = {
-		host		: 'dursley.socs.uoguelph.ca',
-		user		: req.query.username,
-		password	: req.query.password,
-		database	: req.query.database }
-	
-		var status;
+		host: 'dursley.socs.uoguelph.ca',
+		user: req.query.username,
+		password: req.query.password,
+		database: req.query.database
+	}
+
+	var status;
 
 	try {
 		connection = await mysql.createConnection(cred);
@@ -210,12 +210,54 @@ app.get('/dbms', async function(req, res){
 		await connection.execute(query_download);
 
 		status = "Success";
-	} 
-	catch(err) {
+	} catch (err) {
 		console.log("Query error: " + err);
 		status = "Failure";
+	} finally {
+		if (connection && connection.end) connection.end();
 	}
-	finally {
-		if(connection && connection.end) connection.end();
+
+	console.log(status);
+	res.send(status);
+});
+
+app.get('/db-status', async function (req, res) {
+	cred = {
+		host: 'dursley.socs.uoguelph.ca',
+		user: req.query.username,
+		password: req.query.password,
+		database: req.query.dbname
 	}
-}); 
+
+	var r = [];
+
+	try {
+		connection = await mysql.createConnection(cred);
+
+		console.log('Success');
+
+		let [rows1, fields1] = await connection.execute('SELECT (SELECT COUNT(*) FROM FILE) AS fc;');
+		let [rows2, fields2] = await connection.execute('SELECT (SELECT COUNT(*) FROM IMG_CHANGE) AS icc;');
+		let [rows3, fields3] = await connection.execute('SELECT (SELECT COUNT(*) FROM DOWNLOAD) AS dc;');
+
+		for (let row of rows1) {
+			console.log(row.fc);
+			r[0] = row.fc;
+		}
+		for (let row of rows2) {
+			console.log(row.icc);
+			r[1] = row.icc;
+		}
+		for (let row of rows3) {
+			console.log(row.dc);
+			r[2] = row.dc;
+		}
+	} catch (e) {
+		console.log("Query error: " + e);
+	} finally {
+		//Close the connection  
+		if (connection && connection.end) connection.end();
+	}
+
+	res.send(r);
+});
