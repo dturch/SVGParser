@@ -7,6 +7,7 @@
 // Put all onload AJAX calls here, and event listeners
 $(document).ready(function () {
     document.getElementById("db-actions").style.display = "none"; // hide the db actions until logged in
+    document.getElementById("login").style.display = "block";
     refreshFileLogandDropdown(); // populate dropdownlists and filelog
     clearAllForms(); //triger reset to clear all fields in forms
 
@@ -37,23 +38,23 @@ $(document).ready(function () {
                 for (let svgStruct in data) {
                     for (var r = 0; r < data[svgStruct].rectangle.length; r++) {
                         $("#rectangle-summary").append("<tr><td>Rectangle " + (r + 1) + "</td><td>Upper left corner: x = " + data[svgStruct].rectangle[r].x + data[svgStruct].rectangle[r].units + ", y = " + data[svgStruct].rectangle[r].y + data[svgStruct].rectangle[r].units + ", Width: " + data[svgStruct].rectangle[r].w + data[svgStruct].rectangle[r].units + ", Height: " + data[svgStruct].rectangle[r].h + data[svgStruct].rectangle[r].units + "</td><td>" + data[svgStruct].rectangle[r].numAttr + "</td></tr>");
-                        $('#component-dropdown').append("<option value=\""+r+"\"" + ">" + "Rectangle " + (r + 1) + "</option>");
-                        $('#component-dropdown-edit').append("<option value=\""+r+"\"" + ">" + "Rectangle " + (r + 1) + "</option>");
+                        $('#component-dropdown').append("<option value=\"" + r + "\"" + ">" + "Rectangle " + (r + 1) + "</option>");
+                        $('#component-dropdown-edit').append("<option value=\"" + r + "\"" + ">" + "Rectangle " + (r + 1) + "</option>");
                     }
                     for (var c = 0; c < data[svgStruct].circle.length; c++) {
                         $("#circle-summary").append("<tr><td>Circle " + (c + 1) + "</td><td>Centre: x = " + data[svgStruct].circle[c].cx + data[svgStruct].circle[c].units + ", y = " + data[svgStruct].circle[c].cy + data[svgStruct].circle[c].units + ", radius: " + data[svgStruct].circle[c].r + data[svgStruct].circle[c].units + "</td><td>" + data[svgStruct].circle[c].numAttr + "</td></tr>");
-                        $('#component-dropdown').append("<option value=\""+c+"\"" + ">" + "Circle " + (c + 1) + "</option>");
-                        $('#component-dropdown-edit').append("<option value=\""+c+"\"" + ">" + "Circle " + (c + 1) + "</option>");
+                        $('#component-dropdown').append("<option value=\"" + c + "\"" + ">" + "Circle " + (c + 1) + "</option>");
+                        $('#component-dropdown-edit').append("<option value=\"" + c + "\"" + ">" + "Circle " + (c + 1) + "</option>");
                     }
                     for (var p = 0; p < data[svgStruct].path.length; p++) {
                         $("#path-summary").append("<tr><td>Path " + (p + 1) + "</td><td>path data = " + data[svgStruct].path[p].d + "</td><td>" + data[svgStruct].path[p].numAttr + "</td></tr>");
-                        $('#component-dropdown').append("<option value=\""+p+"\"" + ">" + "Path " + (p + 1) + "</option>");
-                        $('#component-dropdown-edit').append("<option value=\""+p+"\"" + ">" + "Path " + (p + 1) + "</option>");
+                        $('#component-dropdown').append("<option value=\"" + p + "\"" + ">" + "Path " + (p + 1) + "</option>");
+                        $('#component-dropdown-edit').append("<option value=\"" + p + "\"" + ">" + "Path " + (p + 1) + "</option>");
                     }
                     for (var g = 0; g < data[svgStruct].group.length; g++) {
                         $("#group-summary").append("<tr><td>Group " + (g + 1) + "</td><td>" + data[svgStruct].group[g].children + " child elements</td><td>" + data[svgStruct].group[g].numAttr + "</td></tr>");
-                        $('#component-dropdown').append("<option value=\""+g+"\"" + ">" + "Group " + (g + 1) + "</option>");
-                        $('#component-dropdown-edit').append("<option value=\""+g+"\"" + ">" + "Group " + (g + 1) + "</option>");
+                        $('#component-dropdown').append("<option value=\"" + g + "\"" + ">" + "Group " + (g + 1) + "</option>");
+                        $('#component-dropdown-edit').append("<option value=\"" + g + "\"" + ">" + "Group " + (g + 1) + "</option>");
                     }
                     $('#svg-title-desc').append("<tr><td>" + data[svgStruct].title + "</td><td>" + data[svgStruct].description + "</td></tr>");
                 }
@@ -71,11 +72,11 @@ $(document).ready(function () {
     // component properties dropdown action 
     $('#component-dropdown').change(function () {
         let component = $("#component-dropdown option:selected").text();
-        let file = $("#svg-dropdown").children("option:selected").val();        
+        let file = $("#svg-dropdown").children("option:selected").val();
         console.log(component);
 
         $('#component-properties tr').remove();
-        
+
         $.ajax({
             type: 'get',            //Request type
             dataType: 'json',       //Data type - we will use JSON for almost everything 
@@ -98,9 +99,9 @@ $(document).ready(function () {
     });
 
     // edit-svg dropdown action 
-    $('#svg-dropdown-edit-svg').change(function (){
+    $('#svg-dropdown-edit-svg').change(function () {
         let imageToEdit = $("#svg-dropdown-edit-svg option:selected").text();
-        console.log(imageToEdit);        
+        console.log(imageToEdit);
 
         $.ajax({
             type: 'get',            //Request type
@@ -123,14 +124,14 @@ $(document).ready(function () {
         });
     });
 
-    // create SVG btn.Click 
+    // create SVG btn.click 
     $('#btn-create-svg').on('click', function (e) {
         e.preventDefault();
         let filename = $("#fname").val()
         let svgTitle = document.getElementById('newTitle').value;
         let svgDesc = document.getElementById('newDescription').value;
 
-        if (filename.length == 0){
+        if (filename.length == 0) {
             alert("filename cannot be blank");
             return;
         }
@@ -149,23 +150,23 @@ $(document).ready(function () {
         }
 
         // temp server crash fix... this causes a non-empty description with nothing inside but a space character need to fix
-        if(svgDesc.length == 0) {
+        if (svgDesc.length == 0) {
             svgDesc = "";
         }
 
-        if(svgTitle.length == 0) {
+        if (svgTitle.length == 0) {
             svgTitle = "";
         }
 
-        if(filename.slice(filename.length - 4) != ".svg"){
+        if (filename.slice(filename.length - 4) != ".svg") {
             filename += ".svg";
         }
 
         let svg = {
-            'title' : svgTitle,
-            'description' : svgDesc
+            'title': svgTitle,
+            'description': svgDesc
         }
-        
+
         let svgJSON = JSON.stringify(svg);
 
         $.ajax({
@@ -175,15 +176,15 @@ $(document).ready(function () {
             data: {
                 filename: filename,
                 svgJSON: svgJSON
-            },            
+            },
             success: function (data) {
-                    alert("successfully created new SVG file");
-                    clearAllForms();
-                    $('#log-table').append("<tr><th scope=\"row\"><a download href=\"uploads/" + filename + "\"><img class='table-img' src=\"uploads/" + filename + "\">" + "</th><td>" + "<a href=\"uploads/" + filename + "\" download>" + filename + "</a><td>" + data["sizeKB"] +"KB</td><td>" + data["numRect"] + "</td><td>" + data["numCirc"] + "</td><td>" + data["numPaths"] + "</td><td>" + data["numGroups"] + "</td>");
-                    $('#svg-dropdown').append("<option value=\"" + filename + "\"" + ">" + filename + "</option>");
-                    $('#svg-dropdown-add-rectangle').append("<option value=\"" + filename + "\"" + ">" + filename + "</option>");
-                    $('#svg-dropdown-add-circle').append("<option value=\"" + filename + "\"" + ">" + filename + "</option>");
-                    $('#svg-dropdown-edit-svg').append("<option value=\"" + filename + "\"" + ">" + filename + "</option>");
+                alert("successfully created new SVG file");
+                clearAllForms();
+                $('#log-table').append("<tr><th scope=\"row\"><a download href=\"uploads/" + filename + "\"><img class='table-img' src=\"uploads/" + filename + "\">" + "</th><td>" + "<a href=\"uploads/" + filename + "\" download>" + filename + "</a><td>" + data["sizeKB"] + "KB</td><td>" + data["numRect"] + "</td><td>" + data["numCirc"] + "</td><td>" + data["numPaths"] + "</td><td>" + data["numGroups"] + "</td>");
+                $('#svg-dropdown').append("<option value=\"" + filename + "\"" + ">" + filename + "</option>");
+                $('#svg-dropdown-add-rectangle').append("<option value=\"" + filename + "\"" + ">" + filename + "</option>");
+                $('#svg-dropdown-add-circle').append("<option value=\"" + filename + "\"" + ">" + filename + "</option>");
+                $('#svg-dropdown-edit-svg').append("<option value=\"" + filename + "\"" + ">" + filename + "</option>");
             },
             fail: function (error) {
                 // Non-200 return, do something with error
@@ -193,22 +194,22 @@ $(document).ready(function () {
         });
     });
 
-    // edit SVG btn.Click 
-    $('#btn-edit-svg').on('click', function() {
+    // edit SVG btn.click 
+    $('#btn-edit-svg').on('click', function () {
         let editSVGFNToUpdate = $("#svg-dropdown-edit-svg").children("option:selected").val();
         let titleEdits = $('#editTitle').val();
         let descEdits = $('#editDescription').val();
 
-        if(editSVGFNToUpdate == "-- None Selected --"){
+        if (editSVGFNToUpdate == "-- None Selected --") {
             alert("please select a svg image to edit its title/description!");
             return;
         }
 
         let svg = {
-            'title' : titleEdits,
-            'description' : descEdits
+            'title': titleEdits,
+            'description': descEdits
         }
-        
+
         let svgJSON = JSON.stringify(svg);
 
         $.ajax({
@@ -218,9 +219,9 @@ $(document).ready(function () {
             data: {
                 filename: editSVGFNToUpdate,
                 svgJSON: svgJSON
-            },   
+            },
             success: function (data) {
-                alert("The file you want edit the title/desc is:  "+editSVGFNToUpdate+"\nTitle is now: "+titleEdits+", description is now: "+descEdits);
+                alert("The file you want edit the title/desc is:  " + editSVGFNToUpdate + "\nTitle is now: " + titleEdits + ", description is now: " + descEdits);
                 clearEditSVGForm();
             },
             fail: function (error) {
@@ -231,23 +232,23 @@ $(document).ready(function () {
         });
     });
 
-    // edit SVG btn.Click 
-    $('#btn-edit-attr').on('click', function() {
+    // edit SVG btn.click 
+    $('#btn-edit-attr').on('click', function () {
         let editAttrFNToUpdate = $("#component-dropdown-edit").children("option:selected").val();
         let nullDDL = $("#component-dropdown-edit").children("option:selected").val();
         let attrNameEdits = $('#editAttrName').val();
         let attrValueEdits = $('#editAttrValue').val();
 
-        if(editAttrFNToUpdate == "-- No Component Selected --" || nullDDL == null){
+        if (editAttrFNToUpdate == "-- No Component Selected --" || nullDDL == null) {
             alert("please select an image component to edit its attributes!");
             return;
         }
 
         let attr = {
-            'name' : attrNameEdits,
-            'value' : attrNameEdits
+            'name': attrNameEdits,
+            'value': attrNameEdits
         }
-        
+
         let attrJSON = JSON.stringify(attr);
 
         $.ajax({
@@ -257,11 +258,11 @@ $(document).ready(function () {
             data: {
                 filename: editAttrFNToUpdate,
                 attrJSON: attrJSON,
-            },   
+            },
             success: function (data) {
-                alert("dummy button click alert for edit attribute\n"+"component to load attributes from: "+editAttrFNToUpdate+"\nattrName: "+attrNameEdits+", attrValue is now: "+attrValueEdits);
+                alert("dummy button click alert for edit attribute\n" + "component to load attributes from: " + editAttrFNToUpdate + "\nattrName: " + attrNameEdits + ", attrValue is now: " + attrValueEdits);
                 clearEditAttributeForm();
-                alert("The Component you want edit the Attr is:  "+editAttrFNToUpdate+"\nTitle is now: "+attrNameEdits+", description is now: "+attrNameEdits);
+                alert("The Component you want edit the Attr is:  " + editAttrFNToUpdate + "\nTitle is now: " + attrNameEdits + ", description is now: " + attrNameEdits);
                 clearEditSVGForm();
             },
             fail: function (error) {
@@ -272,8 +273,8 @@ $(document).ready(function () {
         });
     });
 
-    // add rectangle btn.Click 
-    $('#btn-add-rectangle').on('click', function() {
+    // add rectangle btn.click 
+    $('#btn-add-rectangle').on('click', function () {
         let rectFNToUpdate = "uploads/" + $("#svg-dropdown-add-rectangle").children("option:selected").val();
         let x = $('#x').val();
         let y = $('#y').val();
@@ -281,74 +282,73 @@ $(document).ready(function () {
         let width = $('#width').val();
         let rectUnits = $('#rectUnits').val();
 
-        if(rectFNToUpdate == "uploads/-- None Selected --"){
+        if (rectFNToUpdate == "uploads/-- None Selected --") {
             alert("please select a file to add rectangles to!");
             return;
         }
-        
-        if(width < 0 || height < 0) {
+
+        if (width < 0 || height < 0) {
             alert("width / height cannot be negative!");
             return;
         }
 
-        if(isNaN(width) == 1 || isNaN(height) == 1 || isNaN(y) == 1 || isNaN(x) == 1){
+        if (isNaN(width) == 1 || isNaN(height) == 1 || isNaN(y) == 1 || isNaN(x) == 1) {
             alert("invalid input! only numbers are accepted for x, y, height, and width");
             return;
         }
 
-        alert("The file you want add the new rectangle to is located: "+rectFNToUpdate+"\nNew Rectangle with values of { x: "+x+rectUnits+", y: "+y+rectUnits+", height: "+height+rectUnits+", width: "+width+rectUnits+" }");
+        alert("The file you want add the new rectangle to is located: " + rectFNToUpdate + "\nNew Rectangle with values of { x: " + x + rectUnits + ", y: " + y + rectUnits + ", height: " + height + rectUnits + ", width: " + width + rectUnits + " }");
         clearRectangleForm();
     });
 
-    // add circle btn.Click 
-    $('#btn-add-circle').on('click', function() {
+    // add circle btn.click 
+    $('#btn-add-circle').on('click', function () {
         let circFNToUpdate = "uploads/" + $("#svg-dropdown-add-circle").children("option:selected").val();
         let cx = $('#cx').val();
         let cy = $('#cy').val();
         let radius = $('#radius').val();
         let circUnits = $('#circUnits').val();
 
-        if(circFNToUpdate == "uploads/-- None Selected --"){
+        if (circFNToUpdate == "uploads/-- None Selected --") {
             alert("please select a file to add circles to!");
             return;
         }
 
-        if(radius < 0) {
+        if (radius < 0) {
             alert("Radius cannot be negative!");
             return;
         }
-        if(isNaN(cx) == 1 || isNaN(cy) == 1 || isNaN(radius) == 1){
+        if (isNaN(cx) == 1 || isNaN(cy) == 1 || isNaN(radius) == 1) {
             alert("invalid input! only numbers are accepted for cx, cy, radius");
             return;
         }
 
-        alert("The file you want add the new circle to is located: "+circFNToUpdate+"\nNew Circle with values of { cx: "+cx+circUnits+", cy: "+cy+circUnits+", radius: "+radius+circUnits+" }");
+        alert("The file you want add the new circle to is located: " + circFNToUpdate + "\nNew Circle with values of { cx: " + cx + circUnits + ", cy: " + cy + circUnits + ", radius: " + radius + circUnits + " }");
         clearCircleForm();
     });
 
-    // scale shape btn.Click 
-    $('#btn-scale-shape').on('click', function() {
+    // scale shape btn.click 
+    $('#btn-scale-shape').on('click', function () {
         let shapeToUpdate = "uploads/" + $("#svg-dropdown-scale-shapes").children("option:selected").val();
         let scaleFactor = $('#scale-factor').val();
 
-        if(shapeToUpdate == "uploads/-- None Selected --"){
+        if (shapeToUpdate == "uploads/-- None Selected --") {
             alert("please select a file to scale!");
             return;
         }
 
-        if(isNaN(scaleFactor) == 1){
+        if (isNaN(scaleFactor) == 1) {
             alert("invalid input! only numbers are accepted for scale factor");
             return;
         }
-        alert("The shape you want to scale is "+shapeToUpdate+"\nScale Factor: "+scaleFactor);
+        alert("The shape you want to scale is " + shapeToUpdate + "\nScale Factor: " + scaleFactor);
         clearScaleForm();
     });
 
     //**********************A4 Functions **********************
-    $('#db-login').submit(function(e){
+    // database login btn.Submit
+    $('#db-login').submit(function (e) {
         e.preventDefault();
-
-        document.getElementById("db-actions").style.display = "block";
 
         let username = $("#username").val();
         let password = $("#password").val();
@@ -363,24 +363,89 @@ $(document).ready(function () {
                 password: password,
                 dbname: dbname,
             },
-            success: function(data) {
+            success: function (data) {
                 console.log(data);
-                if(data === "Success")
-                {
+                if (data === true) {
                     alert("Valid Credentials, Successfully Logged Into Database!");
                     document.getElementById("db-actions").style.display = "block"; // reveal db actions once logged in
+                    document.getElementById("login").style.display = "none"; // hide login, because user is now signed in
                 }
-                else{
+                else {
                     alert("Invalid Credentials! Please Try Again");
                 }
             },
-            fail: function(error) {
+            fail: function (error) {
                 console.log(error);
                 alert("There was an error while logging in");
             }
         });
-    })
 
+        // db actions onced signed in!
+        $('#btn-store-files').on('click', function () {
+            $.ajax({
+                type: 'get',
+                dataType: 'json',
+                url: '/store-files/',
+                data: {
+                    username: username,
+                    password: password,
+                    dbname: dbname
+                },
+                success: function (data) {
+                    console.log(data);
+                    alert("All valid SVG files were added to the database!");
+                },
+                fail: function (error) {
+                    console.log(error);
+                    alert("There was an error trying to add files to the database!");
+                }
+            });
+        });
+
+        $('#btn-clear-data').on('click', function () {
+            $.ajax({
+                type: 'get',
+                dataType: 'json',
+                url: '/clear-data/',
+                data: {
+                    username: username,
+                    password: password,
+                    dbname: dbname
+                },
+                success: function (data) {
+                    console.log(data);
+                    alert("All rows in tables 'FILE', 'IMG_CHANGE' & 'DOWNLOAD' were cleared from the database!");
+                },
+                fail: function (error) {
+                    console.log(error);
+                    alert("There was an error trying to clear the database!");
+                }
+            });
+        });
+
+        $('#btn-db-status').on('click', function () {
+            $.ajax({
+                type: 'get',
+                dataType: 'json',
+                url: '/db-status/',
+                data: {
+                    username: username,
+                    password: password,
+                    dbname: dbname
+                },
+                success: function (data) {
+                    console.log(data);
+                    $('#db-status').html("Database has " + data[0] + " files, " + data[1] + " changes and " + data[2] + " downloads.");
+                },
+                fail: function (error) {
+                    console.log(error);
+                    alert("There was an error trying to refresh the database status!");
+                }
+            });
+        });
+
+        
+    })
 });
 
 function refreshFileLogandDropdown() {
@@ -397,14 +462,19 @@ function refreshFileLogandDropdown() {
                 $('#svg-dropdown-add-rectangle').append("<option value=\"" + json["filename"] + "\"" + ">" + json["filename"] + "</option>");
                 $('#svg-dropdown-add-circle').append("<option value=\"" + json["filename"] + "\"" + ">" + json["filename"] + "</option>");
                 $('#svg-dropdown-scale-shapes').append("<option value=\"" + json["filename"] + "\"" + ">" + json["filename"] + "</option>");
-                alert('Successfully added '+json["filename"]+' to the Panel');
+                alert('Successfully added ' + json["filename"] + ' to the Panel');
             }
             // enable vertical scrolling if the file log panel contains more than 5 files
             if ($('#log-table tr').length > 6)
                 $('#log-table').addClass('enable-scroll');
             // display this in file log panel if there are no files
-            else if ($('#log-table tbody tr').length < 1)
+            else if ($('#log-table tbody tr').length < 1) {
                 $('#log-table').append("<tr><td>No files</td></tr>");
+                document.getElementById("db-store-files").style.display = "none";
+            }
+            else
+                document.getElementById("db-store-files").style.display = "block";
+                
         },
         fail: function (error) {
             // Non-200 return, do something with error

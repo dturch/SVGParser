@@ -353,7 +353,7 @@
     <br>
 
     <!-- Database login starts -->
-    <div class="card">
+    <div id="login" class="card">
         <div class="card border-secondary">
             <div class="card-body">
                 <h5 class="card-title">Login to Database</h5>
@@ -370,7 +370,7 @@
                         <label for="db-name">DB Name</label>
                         <input type="text" class="form-control" id="db-name" placeholder="Enter DB Name">
                     </div>
-                    <button type="submit" class="btn btn-primary" id="log-button">Login</button>
+                    <button type="submit" class="btn btn-primary" id="btn-log">Login</button>
                 </form>
             </div>
         </div>
@@ -384,8 +384,8 @@
         <div class="card">
             <h5 class="card-header">Display DB Status</h5>
             <div class="card-body">
-                <p class="card-text">Database has (N1) files, (N2) changes and (N3) downloads.</p>
-                <button type="button" class="btn btn-outline-dark" id="get-status-button">Get Status</button>
+                <p class="card-text" id="db-status">Database has N1 files, N2 changes and N2 downloads.</p>
+                <button type="button" class="btn btn-outline-dark" id="btn-db-status">Get Status</button>
             </div>
         </div>
         <!-- Database status ends -->
@@ -393,28 +393,15 @@
         <br>
 
         <!-- Storing Files starts -->
-        <div class="card">
+        <div id="db-store-files" class="card">
             <div class="card-header">Storing Files into Database</div>
             <div class="card-body">
                 <h5 class="card-title"></h5>
-                <button type="button" class="btn btn-success" id="store-files-button">Store All Files</button>
-                <button type="button" class="btn btn-danger" id="clear-data-button">Clear All Data</button>
+                <button type="button" class="btn btn-success" id="btn-store-files">Store All Files</button>
+                <button type="button" class="btn btn-danger" id="btn-clear-data">Clear All Data</button>
             </div>
         </div>
         <!-- Database Functionality Section ends -->
-
-        <br>
-
-        <!-- Database status starts -->
-        <div class="card">
-            <h5 class="card-header">Execute Queries</h5>
-            <div class="card-body">
-                <p class="card-text">Database has many queries boi.</p>
-                <button type="button" class="btn btn-outline-dark" id="get-status-button">Get Status</button>
-            </div>
-        </div>
-        <!-- Database status ends -->
-
     </div>
 
     <br>

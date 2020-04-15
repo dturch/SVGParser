@@ -80,7 +80,7 @@ app.get('/uploads/:name', function (req, res) {
 	});
 });
 
-/******************** Your code goes here ******************** 
+/******************** Your code goes here ********************
  * file    		app.js
  * author  		Dario Turchi
  * studentID 	0929012
@@ -157,11 +157,10 @@ app.get('/edit-attr/:filename', function (req, res) {
 // 	res.send(resonse);
 // });
 
-//**********************A4 Functions **********************
+//**********************A4 DATABASE Functions **********************
 let cred = {};
-// queries
-let query_file = `CREATE TABLE IF NOT EXISTS FILE (
-	svg_id INT NOT NULL AUTO_INCREMENT, 
+let query_file = `CREATE TABLE IF NOT EXISTS dturchi.FILE (
+	svg_id INT NOT NULL AUTO_INCREMENT,
 	file_name VARCHAR(60) NOT NULL,
 	file_title VARCHAR(256),
 	file_description VARCHAR(256),
@@ -171,43 +170,44 @@ let query_file = `CREATE TABLE IF NOT EXISTS FILE (
 	n_group INT NOT NULL,
 	creation_time DATETIME NOT NULL,
 	file_size INT NOT NULL, PRIMARY KEY (svg_id))`;
-let query_image_change = `CREATE TABLE IF NOT EXISTS IMG_CHANGE (
-	change_id INT NOT NULL AUTO_INCREMENT, 
+
+let query_image_change = `CREATE TABLE IF NOT EXISTS dturchi.IMG_CHANGE (
+	change_id INT NOT NULL AUTO_INCREMENT,
 	change_type VARCHAR(256) NOT NULL,
 	change_summary VARCHAR(256) NOT NULL,
 	change_time DATETIME NOT NULL,
 	svg_id INT NOT NULL,
 	PRIMARY KEY (change_id),
 	FOREIGN KEY (svg_id) REFERENCES FILE(svg_id) ON DELETE CASCADE)`;
-let query_download = `CREATE TABLE IF NOT EXISTS DOWNLOAD (
-	download_id INT NOT NULL AUTO_INCREMENT, 
+
+let query_download = `CREATE TABLE IF NOT EXISTS dturchi.DOWNLOAD (
+	download_id INT NOT NULL AUTO_INCREMENT,
 	d_descr VARCHAR(256),
 	svg_id INT NOT NULL,
 	PRIMARY KEY (download_id), 
 	FOREIGN KEY (svg_id) REFERENCES FILE(svg_id) ON DELETE CASCADE)`;
 
-// login
+// CONNECTION
 app.get('/login', async function (req, res) {
 	cred = {
-		//host: 'dursley.socs.uoguelph.ca',
+		// host: 'dursley.socs.uoguelph.ca',
 		user: req.query.username,
 		password: req.query.password,
-		database: req.query.database
+		database: req.query.dbname
 	}
 
-	var status;
+	let status = false;
 
 	try {
 		connection = await mysql.createConnection(cred);
 
+		status = true;
 		await connection.execute(query_file);
 		await connection.execute(query_image_change);
 		await connection.execute(query_download);
 
-		status = "Success";
 	} catch (err) {
 		console.log("Query error: " + err);
-		status = "Failure";
 	} finally {
 		if (connection && connection.end) connection.end();
 	}
@@ -216,48 +216,163 @@ app.get('/login', async function (req, res) {
 	res.send(status);
 });
 
+// INSERT
+app.get('/store-files', async function (req, res) {
+	cred = {
+		// host     : 'dursley.socs.uoguelph.ca',    
+		user: req.query.username,
+		password: req.query.password,
+		database: req.query.dbname
+	}
 
+	var r = [];
+	let status = false;
+	let files = fs.readdirSync('./uploads');
+	let i = 0;
 
-	app.get('/db-status', async function (req, res) {
-		cred = {
-			host: 'dursley.socs.uoguelph.ca',
-			user: req.query.username,
-			password: req.query.password,
-			database: req.query.dbname
+	try {
+		connection = await mysql.createConnection(cred);
+		status = true;
+		res.send(status);
+
+		while (i < files.length) {
+			if (files[i].slice(files[i].length - 4) != ".svg" || !lib.isValid("uploads/" + files[i])) {
+				console.log("invalid file: " + files[i] + " found in uploads/ folder!");
+				files.splice(i, 1); // doesn't include invalid files! but its still inside upload folder!!!!
+				i = 0;
+			}
+			console.log("valid file: " + files[i] + " found in uploads/ folder!");
+			let c = lib.getSVGInfo(files[i]);
+			var stats = fs.statSync('./uploads/' + files[i]);
+			var kb = Math.round(stats.size / 1024);
+			let jsonObj = JSON.parse(c);
+			jsonObj["filename"] = files[i];
+			jsonObj.sizeKB = kb
+			r[i] = JSON.stringify(jsonObj);
+			i++;
+
+			let query_store_files = 'INSERT IGNORE INTO FILE (file_name, file_title, file_description, n_rect, n_circ, n_path, n_group, creation_time, file_size) VALUES (\'' + jsonObj["filename"] + '\',\'' + jsonObj["title"] + '\',\'' + jsonObj["description"] + '\',\'' + jsonObj["numRect"] + '\',\'' + jsonObj["numCirc"] + '\',\'' + jsonObj["numPaths"] + '\',\'' + jsonObj["numGroups"] + '\', CURRENT_TIMESTAMP ,\'' + jsonObj["sizeKB"] + '\');';
+			console.log(query_store_files);
+			await connection.execute(query_store_files);
+
+			// let d = lib.rte_struct_to_html(files[i]);
+			// let rteObj = JSON.parse(d);
+			// console.log(rteObj);
+
+			// for(var j = 0; j < rteObj.length; j++)
+			// {
+			// 	//console.log(rteObj[j]);
+			// 	let gpxq = 'SELECT (SELECT gpx_id FROM FILE WHERE file_name=\''+files[i]+'\') AS gpx;';
+			// 	//console.log(gpxq);
+			// 	let [rows, fields] = await connection.execute(gpxq);
+			// 	//console.log(rows[0].gpx);
+			// 	let rr = 'INSERT IGNORE INTO ROUTE (route_name, route_len, gpx_id) VALUES (\'' + rteObj[j]["name"] + '\',\'' + rteObj[j]["len"] + '\', \'' + rows[0].gpx + '\');';
+			// 	await connection.execute(rr);
+			// }
+
+			// //error is somewhere here
+			// let e = lib.points_struct_to_html(files[i]);
+			// let pointObj = JSON.parse(e);
+			// console.log(pointObj[0]["point_info"][0]["point_index"]);
+
+			// for(var j = 0; j < pointObj.length; j++)
+			// {
+			// 	//console.log(rteObj[j]);
+			// 	let rteq = 'SELECT (SELECT route_id FROM ROUTE WHERE route_name=\''+pointObj[j]["route_name"]+'\') AS rte;';
+			// 	console.log(rteq);
+			// 	let [rows, fields] = await connection.execute(rteq);
+			// 	console.log(rows[0].rte);
+			// 	for(var k = 0; k < pointObj[j]["point_info"].length; k++)
+			// 	{
+			// 		let pr = 'INSERT IGNORE INTO POINT (point_index, longitude, latitude, point_name, route_id) VALUES (\'' + pointObj[j]["point_info"][k]["point_index"] + '\',\'' + pointObj[j]["point_info"][k]["lon"] + '\', \'' + pointObj[j]["point_info"][k]["lat"] + '\',\'' + pointObj[j]["point_info"][k]["name"] + '\',\'' + rows[0].rte + '\');';
+			// 		console.log(pr);
+			// 		await connection.execute(pr);
+			// 	}
+
+			// }	
 		}
 
-		var r = [];
+	} catch (err) {
+		console.log("Query error: " + err);
+		res.status(400).send('Could not connect. ' + err);
+	} finally {
+		if (connection && connection.end) connection.end();
+	}
+});
 
-		try {
-			connection = await mysql.createConnection(cred);
+// DELETE
+app.get('/clear-data', async function (req, res) {
+	cred = {
+		// host     : 'dursley.socs.uoguelph.ca',    
+		user: req.query.username,
+		password: req.query.password,
+		database: req.query.dbname
+	}
 
-			console.log('Success');
+	let status = false;
 
-			let [rows1, fields1] = await connection.execute('SELECT (SELECT COUNT(*) FROM FILE) AS fc;');
-			let [rows2, fields2] = await connection.execute('SELECT (SELECT COUNT(*) FROM IMG_CHANGE) AS icc;');
-			let [rows3, fields3] = await connection.execute('SELECT (SELECT COUNT(*) FROM DOWNLOAD) AS dc;');
+	try {
+		connection = await mysql.createConnection(cred);
+		status = true;
+		res.send(status);
 
-			for (let row of rows1) {
-				console.log(row.fc);
-				r[0] = row.fc;
-			}
-			for (let row of rows2) {
-				console.log(row.icc);
-				r[1] = row.icc;
-			}
-			for (let row of rows3) {
-				console.log(row.dc);
-				r[2] = row.dc;
-			}
-		} catch (e) {
-			console.log("Query error: " + e);
-		} finally {
-			//Close the connection  
-			if (connection && connection.end) connection.end();
+		await connection.execute('DELETE FROM `dturchi`.`IMG_CHANGE`;');
+		await connection.execute('DELETE FROM `dturchi`.`DOWNLOAD`');
+		await connection.execute('DELETE FROM `dturchi`.`FILE`');
+		console.log('Success Records deleted!');
+
+		
+		
+
+	} catch (err) {
+		console.log("Query error: " + err);
+		res.status(400).send('Could not connect. ' + err);
+	} finally {
+		if (connection && connection.end) connection.end();
+	}
+});
+
+// DB Status
+app.get('/db-status', async function (req, res) {
+	cred = {
+		//host: 'dursley.socs.uoguelph.ca',
+		user: req.query.username,
+		password: req.query.password,
+		database: req.query.dbname
+	}
+
+	var r = [];
+
+	try {
+		connection = await mysql.createConnection(cred);
+
+		console.log('Success');
+
+		let [rows1, fields1] = await connection.execute('SELECT (SELECT COUNT(*) FROM FILE) AS file_count;');
+		let [rows2, fields2] = await connection.execute('SELECT (SELECT COUNT(*) FROM IMG_CHANGE) AS img_change_count;');
+		let [rows3, fields3] = await connection.execute('SELECT (SELECT COUNT(*) FROM DOWNLOAD) AS download_count;');
+
+		for (let row of rows1) {
+			console.log(row.file_count);
+			r[0] = row.file_count;
 		}
+		for (let row of rows2) {
+			console.log(row.img_change_count);
+			r[1] = row.img_change_count;
+		}
+		for (let row of rows3) {
+			console.log(row.download_count);
+			r[2] = row.download_count;
+		}
+	} catch (e) {
+		console.log("Query error: " + e);
+	} finally {
+		//Close the connection  
+		if (connection && connection.end) connection.end();
+	}
 
-		res.send(r);
-	});
+	res.send(r);
+});
 
 //********************** end of my code ******************/
 app.listen(portNum);
