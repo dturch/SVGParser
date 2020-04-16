@@ -380,7 +380,6 @@
     <br>
 
     <div id="db-actions">
-        <!-- Database status starts -->
         <div class="card">
             <h5 class="card-header">Display DB Status</h5>
             <div class="card-body">
@@ -388,20 +387,89 @@
                 <button type="button" class="btn btn-outline-dark" id="btn-db-status">Get Status</button>
             </div>
         </div>
-        <!-- Database status ends -->
 
         <br>
 
-        <!-- Storing Files starts -->
         <div id="db-store-files" class="card">
             <div class="card-header">Storing Files into Database</div>
             <div class="card-body">
-                <h5 class="card-title"></h5>
                 <button type="button" class="btn btn-success" id="btn-store-files">Store All Files</button>
                 <button type="button" class="btn btn-danger" id="btn-clear-data">Clear All Data</button>
             </div>
         </div>
-        <!-- Database Functionality Section ends -->
+
+        <br>
+
+        <div id="db-queries" class="card">
+            <div class="card-header">Execute Queries</div>
+
+            <div class="card-body">
+                <h5 class="card-title">Display All Files</h5>
+                <div class="card border-secondary">
+                    <div class="card-body">
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="checkbox" id="sort-by-size" name="sort">
+                            <label class="form-check-label" for="sort-by-size">Sort by Size</label>                            
+                        </div>
+                        <p class="card-text">^ Default sort is by File Name.</p>
+                        <button type="button" class="btn btn-primary" id="btn-all-files">Execute Query</button>
+                          <table class="table table-hover table-sm">
+                            <thead>
+                              <tr>
+                                <th>File Name</th>
+                                <th>Title</th>
+                                <th>Description</th>
+                                <th>Num of Rectangles</th>
+                                <th>Num of Circles</th>
+                                <th>Num of Paths</th>
+                                <th>Num of Groups</th>
+                                <th>Creation Time</th>
+                                <th>File Size in KB</th>
+                              </tr>
+                            </thead>
+                            <tbody id="sort-all-files">
+                            </tbody>
+                          </table>
+                    </div>
+                </div>
+                <br>
+                <h5 class="card-title">Display All Files Created Between Specific Dates</h5>
+                <div class="card border-secondary">
+                    <div class="card-body">
+                        <button type="button" class="btn btn-primary" id="btn-date-range">Date Range</button>
+                    </div>
+                </div>
+                <br>
+                <h5 class="card-title">Display All Files Modified Between Specific Dates</h5>
+                <div class="card border-secondary">
+                    <div class="card-body">
+                        <button type="button" class="btn btn-primary" id="btn-mod-date-range">Modified Date Range</button>
+                    </div>
+                </div>
+                <br>
+                <h5 class="card-title">Display All Files with shape counts in a specific range</h5>
+                <div class="card border-secondary">
+                    <div class="card-body">
+                        <button type="button" class="btn btn-primary" id="btn-shape-count">Shape Count</button>
+                    </div>
+                </div>
+                <br>
+                <h5 class="card-title">Display N most frequently downloaded Files</h5>
+                <div class="card border-secondary">
+                    <div class="card-body">
+                        <button type="button" class="btn btn-primary" id="btn-download-count">Download Count</button>
+                    </div>
+                </div>
+                <br>
+                <h5 class="card-title">Display All changes of a specific type to a specific file between specific dates</h5>
+                <div class="card border-secondary">
+                    <div class="card-body">
+                        <button type="button" class="btn btn-primary" id="btn-changes">Display All changes of
+                            Type</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
     <br>

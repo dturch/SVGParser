@@ -100,11 +100,11 @@ app.get('/getFiles', function (req, res) {
 	let i = 0;
 	while (i < files.length) {
 		if (files[i].slice(files[i].length - 4) != ".svg" || !lib.isValid("uploads/" + files[i])) {
-			console.log("invalid file: " + files[i] + " found in uploads/ folder!");
+			console.log("invalid file: " + files[i] + " found in 'uploads' folder!");
 			files.splice(i, 1); // doesn't include invalid files! but its still inside upload folder!!!!
 			i = 0;
 		}
-		console.log("valid file: " + files[i] + " found in uploads/ folder!");
+		console.log("valid file: " + files[i] + " found in 'uploads' folder!");
 		let c = lib.getSVGInfo(files[i]);
 		var stats = fs.statSync('./uploads/' + files[i]);
 		var kb = Math.round(stats.size / 1024);
@@ -226,6 +226,7 @@ app.get('/store-files', async function (req, res) {
 	}
 
 	var r = [];
+	let query_store_files;
 	let status = false;
 	let files = fs.readdirSync('./uploads');
 	let i = 0;
@@ -237,59 +238,36 @@ app.get('/store-files', async function (req, res) {
 
 		while (i < files.length) {
 			if (files[i].slice(files[i].length - 4) != ".svg" || !lib.isValid("uploads/" + files[i])) {
-				console.log("invalid file: " + files[i] + " found in uploads/ folder!");
+				console.log("invalid file: " + files[i] + " found in 'uploads' folder!");
 				files.splice(i, 1); // doesn't include invalid files! but its still inside upload folder!!!!
 				i = 0;
 			}
-			console.log("valid file: " + files[i] + " found in uploads/ folder!");
+			console.log("valid file: " + files[i] + " found in 'uploads' folder!");
+			
 			let c = lib.getSVGInfo(files[i]);
+			let d = lib.getShapesInfo(files[i]);
 			var stats = fs.statSync('./uploads/' + files[i]);
 			var kb = Math.round(stats.size / 1024);
 			let jsonObj = JSON.parse(c);
+			let jsonObj1 = JSON.parse(d);
 			jsonObj["filename"] = files[i];
-			jsonObj.sizeKB = kb
+			jsonObj.sizeKB = kb;
 			r[i] = JSON.stringify(jsonObj);
 			i++;
 
-			let query_store_files = 'INSERT IGNORE INTO FILE (file_name, file_title, file_description, n_rect, n_circ, n_path, n_group, creation_time, file_size) VALUES (\'' + jsonObj["filename"] + '\',\'' + jsonObj["title"] + '\',\'' + jsonObj["description"] + '\',\'' + jsonObj["numRect"] + '\',\'' + jsonObj["numCirc"] + '\',\'' + jsonObj["numPaths"] + '\',\'' + jsonObj["numGroups"] + '\', CURRENT_TIMESTAMP ,\'' + jsonObj["sizeKB"] + '\');';
-			console.log(query_store_files);
+			let title = jsonObj1.svgStruct["title"];
+			let desc = jsonObj1.svgStruct["description"];
+
+			if(desc.length < 1 && title.length < 1){
+				query_store_files = 'INSERT IGNORE INTO FILE (file_name, file_title, file_description, n_rect, n_circ, n_path, n_group, creation_time, file_size) VALUES (\'' + jsonObj["filename"] + '\',NULL' + ',NULL,\'' + jsonObj["numRect"] + '\',\'' + jsonObj["numCirc"] + '\',\'' + jsonObj["numPaths"] + '\',\'' + jsonObj["numGroups"] + '\', CURRENT_TIMESTAMP ,\'' + jsonObj["sizeKB"] + '\');';
+			}
+			else if(title.length < 1 && desc.length > 0) {
+				query_store_files = 'INSERT IGNORE INTO FILE (file_name, file_title, file_description, n_rect, n_circ, n_path, n_group, creation_time, file_size) VALUES (\'' + jsonObj["filename"] + '\',NULL' + ',\'' + desc + '\',\'' + jsonObj["numRect"] + '\',\'' + jsonObj["numCirc"] + '\',\'' + jsonObj["numPaths"] + '\',\'' + jsonObj["numGroups"] + '\', CURRENT_TIMESTAMP ,\'' + jsonObj["sizeKB"] + '\');';
+			}
+			else if(desc.length < 1 && title.length > 0) {
+				query_store_files = 'INSERT IGNORE INTO FILE (file_name, file_title, file_description, n_rect, n_circ, n_path, n_group, creation_time, file_size) VALUES (\'' + jsonObj["filename"] + '\',\'' + title + '\',NULL' + ',\'' + jsonObj["numRect"] + '\',\'' + jsonObj["numCirc"] + '\',\'' + jsonObj["numPaths"] + '\',\'' + jsonObj["numGroups"] + '\', CURRENT_TIMESTAMP ,\'' + jsonObj["sizeKB"] + '\');'
+			}
 			await connection.execute(query_store_files);
-
-			// let d = lib.rte_struct_to_html(files[i]);
-			// let rteObj = JSON.parse(d);
-			// console.log(rteObj);
-
-			// for(var j = 0; j < rteObj.length; j++)
-			// {
-			// 	//console.log(rteObj[j]);
-			// 	let gpxq = 'SELECT (SELECT gpx_id FROM FILE WHERE file_name=\''+files[i]+'\') AS gpx;';
-			// 	//console.log(gpxq);
-			// 	let [rows, fields] = await connection.execute(gpxq);
-			// 	//console.log(rows[0].gpx);
-			// 	let rr = 'INSERT IGNORE INTO ROUTE (route_name, route_len, gpx_id) VALUES (\'' + rteObj[j]["name"] + '\',\'' + rteObj[j]["len"] + '\', \'' + rows[0].gpx + '\');';
-			// 	await connection.execute(rr);
-			// }
-
-			// //error is somewhere here
-			// let e = lib.points_struct_to_html(files[i]);
-			// let pointObj = JSON.parse(e);
-			// console.log(pointObj[0]["point_info"][0]["point_index"]);
-
-			// for(var j = 0; j < pointObj.length; j++)
-			// {
-			// 	//console.log(rteObj[j]);
-			// 	let rteq = 'SELECT (SELECT route_id FROM ROUTE WHERE route_name=\''+pointObj[j]["route_name"]+'\') AS rte;';
-			// 	console.log(rteq);
-			// 	let [rows, fields] = await connection.execute(rteq);
-			// 	console.log(rows[0].rte);
-			// 	for(var k = 0; k < pointObj[j]["point_info"].length; k++)
-			// 	{
-			// 		let pr = 'INSERT IGNORE INTO POINT (point_index, longitude, latitude, point_name, route_id) VALUES (\'' + pointObj[j]["point_info"][k]["point_index"] + '\',\'' + pointObj[j]["point_info"][k]["lon"] + '\', \'' + pointObj[j]["point_info"][k]["lat"] + '\',\'' + pointObj[j]["point_info"][k]["name"] + '\',\'' + rows[0].rte + '\');';
-			// 		console.log(pr);
-			// 		await connection.execute(pr);
-			// 	}
-
-			// }	
 		}
 
 	} catch (err) {
@@ -364,13 +342,44 @@ app.get('/db-status', async function (req, res) {
 			console.log(row.download_count);
 			r[2] = row.download_count;
 		}
-	} catch (e) {
-		console.log("Query error: " + e);
+	} catch (err) {
+		console.log("Query error: " + err);
 	} finally {
 		//Close the connection  
 		if (connection && connection.end) connection.end();
 	}
 
+	res.send(r);
+});
+
+app.get('/all-files', async function (req, res) {
+	cred = {
+		//host: 'dursley.socs.uoguelph.ca',
+		user: req.query.username,
+		password: req.query.password,
+		database: req.query.dbname
+	}
+
+	var r = [];
+	var i = 0;
+	let allFilesSort = 'SELECT * from `FILE` ORDER BY ' + '`'+ req.query.sortBy +'`;';
+		
+	try {  	
+		connection = await mysql.createConnection(cred);
+		console.log('Success');
+		
+		const [rows, fields] = await connection.execute(allFilesSort);
+	
+		for (let row of rows){
+			r[i] = {"file_name": row.file_name, "file_title": row.file_title, "file_description": row.file_description, "n_rect": row.n_rect, "n_circ": row.n_circ, "n_path": row.n_path, "n_group": row.n_group, "creation_time": row.creation_time, "file_size": row.file_size};
+			i++;
+		}
+		
+	} catch(err) {  
+		console.log("Query error: " + err);			
+	} finally {	     
+		if (connection && connection.end) connection.end();  
+	}
 	res.send(r);
 });
 

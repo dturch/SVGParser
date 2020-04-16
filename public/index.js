@@ -444,8 +444,66 @@ $(document).ready(function () {
             });
         });
 
-        
-    })
+        // start of 6 SQL queries
+        $('#btn-all-files').on('click', function () {
+            let sortBy;
+            if ($('#sort-by-size').prop("checked") == true) {
+                sortBy = "file_size";
+            }
+            else {
+                sortBy = "file_name";
+            }
+
+            console.log(sortBy);
+
+            $.ajax({
+                type: 'get',            //Request type
+                dataType: 'json',       //Data type - we will use JSON for almost everything
+                url: '/all-files/',   //The server endpoint we are connecting to
+                data: {
+                    username: username,
+                    password: password,
+                    dbname: dbname,
+                    sortBy: sortBy
+                },
+                success: function (data) {
+                    console.log(data);
+                    $('#sort-all-files td').remove();
+                    for (var i = 0; i < data.length; i++) {
+                        $('#sort-all-files').append("<tr><td>" + data[i]["file_name"] + "</td><td>" + data[i]["file_title"] + "</td><td>" + data[i]["file_description"] + "</td><td>" + data[i]["n_rect"] + "</td><td>" + data[i]["n_circ"] + "</td><td>" + data[i]["n_path"] + "</td><td>" + data[i]["n_group"] + "</td><td>" + data[i]["creation_time"] + "</td><td>" + data[i]["file_size"] + "</td></tr>");
+                    }
+                },
+                fail: function (error) {
+                    // Non-200 return, do something with error
+                    console.log(error);
+                }
+            });
+
+        });
+
+        $('#btn-date-range').on('click', function () {
+            alert("btn-date-range was pressed!");
+            // displays all files created between specific dates. All data from FILE except svg_id sor by file_name, file_size, or creation_date
+        });
+
+        $('#btn-mod-date-range').on('click', function () {
+            alert("btn-mod-date-range was pressed!");
+
+        });
+
+        $('#btn-shape-count').on('click', function () {
+            alert("btn-shape-count was pressed!");
+        });
+
+        $('#btn-download-count').on('click', function () {
+            alert("btn-download-count was pressed!");
+        });
+
+        $('#btn-changes').on('click', function () {
+            alert("btn-changes was pressed!");
+        });
+
+    });
 });
 
 function refreshFileLogandDropdown() {
@@ -474,7 +532,7 @@ function refreshFileLogandDropdown() {
             }
             else
                 document.getElementById("db-store-files").style.display = "block";
-                
+
         },
         fail: function (error) {
             // Non-200 return, do something with error
