@@ -36,13 +36,13 @@ package-lock.json
 # This is the Frontend HTML file that you see when you visit the document root
 public/index.html
 
-# This is the Fro
-public/index.jsntend browser JavaScript file
+# This is the Frontend browser JavaScript file
+public/index.js
 
 # This is the Frontend Custom Style Sheet file
 public/style.css
 
-# This is the directory for uploaded .vcf files
+# This is the directory for uploaded .svg files
 upload/
 
 # This is the directory where you put all your C parser code
