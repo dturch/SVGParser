@@ -1,7 +1,7 @@
 # SVG Image Parser - README
-## Installation and init Start of Node Server
+## Installation and init Start of Node.js Server
 
-#### Note: tested and used on Node.JS 12.13.0 !!
+#### Note: tested and working on Node.js ver.12.13.0
 
 ### 1. npm install
 - run 'npm install' command in the root of 'SVGApp' directory
