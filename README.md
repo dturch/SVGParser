@@ -1,7 +1,7 @@
 ## Installation of Node App
 
 
-### 1. Compile Shared Library - libsvgparse.so
+### 1. Compile Shared Library
 
 ```Bash
 # From the root of the parser/ directory
