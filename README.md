@@ -1,13 +1,21 @@
 ## Installation of Node App
 
-### 1. Install
+
+### 1. Compile Shared Library - libsvgparse.so
 
 ```Bash
-# From the root of the directory
+# From the root of the parser/ directory
+make
+```
+
+### 2. Install
+
+```Bash
+# From the root of the SVGApp/ directory
 npm install
 ```
 
-### 2. Running Server
+### 3. Running Server
 
 ```Bash
 # PORT is your personally given port number, e.g. 1234
@@ -41,17 +49,3 @@ upload/
 parser/
 ```
 Note: tested and working on Node.js ver.12.13.0
-
-
-### 2. create libsvgparse.so
-- go to 'parser' directory
-- run 'make' commmand
-- make will compile shared library 'libsvgparse.so' in root of 'SVGApp' directory
-
-### 3. Running Server
-- go to root of 'SVGApp' directory
-- run 'npm run dev xxxxx' command (where xxxxx is port number of your choice)
-
-### 4. Access in Browser
-- open browser of your choice (Chrome, Firefox, Edge)
-- go to 'localhost:xxxxx' (where xxxxx is port number you chose to run server on in step 3)
