@@ -13,4 +13,8 @@
 
 ### 3. Running Server
 - go to root of SVGApp/ directory
-- run 'npm run dev xxxxx' command (where xxxxx is port number)
+- run 'npm run dev xxxxx' command (where xxxxx is port number of your choice)
+
+### 4. Access in Browser
+- open browser of your choice (Chrome, Firefox, Edge)
+- go to 'localhost:xxxxx' (where xxxxx is port number you chose to run server on in step 3)
