@@ -9,7 +9,6 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "acorn": "^6.4.1",
     "express": "^4.16.2",
     "express-fileupload": "^1.1.6",
     "ffi-napi": "^2.4.5",
