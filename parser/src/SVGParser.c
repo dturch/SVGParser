@@ -2216,6 +2216,12 @@
 			return "Invalid file";
 
 		char * otherStr = attrListToJSON(svgImage->otherAttributes);
+
+		// get all lists
+		// List * rectList = getRects(svgImage->rectangles);
+		// List * circList = getCircles(svgImage->circles);
+		// List * pathList = getPaths(svgImage->paths);
+		// List * grpList = getGroups(svgImage->groups);
 	
 		free(dir);
 		deleteSVGimage(svgImage);
@@ -2230,9 +2236,6 @@
 		strcat(dir, filename);
 
 		SVGimage *svgImage = JSONtoSVG(svgJSON);
-
-		//printf("SVGimageToString: %s\n", SVGimageToString(svgImage));
-		//printf("Location saved to: %s\n", dir);
 
 		bool write = writeSVGimage(svgImage, dir);
 		if (write == false)
