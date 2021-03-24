@@ -1,2 +1,5 @@
 node_modules
 .vscode
+libsvgparse.so
+parser/bin/LinkedListAPI.o
+parser/bin/SVGParser.o
